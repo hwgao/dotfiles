@@ -1,3 +1,8 @@
+" Useful commands:
+" * :tab /{pattern}  -- align selected lines by {pattern} with tabular
+" * :b <tab> -- switch between buffers
+
+
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
@@ -30,14 +35,17 @@ Plugin 'VundleVim/Vundle.vim'
 " samples end
 
 Plugin 'mileszs/ack.vim'
+" Vim plugin that displays tags in a window
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-airline/vim-airline'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
 Plugin 'Shougo/neomru.vim'
+" Show a diff via Vim sign column
 Plugin 'mhinz/vim-signify'
 Plugin 'vim-scripts/vcscommand.vim'
+" Vim script for text filtering and alignment
 Plugin 'godlygeek/tabular'
 Plugin 'dkprice/vim-easygrep'
 Plugin 'vim-scripts/grep.vim'
@@ -48,6 +56,7 @@ Plugin 'kergoth/vim-bitbake'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
@@ -75,17 +84,14 @@ autocmd! bufwritepost .vimrc source %
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-
-set nobackup		" do not keep a backup file, use versions instead
+set nobackup      " do not keep a backup file, use versions instead
 set nowritebackup
 set noswapfile
-
-set history=50		" keep 50 lines of command line history
-set ruler			" show the cursor position all the time
-set showcmd			" display incomplete commands
-set incsearch		" do incremental searching
-
-set autowrite       " autosave befor :make
+set history=50    " keep 50 lines of command line history
+set ruler         " show the cursor position all the time
+set showcmd       " display incomplete commands
+set incsearch     " do incremental searching
+set autowrite     " autosave befor :make
 
 " Don't use Ex mode, use Q for formatting
 nnoremap Q gq
@@ -109,6 +115,7 @@ if has('gui_running')
     behave mswin
     set background=dark
     colorscheme solarized
+    set showmatch       " show the matching part of the pair for [] {} and ()
 else
     colorscheme elflord
 endif
@@ -146,8 +153,6 @@ set shiftwidth=4
 set smarttab 	    
 set autoindent
 set smartindent
-" show the matching part of the pair for [] {} and ()
-set showmatch
 " show preview window below the current one
 set splitbelow
 set splitright
@@ -387,8 +392,10 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
 " noremap ,cd :cd %:p:h<CR>:pwd<CR>
-command CCD cd %:p:h
+command! CCD cd %:p:h
 
+" Use syntastic
+let g:pymode_lint_on_write = 0
 " Disable python-mode autocomplete, it conflicts with ycm
 let g:pymode_rope_complete_on_dot = 0
 
@@ -399,23 +406,10 @@ let g:pymode_rope_goto_definition_bind = "<C-]>"
 let g:pymode_doc_bind = "<Leader>d"
 
 " python PEP8 indentation
-au BufNewFile,BufRead *.py
-    \ set tabstop=4
-    \ set softtabstop=4
-    \ set shiftwidth=4
-    \ set textwidth=79
-    \ set expandtab
-    \ set autoindent
-    \ set fileformat=unix
+au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 " web files indentation
-au BufNewFile,BufRead *.js, *.html, *.css
-    \ set tabstop=2
-    \ set softtabstop=2
-    \ set shiftwidth=2
-
-" flag extraneous whitespace
-au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2 softtabstop=2 shiftwidth=2
 
 " OpenSCAD
 au! BufRead,BufNewFile *.scad set filetype=openscad 
