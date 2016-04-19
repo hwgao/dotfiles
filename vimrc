@@ -48,6 +48,7 @@ Plugin 'kergoth/vim-bitbake'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'altercation/vim-colors-solarized'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -98,40 +99,20 @@ if has('mouse')
   set mouse=a
 endif
 
-" Switch syntax highlighting on, when the terminal has colors
-" Also switch on highlighting the last used search pattern.
-if &t_Co > 2 || has("gui_running")
-  syntax on
-  set hlsearch
+let python_highlight_all=1
+syntax enable
+set hlsearch
+set cursorline
+
+if has('gui_running')
+    source $VIMRUNTIME/mswin.vim
+    behave mswin
+    set background=dark
+    colorscheme solarized
+else
+    colorscheme elflord
 endif
 
-" Only do this part when compiled with support for autocommands.
-if has("autocmd")
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-
-  " Put these in an autocmd group, so that we can delete them easily.
-  augroup vimrcEx
-  au!
-
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
-
-  " When editing a file, always jump to the last known cursor position.
-  " Don't do it when the position is invalid or when inside an event handler
-  " (happens when dropping a file on gvim).
-  " Also don't do it when the mark is in the first line, that is the default
-  " position when opening a file.
-  autocmd BufReadPost *
-    \ if line("'\"") > 1 && line("'\"") <= line("$") |
-    \   exe "normal! g`\"" |
-    \ endif
-
-  augroup END
-else
-  set autoindent		" always set autoindenting on
-endif " has("autocmd")
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -163,43 +144,16 @@ set shiftwidth=4
 " insert tabs on the start of a line according to
 " shifwidth, not tabstop
 set smarttab 	    
+set autoindent
 set smartindent
-
+" show the matching part of the pair for [] {} and ()
+set showmatch
 " show preview window below the current one
 set splitbelow
-
-if has('gui_running')
-    source $VIMRUNTIME/mswin.vim
-    behave mswin
-    set cursorline
-end
-
-" solarized 
-" if has('gui_running')
-"     set background=light
-" else
-"     set background=dark
-" endif
-" colorscheme desert
-colorscheme elflord
-" colorscheme peaksea
-" colorscheme jellybeans
-" colorscheme molokai
-" colorscheme solarized
+set splitright
 
 " ctags
 set tags=tags;/
-
-" Taglist
-let Tlist_Show_One_File=1
-let Tlist_Exit_OnlyWindow=1
-
-" Open buffer list and prompt to choose a buffer to switch to
-" unite provided the buffer list function, so disable it
-nnoremap <F7> :buffers<CR>:buffer<Space>
-
-" Taglist
-" nnoremap <silent> <F8> :TlistToggle<CR>
 
 " Tagbar
 nnoremap <silent> <F8> :TagbarToggle<CR>
@@ -210,9 +164,6 @@ map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 " A: c/h switch
 " nnoremap <silent> <F11> :A<CR>
-
-" NERDTree
-" nnoremap <silent> <F12> :NERDTreeToggle<CR>
 
 " cscope
 set cscopequickfix=s-,c-,d-,i-,t-,e-
@@ -280,6 +231,11 @@ let g:ycm_key_list_select_completion = []
 let g:ycm_key_list_previous_completion = []
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
+" ycmcompleter hotkeys
+nnoremap <Leader>] :YcmCompleter GoTo<CR>
+nnoremap <Leader>jr :YcmCompleter GoToReferences<CR>
+nnoremap <Leader>jd :YcmCompleter GetDoc<CR>
+
 " UltiSnips Trigger configuration. 
 let g:UltiSnipsExpandTrigger="<tab>"
 let g:UltiSnipsJumpForwardTrigger="<tab>"
@@ -287,9 +243,6 @@ let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
-
-" Disable python-mode autocomplete, it conflicts with ycm
-let g:pymode_rope_complete_on_dot = 0
 
 " Not need any plugin to complete a tag
 inoremap <c-x><c-]> <c-]>
@@ -312,20 +265,6 @@ nnoremap <Leader>h :nohlsearch<CR>
 " Use w!! to do that after you opened the file already
 cmap w!! w !sudo tee % >/dev/null
 
-" Switch to alternate file
-map <C-Tab> :bnext<cr>
-map <C-S-Tab> :bprevious<cr>
-
-" Switch to alternate tab
-" map <C-Tab> :tabnext<cr>
-" map <C-S-Tab> :tabprevious<cr>
-
-" set switchbuf=usetab,newtab
-" nnoremap <C-Tab> :sbnext<CR>
-" nnoremap <C-S-Tab> :sbprevious<CR>
-
-" when you :grep, ack will be used instead of grep
-" set grepprg=ack\ -H\ --nogroup
 " when you :grep, ag will be used instead of grep
 set grepprg=ag\ --noheading\ --nocolor\ --column
 
@@ -351,14 +290,6 @@ let g:signify_vcs_list = ['git', 'svn']
 
 " diff option
 set diffopt=filler,vertical
-
-" insert #if 0 - #endif around block of code
-" go to the line of code that you want the '#if 0' to be on, type mb to mark this line with
-" the marker b, then move to the line that should be last line just above the '#endif' and
-" press ;'
-" marker a is used by bookmarks, so use marker b
-" Better to use surround.vim with vS#
-" map ;' mz'bO<Esc>i#if 0<Esc>'zo<Esc>i#endif<Esc>
 
 " Use ag with ack.vim
 let g:ackprg = 'ag --noheading --nocolor --column'
@@ -449,32 +380,45 @@ nnoremap <Leader>c :make<CR>
 
 map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
-" as much as possible of the last line in a window will be displayed.  When not included, a last line that doesn't fit is replaced with "@" lines. 
+" as much as possible of the last line in a window will be displayed.  When not set, a last line that doesn't fit is replaced with "@" lines. 
 " set display+=lastline
-
 
 " change the working directory to the dir for the current editing file
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
 " noremap ,cd :cd %:p:h<CR>:pwd<CR>
-command CDC cd %:p:h
+command CCD cd %:p:h
 
-let g:notes_directories = ['/data/Dropbox/vim-notes']
+" Disable python-mode autocomplete, it conflicts with ycm
+let g:pymode_rope_complete_on_dot = 0
 
-" Override go-to.definition key shortcut to Ctrl-]
+" Override go-to.definition key shortcut
 let g:pymode_rope_goto_definition_bind = "<C-]>"
-"
-" Override run current python file key shortcut to Ctrl-Shift-e
-" let g:pymode_run_bind = "<C-S-r>"
-"
-" Override view python doc key shortcut to Ctrl-Shift-d
+
+" Override view python doc key shortcut
 let g:pymode_doc_bind = "<Leader>d"
+
+" python PEP8 indentation
+au BufNewFile,BufRead *.py
+    \ set tabstop=4
+    \ set softtabstop=4
+    \ set shiftwidth=4
+    \ set textwidth=79
+    \ set expandtab
+    \ set autoindent
+    \ set fileformat=unix
+
+" web files indentation
+au BufNewFile,BufRead *.js, *.html, *.css
+    \ set tabstop=2
+    \ set softtabstop=2
+    \ set shiftwidth=2
+
+" flag extraneous whitespace
+au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
 
 " OpenSCAD
 au! BufRead,BufNewFile *.scad set filetype=openscad 
 
 " Arduino hardy
 " let g:hardy_arduino_options = "--board arduino:avr:mega" 
-
-" On insert mode, insert semicolon at the end of line
-inoremap <leader>; <C-o>A;
