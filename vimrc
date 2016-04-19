@@ -1,6 +1,8 @@
 " Useful commands:
 " * :tab /{pattern}  -- align selected lines by {pattern} with tabular
 " * :b <tab> -- switch between buffers
+" * :CCD --- change current dir to the current file's dir
+" * :DiffOrig -- diff current buffer with saved file
 
 
 set nocompatible              " be iMproved, required
@@ -120,7 +122,6 @@ else
     colorscheme elflord
 endif
 
-
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
@@ -167,9 +168,6 @@ let g:tagbar_left=1
 " include files search"
 map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
-" A: c/h switch
-" nnoremap <silent> <F11> :A<CR>
-
 " cscope
 set cscopequickfix=s-,c-,d-,i-,t-,e-
 set cst
@@ -187,8 +185,6 @@ nnoremap <silent> <F6> :cp<CR>
 " Grep
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
-" nnoremap <silent> <S-F3> :BgrepAdd<CR>
-" nnoremap <silent> <S-F4> :RgrepAdd<CR>
 
 " hide tool bar
 set guioptions-=T
@@ -202,16 +198,6 @@ set directory=~/.vimbackup
 
 " set guifont=Fixed
 set guifont=Monaco\ 10
-" set guifont=Consolas\ 12
-" set guifont=Monospace\ 10
-
-" echofunc
-"let g:EchoFuncAutoStartBalloonDeclaration = 0
-let g:EchoFuncMaxBalloonDeclarations = 0
-
-" navigate
-noremap  <A-Left> <C-O>
-noremap  <A-Right> <C-I>
 
 " Saves all open buffers in the background, instead of closing them and re-opening on demand
 set hidden
@@ -230,10 +216,6 @@ endif
 " remove search in included files from the complete list
 set complete-=i
 
-" make YCM compatible with UltiSnips
-" make ycm not use Tab key. Use <C-N> and <C-P> instead
-let g:ycm_key_list_select_completion = []
-let g:ycm_key_list_previous_completion = []
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 " ycmcompleter hotkeys
@@ -242,9 +224,10 @@ nnoremap <Leader>jr :YcmCompleter GoToReferences<CR>
 nnoremap <Leader>jd :YcmCompleter GetDoc<CR>
 
 " UltiSnips Trigger configuration. 
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<tab>"
-let g:UltiSnipsJumpBackwardTrigger="<s-tab>"
+" make compatible with ycm
+let g:UltiSnipsExpandTrigger="<c-k>"
+let g:UltiSnipsJumpForwardTrigger="<c-k>"
+let g:UltiSnipsJumpBackwardTrigger="<c-s-k>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
