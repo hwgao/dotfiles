@@ -3,6 +3,7 @@
 " * :b <tab> -- switch between buffers
 " * :CCD --- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
+" * :BufOnly -- Delete all the buffers except the current/named buffer
 
 
 set nocompatible              " be iMproved, required
@@ -60,6 +61,18 @@ Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
+" Alternate Files quickly (.c --> .h etc)
+Plugin 'vim-scripts/a.vim'
+" Script that will search for and load cscope.out databases automatically
+Plugin 'vim-scripts/autoload_cscope.vim'
+" Unload/delete/wipe a buffer, keep its window(s), display last accessed buffer(s)
+Plugin 'vim-scripts/bufkill.vim'
+" Delete all the buffers except the current/named buffer
+Plugin 'vim-scripts/BufOnly.vim'
+" Highlight several words in different colors simultaneously.
+Plugin 'dimasg/vim-mark'
+" For instance if you type an '(', ``autoclose`` will automatically insert a ')' and put the cursor between then
+Plugin 'Townk/vim-autoclose'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -396,6 +409,12 @@ au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2 softtabstop=2 shiftwidth
 
 " OpenSCAD
 au! BufRead,BufNewFile *.scad set filetype=openscad 
+
+" kv
+au BufNewFile,BufRead *.kv set filetype=kv
+
+" log
+au BufNewFile,BufRead *.log set filetype=log
 
 " Arduino hardy
 " let g:hardy_arduino_options = "--board arduino:avr:mega" 
