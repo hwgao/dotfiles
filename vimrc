@@ -4,6 +4,8 @@
 " * :CCD --- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
+" * <leader>m -- Mark the same words under cursor
+" * <leader>n -- Clean all the marks
 
 
 set nocompatible              " be iMproved, required
@@ -377,8 +379,10 @@ set confirm
 " Show the tag under cursor in preview window
 nnoremap <C-p> <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
+" Run make
 nnoremap <Leader>c :make<CR>
 
+" List the search of the word under cursor and let user to choose
 map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 " as much as possible of the last line in a window will be displayed.  When not set, a last line that doesn't fit is replaced with "@" lines. 
