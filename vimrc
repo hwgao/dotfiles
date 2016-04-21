@@ -39,7 +39,6 @@ Plugin 'VundleVim/Vundle.vim'
 "Plugin 'ascenator/L9', {'name': 'newL9'}
 " samples end
 
-Plugin 'mileszs/ack.vim'
 " Vim plugin that displays tags in a window
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-airline/vim-airline'
@@ -75,6 +74,8 @@ Plugin 'vim-scripts/BufOnly.vim'
 Plugin 'dimasg/vim-mark'
 " For instance if you type an '(', ``autoclose`` will automatically insert a ')' and put the cursor between then
 Plugin 'Townk/vim-autoclose'
+" Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
+Plugin 'rking/ag.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -194,9 +195,6 @@ nnoremap <silent> <F9> :cs find s <C-R>=expand("<cword>")<CR><CR>
 nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
 
-" Search in current file
-" nnoremap <F3> :Ack -w <C-r><C-w> %
-" nnoremap <F4> :Ack -w <C-r><C-w>
 " Grep
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
@@ -294,11 +292,9 @@ let g:signify_vcs_list = ['git', 'svn']
 " diff option
 set diffopt=filler,vertical
 
-" Use ag with ack.vim
-let g:ackprg = 'ag --noheading --nocolor --column'
-
-" find word under cursor with Ack, the trailing space is needed
-nnoremap , :Ack -w <C-r><C-w>
+" find word under cursor with ag, in current dir (use :pwd to check current
+" dir)
+nnoremap , :Ag <C-r><C-w>
 
 " Unite
 nmap <space> [unite]
