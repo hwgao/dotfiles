@@ -60,7 +60,7 @@ Plugin 'kergoth/vim-bitbake'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
+" Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
 " Alternate Files quickly (.c --> .h etc)
 Plugin 'vim-scripts/a.vim'
@@ -230,6 +230,8 @@ endif
 set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+" If use syntastic, disable it
+" let g:ycm_show_diagnostics_ui = 0
 
 " ycmcompleter hotkeys
 nnoremap <Leader>] :YcmCompleter GoTo<CR>
@@ -390,8 +392,9 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " noremap ,cd :cd %:p:h<CR>:pwd<CR>
 command! CCD cd %:p:h
 
-" Use syntastic
-let g:pymode_lint_on_write = 0
+" If use syntastic, disable it
+" let g:pymode_lint_on_write = 0
+
 " Disable python-mode autocomplete, it conflicts with ycm
 let g:pymode_rope_complete_on_dot = 0
 
