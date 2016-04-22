@@ -60,7 +60,7 @@ Plugin 'kergoth/vim-bitbake'
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-" Plugin 'scrooloose/syntastic'
+Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
 " Alternate Files quickly (.c --> .h etc)
 Plugin 'vim-scripts/a.vim'
@@ -72,8 +72,8 @@ Plugin 'vim-scripts/bufkill.vim'
 Plugin 'vim-scripts/BufOnly.vim'
 " Highlight several words in different colors simultaneously.
 Plugin 'dimasg/vim-mark'
-" For instance if you type an '(', ``autoclose`` will automatically insert a ')' and put the cursor between then
-Plugin 'Townk/vim-autoclose'
+" provides insert mode auto-completion for quotes, parens, brackets, etc.
+Plugin 'Raimondi/delimitMate'
 " Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
 Plugin 'rking/ag.vim'
 
@@ -230,7 +230,8 @@ endif
 set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-" If use syntastic, disable it
+
+" If use syntastic, disable it. As ycm will disable syntastic by default
 " let g:ycm_show_diagnostics_ui = 0
 
 " ycmcompleter hotkeys
@@ -391,6 +392,9 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " :h Head of the file name(the last component and any separators removed)
 " noremap ,cd :cd %:p:h<CR>:pwd<CR>
 command! CCD cd %:p:h
+
+" Disable syntastic for python
+let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
 
 " If use syntastic, disable it
 " let g:pymode_lint_on_write = 0
