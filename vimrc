@@ -233,6 +233,10 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 
 " If use syntastic, disable it. As ycm will disable syntastic by default
 " let g:ycm_show_diagnostics_ui = 0
+" or
+" sysntastic setting for c++11
+let g:syntastic_cpp_compiler = 'clang++'
+let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
 
 " ycmcompleter hotkeys
 nnoremap <Leader>] :YcmCompleter GoTo<CR>
@@ -378,9 +382,6 @@ set confirm
 " Show the tag under cursor in preview window
 nnoremap <C-p> <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
-" Run make
-nnoremap <Leader>c :make<CR>
-
 " List the search of the word under cursor and let user to choose
 map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
@@ -390,12 +391,11 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " change the working directory to the dir for the current editing file
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
-" noremap ,cd :cd %:p:h<CR>:pwd<CR>
-command! CCD cd %:p:h
+nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
 
 " Disable syntastic for python
 let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
-
+" or
 " If use syntastic, disable it
 " let g:pymode_lint_on_write = 0
 
