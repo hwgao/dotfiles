@@ -130,9 +130,12 @@ cl () {
     ls
 }
 
-# set -o vi 				# enable vi-mode
-# bind -m vi-command ".":insert-last-argument
+set -o vi 				# enable vi-mode
+bind -m vi-command ".":insert-last-argument
 export EDITOR=vi
+
+# terminal support 256 color
+export TERM=xterm-256color
 
 # export CDPATH=".:/home/hwgao:/data/work/sources/"
 export CDPATH=".:/data/work/sources/"
@@ -172,8 +175,6 @@ eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
 export PATH="/opt/lampp/bin:$PATH"
-export TERM=xterm-256color
-[ -n "$TMUX" ] && export TERM=screen-256color
 
 # Added by fastrun, please don't edit it manually
 if [ -f ~/.fr/fastrun.sh ]; then # fastrun
