@@ -115,6 +115,8 @@ alias cp='cp -i'
 alias mv='mv -i'
 alias pgrep='pgrep -fa'
 alias agf='ag -i -g'
+# force tmux to assume the terminal support 256 colors
+alias tmux='tmux -2'
 
 # mkdir, cd into it
 mdc () {
@@ -170,6 +172,8 @@ eval "$(rbenv init -)"
 export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
 export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
 export PATH="/opt/lampp/bin:$PATH"
+export TERM=xterm-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
 
 # Added by fastrun, please don't edit it manually
 if [ -f ~/.fr/fastrun.sh ]; then # fastrun
