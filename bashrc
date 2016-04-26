@@ -136,6 +136,8 @@ export EDITOR=vi
 
 # terminal support 256 color
 export TERM=xterm-256color
+[ -n "$TMUX" ] && export TERM=screen-256color
+
 
 # export CDPATH=".:/home/hwgao:/data/work/sources/"
 export CDPATH=".:/data/work/sources/"
