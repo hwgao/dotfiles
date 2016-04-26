@@ -130,6 +130,9 @@ syntax enable
 set hlsearch
 set cursorline
 
+" Terminal support 256 color
+set t_Co=256
+
 if has('gui_running')
     source $VIMRUNTIME/mswin.vim
     behave mswin
