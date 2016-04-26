@@ -76,6 +76,8 @@ Plugin 'dimasg/vim-mark'
 Plugin 'Raimondi/delimitMate'
 " Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
 Plugin 'rking/ag.vim'
+" Plugin 'Rip-Rip/clang_complete'
+" Plugin 'ervandew/supertab'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -131,11 +133,12 @@ set cursorline
 if has('gui_running')
     source $VIMRUNTIME/mswin.vim
     behave mswin
-    set background=dark
+    set background=light
     colorscheme solarized
     set showmatch       " show the matching part of the pair for [] {} and ()
 else
-    colorscheme elflord
+    set background=dark
+    colorscheme solarized
 endif
 
 " Convenient command to see the difference between the current buffer and the
@@ -234,8 +237,11 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 " If use syntastic, disable it. As ycm will disable syntastic by default
 " let g:ycm_show_diagnostics_ui = 0
 
+" syntastic c++11 setting
+let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
+
 " ycmcompleter hotkeys
-nnoremap <Leader>] :YcmCompleter GoTo<CR>
+nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
 nnoremap <Leader>jr :YcmCompleter GoToReferences<CR>
 nnoremap <Leader>jd :YcmCompleter GetDoc<CR>
 

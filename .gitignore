@@ -1,3 +1,5 @@
 vim/bundle/**
 vim/.ropeproject/**
 vim/.ycm_extra_conf.pyc
+vim/.netrwhist
+.ropeproject
