@@ -1,3 +1,3 @@
 if !filereadable(expand("%:p:h")."/Makefile")
-    setlocal makeprg=clang++\ -g\ -std=c++11\ -o\ %<\ %
+    setlocal makeprg=g++\ -Wall\ -Wextra\ -std=c++11\ -o\ %<\ %
 endif

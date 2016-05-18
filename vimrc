@@ -280,7 +280,7 @@ nnoremap <Leader>h :nohlsearch<CR>
 
 " Forget to sudo before editing a file that requires root privileges
 " Use w!! to do that after you opened the file already
-cmap w!! w !sudo tee % >/dev/null
+cmap w!! w !sudo tee >/dev/null %
 
 " when you :grep, ag will be used instead of grep
 set grepprg=ag\ --noheading\ --nocolor\ --column
