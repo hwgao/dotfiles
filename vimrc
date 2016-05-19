@@ -112,6 +112,7 @@ set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set autowrite     " autosave befor :make
+set nofoldenable  " turn off folding
 
 " Don't use Ex mode, use Q for formatting
 nnoremap Q gq
@@ -130,9 +131,8 @@ syntax enable
 set hlsearch
 set cursorline
 
-" Terminal support 256 color
-set t_Co=256
-
+let g:solarized_termcolors=256
+set t_Co=256           " Terminal support 256 color
 if has('gui_running')
     source $VIMRUNTIME/mswin.vim
     behave mswin
@@ -140,9 +140,12 @@ if has('gui_running')
     colorscheme solarized
     set showmatch       " show the matching part of the pair for [] {} and ()
 else
-    set background=dark
+    set background=light
     colorscheme solarized
 endif
+
+" hide currentline backgroud when in insert mode
+autocmd InsertEnter,InsertLeave * set cul! 
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -243,9 +246,6 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 " sysntastic setting for c++11
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
-
-" syntastic c++11 setting
-let g:syntastic_cpp_compiler_options = "-std=c++11 -Wall -Wextra -Wpedantic"
 
 " ycmcompleter hotkeys
 nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
@@ -401,6 +401,9 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
 nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
+
+" set completeopt-=preview "Disable preview document when autocomplete
+set completeopt=longest,menuone
 
 " Disable syntastic for python
 let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
