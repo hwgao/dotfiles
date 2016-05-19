@@ -140,7 +140,7 @@ if has('gui_running')
     colorscheme solarized
     set showmatch       " show the matching part of the pair for [] {} and ()
 else
-    set background=light
+    set background=dark
     colorscheme solarized
 endif
 
