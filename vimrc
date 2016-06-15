@@ -140,7 +140,7 @@ if has('gui_running')
     colorscheme solarized
     set showmatch       " show the matching part of the pair for [] {} and ()
 else
-    set background=light
+    set background=dark
     colorscheme solarized
 endif
 
@@ -239,6 +239,8 @@ endif
 set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 
 " If use syntastic, disable it. As ycm will disable syntastic by default
 " let g:ycm_show_diagnostics_ui = 0
