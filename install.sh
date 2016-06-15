@@ -29,9 +29,25 @@ for file in $files; do
     ln -s $dir/$file ~/.$file
 done
 
+echo -n "Install useful tools ..."
+sudo apt update
+sudo apt install build-essential cmake
+sudo apt install python-dev python3-dev
+sudo apt install git vim-gnome tmux mc silversearcher-ag meld 
+sudo apt install nautilus-actions nautilus-compare 
+sudo apt install zim goldendict htop strace
+
 echo -n "Clone Vundle ..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 echo -n "Install all vim plugins ..."
 vim +PluginInstall +qall
+
+echo -n "Build ycm"
+cd ~/.vim/bundle/YouCompleteMe
+./install.py --clang-completer
+
+echo -n "Clone bin folder ..."
+git clone ssh://pi2:/media/Work/repos/tools ~/bin
 echo "done"
+
