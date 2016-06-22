@@ -34,8 +34,9 @@ sudo apt update
 sudo apt install build-essential cmake
 sudo apt install python-dev python3-dev
 sudo apt install git vim-gnome tmux mc silversearcher-ag meld 
-sudo apt install nautilus-actions nautilus-compare 
+sudo apt install nautilus-actions nautilus-compare gnome-sushi
 sudo apt install zim python-gtksourceview2 goldendict htop strace
+sudo apt install openvpn network-manager-openvpn-gnome
 
 echo -n "Clone Vundle ..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
