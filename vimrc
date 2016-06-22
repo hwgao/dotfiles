@@ -1,5 +1,5 @@
 " Useful commands:
-" * :tab /{pattern}  -- align selected lines by {pattern} with tabular
+" * :Tab /{pattern}  -- align selected lines by {pattern} with tabular
 " * :b <tab> -- switch between buffers
 " * :CCD --- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
