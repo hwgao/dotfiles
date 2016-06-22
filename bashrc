@@ -102,7 +102,7 @@ alias cd.....='cd ../../../../..'
 alias cd......='cd ../../../../../..'
 
 alias vg=gvim
-alias sshpi2='ssh pi2 -t tmux attach;reset'
+alias sp2='ssh pi2 -t tmux attach -t 0'
 alias pp='curl -s ipecho.net/plain;echo'
 alias cp='nocache cp'
 alias mv='nocache mv'
