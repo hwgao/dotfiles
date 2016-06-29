@@ -102,19 +102,13 @@ alias cd.....='cd ../../../../..'
 alias cd......='cd ../../../../../..'
 
 alias vg=gvim
-alias upgrade='sudo apt-get update && sudo apt-get dist-upgrade'
-alias sshpi='ssh pi -t tmux attach;reset'
-alias sshpi2='ssh pi2 -t tmux attach;reset'
-alias sshgr='ssh pi2 -t ssh router;reset'
+alias sp2='ssh pi2 -t tmux attach -t 0'
 alias pp='curl -s ipecho.net/plain;echo'
-alias pg='pgrep -fa'
 alias cp='nocache cp'
 alias mv='nocache mv'
-alias rm='safe-rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 alias pgrep='pgrep -fa'
-alias agf='ag -i -g'
 # force tmux to assume the terminal support 256 colors
 alias tmux='tmux -2'
 alias ta='tmux -2 attach'
@@ -138,12 +132,6 @@ export EDITOR=vi
 # terminal support 256 color
 export TERM=xterm-256color
 [ -n "$TMUX" ] && export TERM=screen-256color
-
-
-# export CDPATH=".:/home/hwgao:/data/work/sources/"
-export CDPATH=".:/data/work/sources/"
-
-export POCO_BASE="/opt/poco-1.6.1/"
 
 # Use case insensitive filename globbing
 shopt -s nocaseglob
@@ -172,15 +160,3 @@ fi
 if [ -f ~/mywork/cd.bash/cd.bash ]; then
     . ~/mywork/cd.bash/cd.bash
 fi
-
-export PATH="$HOME/.rbenv/bin:$PATH"
-eval "$(rbenv init -)"
-export PATH="$HOME/.rbenv/plugins/ruby-build/bin:$PATH"
-export PATH="$HOME/Android/Sdk/platform-tools:$PATH"
-export PATH="/opt/lampp/bin:$PATH"
-
-# Added by fastrun, please don't edit it manually
-if [ -f ~/.fr/fastrun.sh ]; then # fastrun
-    . ~/.fr/fastrun.sh # fastrun
-fi # fastrun
-# fastrun end

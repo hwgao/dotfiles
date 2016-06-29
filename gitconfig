@@ -1,0 +1,23 @@
+[user]
+	email = hhww.gao@gmail.com
+	name = hwgao
+[diff]
+    tool = meld
+[difftool]
+    prompt = 0
+[color]
+    ui = true
+[alias]
+    last = log -1 --stat
+    cp = cherry-pick
+    co = checkout
+    cl = clone
+    ci = commit
+    st = status -sb
+    br = branch
+    unstage = reset HEAD --
+    dc = diff --cached
+    lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+
+
+

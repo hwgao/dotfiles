@@ -1,5 +1,5 @@
 " Useful commands:
-" * :tab /{pattern}  -- align selected lines by {pattern} with tabular
+" * :Tab /{pattern}  -- align selected lines by {pattern} with tabular
 " * :b <tab> -- switch between buffers
 " * :CCD --- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
@@ -239,6 +239,8 @@ endif
 set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
+let g:ycm_confirm_extra_conf = 0
+let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 
 " If use syntastic, disable it. As ycm will disable syntastic by default
 " let g:ycm_show_diagnostics_ui = 0
