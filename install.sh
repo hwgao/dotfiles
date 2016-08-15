@@ -31,12 +31,15 @@ done
 
 echo -n "Install useful tools ..."
 sudo apt update
-sudo apt install build-essential cmake
-sudo apt install python-dev python3-dev
-sudo apt install git vim-gnome tmux mc silversearcher-ag meld 
-sudo apt install nautilus-actions nautilus-compare gnome-sushi
-sudo apt install zim python-gtksourceview2 goldendict htop strace
-sudo apt install openvpn network-manager-openvpn-gnome
+sudo apt install -y build-essential cmake
+sudo apt install -y python-dev python3-dev
+sudo apt install -y git vim tmux mc silversearcher-ag htop strace
+sudo apt install -y zim python-gtksourceview2 meld vim-gnome
+sudo apt install -y xclip
+#sudo apt install -y goldendict
+#sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
+#sudo apt install -y openvpn network-manager-openvpn-gnome
+sudo apt-get clean
 
 echo -n "Clone Vundle ..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
