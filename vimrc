@@ -205,6 +205,8 @@ nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
 
 " Grep
+let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git obj build lib'
+let Grep_Skip_Files = '*.bak *~ *.so *.a *.o'
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
 
