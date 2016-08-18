@@ -114,6 +114,9 @@ set incsearch     " do incremental searching
 set autowrite     " autosave befor :make
 set nofoldenable  " turn off folding
 
+" place yanked text into the global clipboard
+set clipboard=unnamedplus
+
 " Don't use Ex mode, use Q for formatting
 nnoremap Q gq
 
@@ -206,7 +209,7 @@ nnoremap <silent> <F6> :cp<CR>
 
 " Grep
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git obj build lib'
-let Grep_Skip_Files = '*.bak *~ *.so *.a *.o'
+let Grep_Skip_Files = '*.bak *~ *.so *.a *.o *.log *.fw'
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
 
