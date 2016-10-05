@@ -20,6 +20,10 @@ BASE_FLAGS = [
     '/usr/include/'
 ]
 
+R_INC_FLAGS = [
+    '/usr/local/include'
+]
+
 SOURCE_EXTENSIONS = [
     '.cpp',
     '.cxx',
@@ -105,16 +109,20 @@ def FlagsForClangComplete(root):
         return None
 
 
+def FlagsForR(root):
+    flags = []
+    flags = flags + ["-I" + root]
+    for dirroot, dirnames, filenames in os.walk(root):
+        for dir_path in dirnames:
+            real_path = os.path.join(dirroot, dir_path)
+            flags = flags + ["-I" + real_path]
+    return flags
+
+
 def FlagsForInclude(root):
     try:
         include_path = FindNearest(root, 'include')
-        flags = []
-        flags = flags + ["-I" + include_path]
-        for dirroot, dirnames, filenames in os.walk(include_path):
-            for dir_path in dirnames:
-                real_path = os.path.join(dirroot, dir_path)
-                flags = flags + ["-I" + real_path]
-        return flags
+        return FlagsForR(include_path)
     except:
         return None
 
@@ -122,13 +130,7 @@ def FlagsForInclude(root):
 def FlagsForInc(root):
     try:
         inc_path = FindNearest(root, 'inc')
-        flags = []
-        flags = flags + ["-I" + inc_path]
-        for dirroot, dirnames, filenames in os.walk(inc_path):
-            for dir_path in dirnames:
-                real_path = os.path.join(dirroot, dir_path)
-                flags = flags + ["-I" + real_path]
-        return flags
+        return FlagsForR(inc_path)
     except:
         return None
 
@@ -153,6 +155,14 @@ def FlagsForCompilationDatabase(root, filename):
         return None
 
 
+def RecursiveIncludes():
+    flags = []
+    for d in R_INC_FLAGS:
+        flags += FlagsForR(d)
+
+    return flags
+
+
 def FlagsForFile(filename):
     root = os.path.realpath(filename)
     compilation_db_flags = FlagsForCompilationDatabase(root, filename)
@@ -161,14 +171,15 @@ def FlagsForFile(filename):
     else:
         final_flags = BASE_FLAGS
         clang_flags = FlagsForClangComplete(root)
+        final_flags += RecursiveIncludes()
         if clang_flags:
-            final_flags = final_flags + clang_flags
+            final_flags += clang_flags
         include_flags = FlagsForInclude(root)
         if include_flags:
-            final_flags = final_flags + include_flags
+            final_flags += include_flags
         inc_flags = FlagsForInc(root)
         if inc_flags:
-            final_flags = final_flags + inc_flags
+            final_flags += inc_flags
     return {
         'flags': final_flags,
         'do_cache': True
