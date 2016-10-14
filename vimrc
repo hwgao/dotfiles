@@ -9,6 +9,10 @@
 " * <leader>cc -- Comment out the current line or text selected in visual mode
 " * <leader>c<space> -- Toggles the comment state of the selected line(s)
 " * <leader>cs -- Comments out the selected lines with a pretty block formatted layout
+" * :DOX --  Function / class comment: place the cursor on the line of the
+"            function header (or returned value of the function) or the class.  
+"            Then execute the command :Dox.  This will generate the skeleton 
+"            and leave the cursor after the @brief tag.
 
 
 set nocompatible              " be iMproved, required
@@ -73,6 +77,7 @@ Plugin 'vim-scripts/autoload_cscope.vim'
 Plugin 'vim-scripts/bufkill.vim'
 " Delete all the buffers except the current/named buffer
 Plugin 'vim-scripts/BufOnly.vim'
+Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Highlight several words in different colors simultaneously.
 Plugin 'dimasg/vim-mark'
 " provides insert mode auto-completion for quotes, parens, brackets, etc.
