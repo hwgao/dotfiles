@@ -6,6 +6,9 @@
 " * :BufOnly -- Delete all the buffers except the current/named buffer
 " * <leader>m -- Mark the same words under cursor
 " * <leader>n -- Clean all the marks
+" * <leader>cc -- Comment out the current line or text selected in visual mode
+" * <leader>c<space> -- Toggles the comment state of the selected line(s)
+" * <leader>cs -- Comments out the selected lines with a pretty block formatted layout
 
 
 set nocompatible              " be iMproved, required
@@ -78,6 +81,7 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'rking/ag.vim'
 " Plugin 'Rip-Rip/clang_complete'
 " Plugin 'ervandew/supertab'
+Plugin 'scrooloose/nerdcommenter'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -113,6 +117,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set autowrite     " autosave befor :make
 set nofoldenable  " turn off folding
+set number        " show line number
 
 " place yanked text into the global clipboard
 set clipboard=unnamedplus
@@ -234,11 +239,12 @@ set confirm
 
 " If not use tmux navigator plugin
 if !exists('$TMUX')
-  map <C-h> <C-w>h
-  map <C-j> <C-w>j
-  map <C-k> <C-w>k
-  map <C-l> <C-w>l
+    nnoremap <c-j> <c-w>j
+    nnoremap <c-k> <c-w>k
+    nnoremap <c-h> <c-w>h
+    nnoremap <c-l> <c-w>l
 endif
+
 
 " remove search in included files from the complete list
 set complete-=i
@@ -379,6 +385,7 @@ endfunction
 
 " Always have a status line
 set laststatus=2
+set statusline+=%F
 
 " use vcscommand.vim if available >
 let g:airline#extensions#branch#use_vcscommand = 1
@@ -444,3 +451,13 @@ au BufNewFile,BufRead *.log set filetype=log
 
 " Arduino hardy
 " let g:hardy_arduino_options = "--board arduino:avr:mega" 
+
+" NERD Commenter
+" Add spaces after comment delimiters by default
+let g:NERDSpaceDelims = 1
+
+" Use compact syntax for prettified multi-line comments
+" let g:NERDCompactSexyComs = 1
+
+" Align line-wise comment delimiters flush left instead of following code indentation
+let g:NERDDefaultAlign = 'left'

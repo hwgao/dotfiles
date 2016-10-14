@@ -111,11 +111,11 @@ def FlagsForClangComplete(root):
 
 def FlagsForR(root):
     flags = []
-    flags = flags + ["-I" + root]
+    flags += ["-I" + root]
     for dirroot, dirnames, filenames in os.walk(root):
         for dir_path in dirnames:
             real_path = os.path.join(dirroot, dir_path)
-            flags = flags + ["-I" + real_path]
+            flags += ["-I" + real_path]
     return flags
 
 

@@ -32,13 +32,21 @@ done
 echo -n "Install useful tools ..."
 sudo apt update
 sudo apt install -y build-essential cmake
+# need by ycm 
 sudo apt install -y python-dev python3-dev
 sudo apt install -y git vim tmux mc silversearcher-ag htop strace
+sudo apt install -y ctags cscope
+sudo apt install -y autotools-dev automake
 sudo apt install -y zim python-gtksourceview2 meld vim-gnome
+# need by tmux to copy to clipboard
 sudo apt install -y xclip
+sudo apt install -y ranger
 #sudo apt install -y goldendict
 #sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
 #sudo apt install -y openvpn network-manager-openvpn-gnome
+# Need by OE-core
+#sudo apt install -y texinfo gawk chrpath
+#sudo apt install -y gsoap
 sudo apt-get clean
 
 echo -n "Clone Vundle ..."
