@@ -59,6 +59,10 @@ echo -n "Build ycm"
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
 
+echo -n "Build vimproc(requested by unite)"
+cd ~/.vim/bundle/vimproc.vim
+make
+
 echo -n "Clone bin folder ..."
 git clone ssh://pi2:/media/Work/repos/tools ~/bin
 echo "done"
