@@ -81,7 +81,8 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Highlight several words in different colors simultaneously.
 Plugin 'dimasg/vim-mark'
 " provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plugin 'Raimondi/delimitMate'
+" Plugin 'Raimondi/delimitMate'
+Plugin 'jiangmiao/auto-pairs'
 " Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
 Plugin 'rking/ag.vim'
 " Plugin 'Rip-Rip/clang_complete'
@@ -466,3 +467,11 @@ let g:NERDSpaceDelims = 1
 
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
+
+" DoxygenToolkit
+" let g:load_doxygen_syntax=1
+
+" cindent option
+" refer to indent.txt
+" g0 -- don't indent c++ scope declarations 
+set cino+=g0

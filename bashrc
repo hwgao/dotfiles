@@ -112,6 +112,7 @@ alias pgrep='pgrep -fa'
 # force tmux to assume the terminal support 256 colors
 alias tmux='tmux -2'
 alias ta='tmux -2 attach'
+alias rr=ranger
 
 # mkdir, cd into it
 mdc () {
