@@ -114,9 +114,11 @@ autocmd! bufwritepost .vimrc source %
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-set nobackup      " do not keep a backup file, use versions instead
-set nowritebackup
-set noswapfile
+" bydefault backup off, writebackup on
+" set nobackup      " do not keep a backup file, use versions instead
+" set nowritebackup
+" set noswapfile  " Swap files store changes you've made to the buffer. If Vim 
+                  " or your computer crashes, they allow you to recover those changes
 set history=50    " keep 50 lines of command line history
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
@@ -231,8 +233,13 @@ set guioptions-=T
 set wildmenu
 
 " Where backup file is stored
-set backupdir=~/.vimbackup
-set directory=~/.vimbackup
+set backupdir^=~/.vimbackup//
+" The // at the end of the directory name tells Vim to use the absolute path
+" to the file to create the swap file so there aren't collisions between files
+" of the same name from different directories.
+" The ^= syntax for :set prepends the directory name to the head of the list,
+" so Vim will check that directory first.
+set directory^=~/.vimbackup//
 
 " set guifont=Fixed
 set guifont=Monaco\ 10
@@ -473,5 +480,5 @@ let g:NERDDefaultAlign = 'left'
 
 " cindent option
 " refer to indent.txt
-" g0 -- don't indent c++ scope declarations 
+" g0 -- don't indent c++ scope declarations -- public, protect, private
 set cino+=g0

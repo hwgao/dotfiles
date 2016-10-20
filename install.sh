@@ -49,6 +49,8 @@ sudo apt install -y ranger
 #sudo apt install -y gsoap
 sudo apt-get clean
 
+mkdir -p ~/.vimbackup
+
 echo -n "Clone Vundle ..."
 git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
