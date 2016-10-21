@@ -4,15 +4,35 @@
 " * :CCD --- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
+" mark
 " * <leader>m -- Mark the same words under cursor
 " * <leader>n -- Clean all the marks
+" nerdcommenter
 " * <leader>cc -- Comment out the current line or text selected in visual mode
 " * <leader>c<space> -- Toggles the comment state of the selected line(s)
 " * <leader>cs -- Comments out the selected lines with a pretty block formatted layout
+" DoxygenToolkit
 " * :DOX --  Function / class comment: place the cursor on the line of the
 "            function header (or returned value of the function) or the class.  
 "            Then execute the command :Dox.  This will generate the skeleton 
 "            and leave the cursor after the @brief tag.
+" EasyGrep
+" * <leader>vv -- Search word under cursor in all buffers
+" * <Leader>vo -- Open an options explorer to select the files to search in
+"            and set grep options 
+"
+" * Ctrl+R Ctrl+W -- In command line mode, insert the word under the cursor.
+" * w!! -- sudo save the file
+" * 1 Ctrl+G -- Show the path of the current file
+" * F9  -- search the symbol under cursor in cscope db
+" * F10 -- Search the keyword under cursor in the current file and includes
+" * F11 -- toggle paste mode
+" bookmarks
+" * mm -- toggle bookmark
+" * ma -- list all bookmarks
+" * mc -- clear bookmarks in current buffer
+" * mx -- clear all bookmarks
+" * mn, mp -- jump to next or previous bookmark
 
 
 set nocompatible              " be iMproved, required
@@ -81,13 +101,13 @@ Plugin 'vim-scripts/DoxygenToolkit.vim'
 " Highlight several words in different colors simultaneously.
 Plugin 'dimasg/vim-mark'
 " provides insert mode auto-completion for quotes, parens, brackets, etc.
-" Plugin 'Raimondi/delimitMate'
 Plugin 'jiangmiao/auto-pairs'
 " Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
 Plugin 'rking/ag.vim'
 " Plugin 'Rip-Rip/clang_complete'
 " Plugin 'ervandew/supertab'
 Plugin 'scrooloose/nerdcommenter'
+Plugin 'MattesGroeger/vim-bookmarks'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -206,7 +226,8 @@ set tags=tags;/
 nnoremap <silent> <F8> :TagbarToggle<CR>
 let g:tagbar_left=1
 
-" include files search"
+" Display all line that contain the keyward under the cursor
+" :help [I
 map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 " cscope
@@ -295,7 +316,11 @@ nmap <silent> <leader>ev :e $MYVIMRC<CR>
 nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " map toggle paste mode
-" set pastetoggle=<F11>
+" Refer to http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
+nnoremap <F11> :set invpaste paste?<CR>
+set pastetoggle=<F11>
+set showmode
+
 
 " if line wrapped, jump to the new row, not the next line
 nnoremap j gj
@@ -369,7 +394,7 @@ elseif executable('ack-grep')
 endif
 
 " default is 1000. It is slow if large mru files
-let g:neomru#file_mru_limit = 10
+let g:neomru#file_mru_limit = 100
 let g:neomru#directory_mru_limit = 10
 " unite doesn't validate mru files
 let g:neomru#do_validate = 0
