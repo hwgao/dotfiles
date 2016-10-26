@@ -35,6 +35,7 @@ sudo apt install -y build-essential cmake
 # need by ycm 
 sudo apt install -y python-dev python3-dev
 sudo apt install -y git vim tmux mc silversearcher-ag htop strace
+sudo apt install -y curl
 sudo apt install -y ctags cscope
 sudo apt install -y autotools-dev automake
 sudo apt install -y zim python-gtksourceview2 meld vim-gnome
@@ -57,11 +58,11 @@ git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 echo -n "Install all vim plugins ..."
 vim +PluginInstall +qall
 
-echo -n "Build ycm"
+echo -n "Build ycm ..."
 cd ~/.vim/bundle/YouCompleteMe
 ./install.py --clang-completer
 
-echo -n "Build vimproc(requested by unite)"
+echo -n "Build vimproc(requested by unite) ..."
 cd ~/.vim/bundle/vimproc.vim
 make
 
@@ -69,3 +70,5 @@ echo -n "Clone bin folder ..."
 git clone ssh://pi2:/media/Work/repos/tools ~/bin
 echo "done"
 
+echo -n "Install sag sack ..." 
+git clone https://github.com/sampson-chen/sack.git && cd sack && chmod +x install_sack.sh && ./install_sack.sh
