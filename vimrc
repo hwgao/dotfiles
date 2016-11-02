@@ -13,13 +13,13 @@
 " * <leader>cs -- Comments out the selected lines with a pretty block formatted layout
 " DoxygenToolkit
 " * :DOX --  Function / class comment: place the cursor on the line of the
-"            function header (or returned value of the function) or the class.  
-"            Then execute the command :Dox.  This will generate the skeleton 
+"            function header (or returned value of the function) or the class.
+"            Then execute the command :Dox.  This will generate the skeleton
 "            and leave the cursor after the @brief tag.
 " EasyGrep
 " * <leader>vv -- Search word under cursor in all buffers
 " * <Leader>vo -- Open an options explorer to select the files to search in
-"            and set grep options 
+"            and set grep options
 "
 " * Ctrl+R Ctrl+W -- In command line mode, insert the word under the cursor.
 " * w!! -- sudo save the file
@@ -69,6 +69,7 @@ Plugin 'VundleVim/Vundle.vim'
 " Vim plugin that displays tags in a window
 Plugin 'majutsushi/tagbar'
 Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'Shougo/unite.vim'
 Plugin 'Shougo/vimproc.vim'
@@ -138,7 +139,7 @@ set backspace=indent,eol,start
 " bydefault backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
 " set nowritebackup
-" set noswapfile  " Swap files store changes you've made to the buffer. If Vim 
+" set noswapfile  " Swap files store changes you've made to the buffer. If Vim
                   " or your computer crashes, they allow you to recover those changes
 set history=50    " keep 50 lines of command line history
 set ruler         " show the cursor position all the time
@@ -182,14 +183,14 @@ else
 endif
 
 " hide currentline backgroud when in insert mode
-autocmd InsertEnter,InsertLeave * set cul! 
+autocmd InsertEnter,InsertLeave * set cul!
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
 if !exists(":DiffOrig")
     command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		\ | wincmd p | diffthis
+        \ | wincmd p | diffthis
 endif
 
 " Ignore case when searching
@@ -213,7 +214,7 @@ set tabstop=4
 set shiftwidth=4
 " insert tabs on the start of a line according to
 " shifwidth, not tabstop
-set smarttab 	    
+set smarttab
 set autoindent
 set smartindent
 " show preview window below the current one
@@ -300,7 +301,7 @@ nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
 nnoremap <Leader>jr :YcmCompleter GoToReferences<CR>
 nnoremap <Leader>jd :YcmCompleter GetDoc<CR>
 
-" UltiSnips Trigger configuration. 
+" UltiSnips Trigger configuration.
 " make compatible with ycm
 let g:UltiSnipsExpandTrigger="<c-k>"
 let g:UltiSnipsJumpForwardTrigger="<c-k>"
@@ -440,14 +441,15 @@ let g:airline#extensions#whitespace#enabled = 1
 
 " Confirm if 1 more files to edit
 set confirm
- 
+
 " Show the tag under cursor in preview window
 nnoremap <C-p> <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
 " List the search of the word under cursor and let user to choose
 map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
-" as much as possible of the last line in a window will be displayed.  When not set, a last line that doesn't fit is replaced with "@" lines. 
+" as much as possible of the last line in a window will be displayed.
+" When not set, a last line that doesn't fit is replaced with "@" lines.
 " set display+=lastline
 
 " change the working directory to the dir for the current editing file
@@ -480,7 +482,7 @@ au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79
 au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2 softtabstop=2 shiftwidth=2
 
 " OpenSCAD
-au! BufRead,BufNewFile *.scad set filetype=openscad 
+au! BufRead,BufNewFile *.scad set filetype=openscad
 
 " kv
 au BufNewFile,BufRead *.kv set filetype=kv
@@ -489,7 +491,7 @@ au BufNewFile,BufRead *.kv set filetype=kv
 au BufNewFile,BufRead *.log set filetype=log
 
 " Arduino hardy
-" let g:hardy_arduino_options = "--board arduino:avr:mega" 
+" let g:hardy_arduino_options = "--board arduino:avr:mega"
 
 " NERD Commenter
 " Add spaces after comment delimiters by default
@@ -508,3 +510,5 @@ let g:NERDDefaultAlign = 'left'
 " refer to indent.txt
 " g0 -- don't indent c++ scope declarations -- public, protect, private
 set cino+=g0
+
+let g:airline_theme='solarized'
