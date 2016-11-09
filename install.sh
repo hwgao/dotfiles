@@ -42,6 +42,7 @@ sudo apt install -y zim python-gtksourceview2 meld vim-gnome
 # need by tmux to copy to clipboard
 sudo apt install -y xclip
 sudo apt install -y ranger
+sudo apt install -y shellcheck
 #sudo apt install -y goldendict
 #sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
 #sudo apt install -y openvpn network-manager-openvpn-gnome
