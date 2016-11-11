@@ -19,6 +19,8 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
+HISTIGNORE="pwd:ls:ll:la:rm *:svn revert *:cd *"
+
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
