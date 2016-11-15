@@ -110,6 +110,7 @@ Plugin 'rking/ag.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'will133/vim-dirdiff'
+Plugin 'tmhedberg/matchit'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -512,3 +513,6 @@ let g:NERDDefaultAlign = 'left'
 set cino+=g0
 
 let g:airline_theme='solarized'
+
+" Insert semicolon at the end of line in insert mode
+inoremap <c-;> <c-o>A;
