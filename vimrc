@@ -21,9 +21,9 @@
 " * <Leader>vo -- Open an options explorer to select the files to search in
 "            and set grep options
 "
-" * Ctrl+R Ctrl+W -- In command line mode, insert the word under the cursor.
+" * Ctrl+r Ctrl+w -- In command line mode, insert the word under the cursor.
 " * w!! -- sudo save the file
-" * 1 Ctrl+G -- Show the path of the current file
+" * 1 Ctrl+g -- Show the path of the current file
 " * F9  -- search the symbol under cursor in cscope db
 " * F10 -- Search the keyword under cursor in the current file and includes
 " * F11 -- toggle paste mode
@@ -33,6 +33,21 @@
 " * mc -- clear bookmarks in current buffer
 " * mx -- clear all bookmarks
 " * mn, mp -- jump to next or previous bookmark
+"
+" * :retab -- Change all the existing tab to match the current tab settings
+" Resize window
+" * Ctrl+w = -- Resize all windows to equal dimensions based on their splits
+" * Ctrl+w _ -- Increase a window to its maximum height
+" * Ctrl+w | -- Increase a window to its maximum width
+" * Ctrl+w o -- Same with :only. Make the current window the only one on the screen.
+" * :sp filename -- horizontal split
+" * :vsp filename -- vertical split
+" Tab
+" * Ctrl+w T -- Move the current window to a new tab page.
+" * gt -- Goto the next tab
+" * gT -- Goto the previous tab
+" * :tabonly -- Close all other tabs
+" * :tabedit filename -- open the filename in a tab
 
 
 set nocompatible              " be iMproved, required
@@ -181,6 +196,9 @@ if has('gui_running')
 else
     set background=dark
     colorscheme solarized
+    " when terminal or tmux using 16 colors mode
+    "colorscheme desert
+    "hi CursorLine term=bold cterm=bold guibg=Grey40  
 endif
 
 " hide currentline backgroud when in insert mode
