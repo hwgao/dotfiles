@@ -48,7 +48,12 @@
 " * gT -- Goto the previous tab
 " * :tabonly -- Close all other tabs
 " * :tabedit filename -- open the filename in a tab
-
+" * ]p -- pasting in the current indent
+" * :e! -- open the same file freshly discarding current changes
+" * gd -- search for define in same function
+" * gD -- search for define in same file
+" autoformat
+" * :AutoFormat -- format the current file with astyle by default
 
 set nocompatible              " be iMproved, required
 filetype off                  " required

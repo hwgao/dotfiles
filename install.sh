@@ -43,6 +43,7 @@ sudo apt install -y zim python-gtksourceview2 meld vim-gnome
 sudo apt install -y xclip
 sudo apt install -y ranger
 sudo apt install -y shellcheck
+# Need to update to latest version to support input stream
 sudo apt install -y astyle
 #sudo apt install -y goldendict
 #sudo apt install -y nautilus-actions nautilus-compare gnome-sushi

@@ -1,8 +1,13 @@
 # astylerc
 
---style=java
+--style=kr
 --indent=spaces=4
 --indent-cases
 --pad-oper
-
+--pad-header
+--unpad-paren
+--align-pointer=name
+--align-reference=name
+--convert-tabs
+--keep-one-line-statements
 
