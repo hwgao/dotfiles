@@ -1,0 +1,8 @@
+# astylerc
+
+--style=java
+--indent=spaces=4
+--indent-cases
+--pad-oper
+
+

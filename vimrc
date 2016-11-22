@@ -126,6 +126,7 @@ Plugin 'scrooloose/nerdcommenter'
 Plugin 'MattesGroeger/vim-bookmarks'
 Plugin 'will133/vim-dirdiff'
 Plugin 'tmhedberg/matchit'
+Plugin 'Chiel92/vim-autoformat'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required

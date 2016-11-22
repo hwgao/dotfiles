@@ -8,7 +8,7 @@
 
 dir=~/dotfiles                    # dotfiles directory
 olddir=~/dotfiles_old             # old dotfiles backup directory
-files="bashrc vimrc tmux.conf inputrc vim gitconfig"    # list of files/folders to symlink in homedir
+files="bashrc vimrc tmux.conf inputrc vim gitconfig astylerc"    # list of files/folders to symlink in homedir
 
 ##########
 
@@ -43,6 +43,7 @@ sudo apt install -y zim python-gtksourceview2 meld vim-gnome
 sudo apt install -y xclip
 sudo apt install -y ranger
 sudo apt install -y shellcheck
+sudo apt install -y astyle
 #sudo apt install -y goldendict
 #sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
 #sudo apt install -y openvpn network-manager-openvpn-gnome
