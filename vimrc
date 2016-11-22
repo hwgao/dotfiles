@@ -47,13 +47,22 @@
 " * gt -- Goto the next tab
 " * gT -- Goto the previous tab
 " * :tabonly -- Close all other tabs
-" * :tabedit filename -- open the filename in a tab
-" * ]p -- pasting in the current indent
-" * :e! -- open the same file freshly discarding current changes
-" * gd -- search for define in same function
-" * gD -- search for define in same file
-" autoformat
-" * :AutoFormat -- format the current file with astyle by default
+" * :tabedit filename -- Open the filename in a tab
+"
+" * ]p -- Pasting in the current indent
+" * :e! -- Open the same file freshly discarding current changes
+" * gd -- Search for define in same function
+" * gD -- Search for define in same file
+" format
+" * :AutoFormat -- Format the current file, asytyle 2.05.1 is needed, or clang-format.
+" * :%!astyle -- Call astyle formating current file
+" change
+" * :g; -- Jump back to the position of the previous (older) change.
+" * :g, -- Jump to the position of the next (newer) change.
+" * :changes -- List the changes
+" * `. -- Jump to the position the last change was made.
+"
+" * :recover -- Try to recover from the swap file
 
 set nocompatible              " be iMproved, required
 filetype off                  " required
