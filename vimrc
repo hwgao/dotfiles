@@ -513,7 +513,8 @@ let g:pymode_doc_bind = "<Leader>d"
 au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 " web files indentation
-au BufNewFile,BufRead *.js, *.html, *.css set tabstop=2 softtabstop=2 shiftwidth=2
+" Note: no space between file types
+au BufNewFile,BufRead *.js,*.html,*.css set tabstop=2 softtabstop=2 shiftwidth=2
 
 " OpenSCAD
 au! BufRead,BufNewFile *.scad set filetype=openscad
