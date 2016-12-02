@@ -330,6 +330,10 @@ let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
 
+" JavaScript lint -- eslint
+" Install: # npm install -g eslint
+let g:syntastic_javascript_checkers = ['eslint']
+
 " ycmcompleter hotkeys
 nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
 nnoremap <Leader>jr :YcmCompleter GoToReferences<CR>

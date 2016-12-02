@@ -45,6 +45,8 @@ sudo apt install -y ranger
 sudo apt install -y shellcheck
 # Need to update to latest version to support input stream
 sudo apt install -y astyle
+# Terminal music player
+sudo apt install -y cmus
 #sudo apt install -y goldendict
 #sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
 #sudo apt install -y openvpn network-manager-openvpn-gnome
