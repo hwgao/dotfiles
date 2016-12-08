@@ -53,6 +53,12 @@ sudo apt install -y cmus
 # Need by OE-core
 #sudo apt install -y texinfo gawk chrpath
 #sudo apt install -y gsoap
+#sudo apt install -y openssh-server
+#To run a 32-bit executable file on a 64-bit multi-architecture Ubuntu
+#sudo dpkg --add-architecture i386
+#sudo apt-get update
+#sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
+
 sudo apt-get clean
 
 mkdir -p ~/.vimbackup
