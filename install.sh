@@ -43,10 +43,10 @@ sudo apt install -y zim python-gtksourceview2 meld vim-gnome
 sudo apt install -y xclip
 sudo apt install -y ranger
 sudo apt install -y shellcheck
-# Need to update to latest version to support input stream
+# Need to update to latest version to support input stream required by vim 
 sudo apt install -y astyle
 # Terminal music player
-sudo apt install -y cmus
+#sudo apt install -y cmus
 #sudo apt install -y goldendict
 #sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
 #sudo apt install -y openvpn network-manager-openvpn-gnome
@@ -54,12 +54,6 @@ sudo apt install -y cmus
 #sudo apt install -y texinfo gawk chrpath
 #sudo apt install -y gsoap
 #sudo apt install -y openssh-server
-#To run a 32-bit executable file on a 64-bit multi-architecture Ubuntu
-#sudo dpkg --add-architecture i386
-#sudo apt-get update
-#sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
-
-sudo apt-get clean
 
 mkdir -p ~/.vimbackup
 
@@ -83,3 +77,34 @@ echo "done"
 
 echo -n "Install sag sack ..." 
 git clone https://github.com/sampson-chen/sack.git && cd sack && chmod +x install_sack.sh && ./install_sack.sh
+
+#To run a 32-bit executable file on a 64-bit multi-architecture Ubuntu
+if [ "x$support_32bit" == "xy" ]; then
+    sudo dpkg --add-architecture i386
+    sudo apt-get update
+    sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
+fi
+
+#Manage node with nvm
+if [ "x$install_node" == "xy" ]; then
+    sudo apt-get install build-essential checkinstall
+    sudo apt-get install libssl-dev
+    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash 
+    . ~/.bashrc
+    nvm install node
+fi
+
+if [ "x$install_samba" == "xy" ]; then
+    sudo apt-get install samba
+    sudo smbpasswd -a hongwei
+    sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.orig
+    cat << EOF | sudo tee /etc/samba/smb.conf
+[data]
+    path = /data
+    valid users = hongwei
+    read only = no
+EOF
+    sudo service smbd restart
+fi
+
+sudo apt-get clean
