@@ -34,7 +34,7 @@ sudo apt update
 sudo apt install -y build-essential cmake
 # need by ycm 
 sudo apt install -y python-dev python3-dev
-sudo apt install -y git vim tmux mc silversearcher-ag htop strace
+sudo apt install -y git tig vim tmux mc silversearcher-ag htop strace
 sudo apt install -y curl
 sudo apt install -y ctags cscope
 sudo apt install -y autotools-dev automake
