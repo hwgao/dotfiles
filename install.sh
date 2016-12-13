@@ -108,3 +108,6 @@ EOF
 fi
 
 sudo apt-get clean
+
+# Configure bash as the default shell
+sudo dpkg-reconfigure dash
