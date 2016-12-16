@@ -34,7 +34,7 @@ sudo apt update
 sudo apt install -y build-essential cmake
 # need by ycm 
 sudo apt install -y python-dev python3-dev
-sudo apt install -y git tig vim tmux mc silversearcher-ag htop strace
+sudo apt install -y git vim tmux mc silversearcher-ag htop strace
 sudo apt install -y curl
 sudo apt install -y ctags cscope
 sudo apt install -y autotools-dev automake
@@ -54,6 +54,7 @@ sudo apt install -y astyle
 #sudo apt install -y texinfo gawk chrpath
 #sudo apt install -y gsoap
 #sudo apt install -y openssh-server
+sudo apt install -y minicom uucp
 
 mkdir -p ~/.vimbackup
 
@@ -111,3 +112,20 @@ sudo apt-get clean
 
 # Configure bash as the default shell
 sudo dpkg-reconfigure dash
+
+# cd.bash
+if [ "x$install_cdbash" == "xy" ]; then
+    mkdir -p ~/mywork/cd.bash
+    cd ~/mywork/cd.bash
+    git clone https://gist.github.com/6640533.git
+fi
+
+# install latest tig
+if [ "x$install_tig" == "xy" ]; then
+    cd ~/mywork
+    git clone https://github.com/jonas/tig.git
+    cd tig
+    git checkout $(git describe --tags)
+    make
+    make install
+fi
