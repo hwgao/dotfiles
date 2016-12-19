@@ -3,7 +3,7 @@ import os.path
 import logging
 import ycm_core
 
-# Can use relative path
+# Can add absolute include path here
 BASE_FLAGS = [
     '-Wall',
     '-Wextra',
@@ -21,8 +21,16 @@ BASE_FLAGS = [
     '/usr/include/'
 ]
 
-# Must use absolute path
+# Add relative and absolute include paths
+# the relative path is the parent paths of the current edited file
+INC_FLAGS = [
+]
+
+# Recursively add relative and absolute include paths
+# the relative path is the parent paths of the current edited file
 R_INC_FLAGS = [
+    'include',
+    'inc',
     '/usr/local/include'
 ]
 
@@ -157,9 +165,22 @@ def FlagsForCompilationDatabase(root, filename):
         return None
 
 
-def RecursiveIncludes():
+def IncludePaths(root):
     flags = []
+    for d in INC_FLAGS:
+        if not d.startswith('/'):
+            try:
+                d = FindNearest(root, d)
+            except:
+                continue
+        flags += ["-I" + d]
+
     for d in R_INC_FLAGS:
+        if not d.startswith('/'):
+            try:
+                d = FindNearest(root, d)
+            except:
+                continue
         flags += FlagsForR(d)
 
     return flags
@@ -171,19 +192,13 @@ def FlagsForFile(filename):
     if compilation_db_flags:
         final_flags = compilation_db_flags
     else:
-        final_flags = MakeRelativePathsInFlagsAbsolute(
-            BASE_FLAGS,
-            os.getcwd())
+        final_flags = BASE_FLAGS
         clang_flags = FlagsForClangComplete(root)
-        final_flags += RecursiveIncludes()
         if clang_flags:
             final_flags += clang_flags
-        include_flags = FlagsForInclude(root)
+        include_flags = IncludePaths(root)
         if include_flags:
             final_flags += include_flags
-        inc_flags = FlagsForInc(root)
-        if inc_flags:
-            final_flags += inc_flags
     return {
         'flags': final_flags,
         'do_cache': True
