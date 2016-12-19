@@ -3,6 +3,7 @@ import os.path
 import logging
 import ycm_core
 
+# Can use relative path
 BASE_FLAGS = [
     '-Wall',
     '-Wextra',
@@ -20,6 +21,7 @@ BASE_FLAGS = [
     '/usr/include/'
 ]
 
+# Must use absolute path
 R_INC_FLAGS = [
     '/usr/local/include'
 ]
@@ -169,7 +171,9 @@ def FlagsForFile(filename):
     if compilation_db_flags:
         final_flags = compilation_db_flags
     else:
-        final_flags = BASE_FLAGS
+        final_flags = MakeRelativePathsInFlagsAbsolute(
+            BASE_FLAGS,
+            os.getcwd())
         clang_flags = FlagsForClangComplete(root)
         final_flags += RecursiveIncludes()
         if clang_flags:

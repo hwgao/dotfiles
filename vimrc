@@ -119,6 +119,7 @@ Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
 Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'morhetz/gruvbox'
 " Alternate Files quickly (.c --> .h etc)
 Plugin 'vim-scripts/a.vim'
 " Script that will search for and load cscope.out databases automatically
@@ -210,10 +211,10 @@ if has('gui_running')
     set showmatch       " show the matching part of the pair for [] {} and ()
 else
     set background=dark
-    colorscheme solarized
+    colorscheme gruvbox
     " when terminal or tmux using 16 colors mode
-    "colorscheme desert
-    "hi CursorLine term=bold cterm=bold guibg=Grey40  
+    " colorscheme desert
+    " hi CursorLine term=bold cterm=bold guibg=Grey40  
 endif
 
 " hide currentline backgroud when in insert mode
@@ -550,7 +551,7 @@ let g:NERDDefaultAlign = 'left'
 " g0 -- don't indent c++ scope declarations -- public, protect, private
 set cino+=g0
 
-let g:airline_theme='solarized'
+" let g:airline_theme='solarized'
 
 " Insert semicolon at the end of line in insert mode
 inoremap <c-;> <c-o>A;
