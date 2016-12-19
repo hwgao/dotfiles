@@ -555,3 +555,6 @@ set cino+=g0
 
 " Insert semicolon at the end of line in insert mode
 inoremap <c-;> <c-o>A;
+
+" Max current window
+map <F7> <C-W>_<C-W><Bar>
