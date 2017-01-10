@@ -19,7 +19,8 @@ shopt -s histappend
 HISTSIZE=1000
 HISTFILESIZE=2000
 
-HISTIGNORE="pwd:ls:ll:la:rm *:svn revert *:cd *"
+# HISTIGNORE="pwd:ls:ll:la:rm *:svn revert *:cd *"
+HISTIGNORE="pwd:ls:ll:la"
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
@@ -116,18 +117,8 @@ alias pgrep='pgrep -fa'
 alias tmux='tmux -2'
 alias ta='tmux -2 attach'
 alias rr=ranger
-
-# mkdir, cd into it
-mdc () {
-    mkdir -p "$*"
-    cd "$*"
-}
-
-# cd, ls 
-cl () {
-    cd "$*"
-    ls
-}
+alias df='df -h'
+alias wk='cd /data/work'
 
 set -o vi 				# enable vi-mode
 bind -m vi-command ".":insert-last-argument
@@ -161,6 +152,9 @@ if ! shopt -oq posix; then
 fi
 
 # bash 'cd' replacement function capable keeping up to 10 visited directories
-if [ -f ~/mywork/cd.bash/cd.bash ]; then
-    . ~/mywork/cd.bash/cd.bash
+if [ -f ~/dotfiles/cd2.bash ]; then
+    . ~/dotfiles/cd2.bash
 fi
+
+export NVM_DIR="/home/hongwei/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
