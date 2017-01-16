@@ -179,7 +179,7 @@ set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
 set autowrite     " autosave befor :make
 set nofoldenable  " turn off folding
-set number        " show line number
+" set number        " show line number
 
 " place yanked text into the global clipboard
 set clipboard=unnamedplus
