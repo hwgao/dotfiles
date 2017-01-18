@@ -1,0 +1,36 @@
+#!/bin/sh
+case "$2,$3" in
+  merge,);;
+  message,);;
+# ,|template,)
+#   /usr/bin/perl -i.bak -pe '
+#      print "\n" . `git diff --cached --name-status -r`
+#        if /^#/ && $first++ == 0' "$1" ;;
+  *)
+      GIT_PROJECT_NAME=$(git config -l | grep -oP url="(.*)" | sed -e 's/^url\=[a-z]*\:\/\/hcgit03\:[0-9]*\///' | sed 's/[ \t]*$//')
+      TEMPLATE_COMMON="short title description on first line within 65 char\n\nmore detailed description of your patch,\nwhich is likely to take up multiple lines. maxlength within 70 char\nif possible, please describe the root cause and solution here\n#please remove this line\n#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na\n[ticket] = na\n[red flag] = y/n\n";
+      TEMPLATE_MMSDK="short title description on first line within 65 char\n\nmore detailed description of your patch,\nwhich is likely to take up multiple lines. maxlength within 70 char\nif possible, please describe the root cause and solution here\n#please remove this line\n#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na\n[ticket] = na\n[DS/Non-DS Test] = Pass/Fail\n[MVC Test] = Pass/Fail\n[red flag] = y/n\n";
+      TEMPLATE_NON_REDFLAG="short title description on first line within 65 char\n\nmore detailed description of your patch,\nwhich is likely to take up multiple lines. maxlength within 70 char\nif possible, please describe the root cause and solution here\n#please remove this line\n#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na\n[ticket] = na\n[red flag] = n\n";
+
+      if [[ "$2" == "commit" && "$3" = "HEAD" ]]; then
+        echo "";# do nothing for "--amend" option
+      else
+        /bin/cp "$1" "$1.bak";
+        git diff --cached --name-only -r | grep -q "mmsdk_porting\/src\/porting_display\.cpp"
+        if [ $? -eq 0 ]; then
+            echo -ne "$TEMPLATE_MMSDK" > "$1";
+        else
+            if [[ "$GIT_PROJECT_NAME" == "mstar/type-c/elixir" ]] ||
+               [[ "$GIT_PROJECT_NAME" == "mstar/chakra3" ]] ||
+               [[ "$GIT_PROJECT_NAME" == "mstar/chakra3/security_r2" ]] ||
+               [[ "$GIT_PROJECT_NAME" == "mstar/type-c/neutron" ]] ||
+               [[ "$GIT_PROJECT_NAME" =~ "hqtvfae/" ]]; then
+                echo -ne "$TEMPLATE_NON_REDFLAG" > "$1";
+            else
+                echo -ne "$TEMPLATE_COMMON" > "$1";
+            fi
+        fi
+        cat "$1.bak" >> "$1";
+      fi
+  ;;
+esac

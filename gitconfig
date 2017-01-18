@@ -1,8 +1,8 @@
 [user]
-	email = hhww.gao@gmail.com
-	name = hwgao
+	email = hongwei.gao@mstarsemi.com
+	name = hongwei.gao
 [diff]
-    tool = meld
+    tool = vimdiff
 [difftool]
     prompt = 0
 [color]
@@ -18,6 +18,9 @@
     unstage = reset HEAD --
     dc = diff --cached
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
+    review = push origin HEAD:refs/for/master
 
 [push]
 	default = simple
+[init]
+	templatedir = ~/dotfiles/git_template
