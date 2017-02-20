@@ -30,31 +30,33 @@ for file in $files; do
 done
 
 echo -n "Install useful tools ..."
-sudo apt update
-sudo apt install -y build-essential cmake
+sudo apt-get update
+sudo apt-get install -y build-essential cmake
 # need by ycm 
-sudo apt install -y python-dev python3-dev
-sudo apt install -y git vim tmux mc silversearcher-ag htop strace
-sudo apt install -y curl
-sudo apt install -y ctags cscope
-sudo apt install -y autotools-dev automake
-sudo apt install -y zim python-gtksourceview2 meld vim-gnome
+sudo apt-get install -y python-dev python3-dev
+sudo apt-get install -y git vim tmux mc silversearcher-ag htop strace
+sudo apt-get install -y curl
+sudo apt-get install -y ctags cscope
+sudo apt-get install -y autotools-dev automake
+sudo apt-get install -y zim python-gtksourceview2 meld vim-gnome
 # need by tmux to copy to clipboard
-sudo apt install -y xclip
-sudo apt install -y ranger
-sudo apt install -y shellcheck
+sudo apt-get install -y xclip
+sudo apt-get install -y ranger
+sudo apt-get install -y shellcheck
 # Need to update to latest version to support input stream required by vim 
-sudo apt install -y astyle
+sudo apt-get install -y astyle
 # Terminal music player
-#sudo apt install -y cmus
-#sudo apt install -y goldendict
-#sudo apt install -y nautilus-actions nautilus-compare gnome-sushi
-#sudo apt install -y openvpn network-manager-openvpn-gnome
+#sudo apt-get install -y cmus
+#sudo apt-get install -y goldendict
+#sudo apt-get install -y nautilus-actions nautilus-compare gnome-sushi
+#sudo apt-get install -y openvpn network-manager-openvpn-gnome
 # Need by OE-core
-#sudo apt install -y texinfo gawk chrpath
-#sudo apt install -y gsoap
-#sudo apt install -y openssh-server
-sudo apt install -y minicom uucp
+#sudo apt-get install -y texinfo gawk chrpath
+#sudo apt-get install -y gsoap
+#sudo apt-get install -y openssh-server
+sudo apt-get install -y minicom uucp
+# rdk 
+sudo apt-get install -y diffstat texinfo chrpath
 
 mkdir -p ~/.vimbackup
 
