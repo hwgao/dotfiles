@@ -1,8 +1,7 @@
 #!/bin/bash
 
-SRC_ROOT="src_root"
-cd ~
-mkdir ${SRC_ROOT} 
+SRC_ROOT=~/src_root
+mkdir -p ${SRC_ROOT} 
 
 #Install checkinstall to easily uninstall
 sudo apt-get install checkinstall
@@ -63,6 +62,16 @@ sudo make install
 
 #cmake
 
-#git
+###git
+sudo apt-get install libcurl4-gnutls-dev libexpat1-dev gettext libz-dev libssl-dev asciidoc xmlto docbook2x
+cd ${SRC_ROOT}
+git clone https://git.kernel.org/pub/scm/git/git.git
+cd git
+make all doc info prefix=/usr 
+sudo apt-get remove git
+sudo make install install-doc install-html install-info install-man prefix=/usr
 
 #astyle
+#first download astyle from sourceforge
+cd astyle/build/gcc
+make
