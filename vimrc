@@ -75,9 +75,6 @@ Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'Shougo/unite.vim'
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-Plug 'Shougo/neomru.vim'
 " Show a diff via Vim sign column
 Plug 'mhinz/vim-signify'
 Plug 'vim-scripts/vcscommand.vim'
@@ -112,8 +109,7 @@ Plug 'vim-scripts/DoxygenToolkit.vim'
 Plug 'dimasg/vim-mark'
 " provides insert mode auto-completion for quotes, parens, brackets, etc.
 Plug 'jiangmiao/auto-pairs'
-" Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
-Plug 'rking/ag.vim'
+Plug 'mileszs/ack.vim'
 " Plug 'Rip-Rip/clang_complete'
 " Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdcommenter'
@@ -260,7 +256,7 @@ nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
 
 " Grep
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git obj build lib'
+let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git .repo obj build lib'
 let Grep_Skip_Files = '*.bak *~ *.so *.a *.o *.log *.fw'
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
@@ -355,8 +351,15 @@ nnoremap <Leader>h :nohlsearch<CR>
 " Use w!! to do that after you opened the file already
 cmap w!! w !sudo tee >/dev/null %
 
-" when you :grep, ag will be used instead of grep
-set grepprg=ag\ --noheading\ --nocolor\ --column
+if executable("rg")
+    set grepprg=rg\ --vimgrep\ --no-ignore-vcs
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+    let g:ackprg = 'rg --vimgrep --no-ignore-vcs'
+elseif executable("ag")
+    set grepprg=ag\ --vimgrep
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
+    let g:ackprg = 'ag --vimgrep'
+endif
 
 " Set easygrep mode to Open Buffers
 let g:EasyGrepMode=1
@@ -381,67 +384,9 @@ let g:signify_vcs_list = ['git', 'svn']
 " diff option
 set diffopt=filler,vertical
 
-" find word under cursor with ag, in current dir (use :pwd to check current
+" find word under cursor with rg, in current dir (use :pwd to check current
 " dir)
-nnoremap , :Ag -w <C-r><C-w>
-
-" Unite
-nmap <space> [unite]
-nnoremap [unite] <nop>
-
-let g:unite_source_grep_max_candidates = 200
-
-if executable('ag')
-    " Use ag in unite grep source.
-    let g:unite_source_grep_command = 'ag'
-    let g:unite_source_grep_default_opts =
-        \ '-i --line-numbers --nocolor --nogroup --hidden --ignore ' .
-        \  '''.hg'' --ignore ''.svn'' --ignore ''.git'' --ignore ''.bzr'''
-    let g:unite_source_grep_recursive_opt = ''
-    " Using ag as recursive command.
-    " let g:unite_source_rec_async_command =
-    "   \ 'ag --follow --nocolor --nogroup --hidden -g ""'
-elseif executable('pt')
-    " Use pt in unite grep source.
-    " https://github.com/monochromegane/the_platinum_searcher
-    let g:unite_source_grep_command = 'pt'
-    let g:unite_source_grep_default_opts = '-i --nogroup --nocolor'
-    let g:unite_source_grep_recursive_opt = ''
-elseif executable('ack-grep')
-    " Use ack in unite grep source.
-    let g:unite_source_grep_command = 'ack-grep'
-    let g:unite_source_grep_default_opts =
-        \ '-i --no-heading --no-color -k -H'
-    let g:unite_source_grep_recursive_opt = ''
-endif
-
-" default is 1000. It is slow if large mru files
-let g:neomru#file_mru_limit = 100
-let g:neomru#directory_mru_limit = 10
-" unite doesn't validate mru files
-let g:neomru#do_validate = 0
-
-let g:unite_source_history_yank_enable = 1
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-nnoremap [unite]t :<C-u>Unite -no-split -start-insert -buffer-name=files   file_rec/async<cr>
-nnoremap [unite]f :<C-u>Unite -no-split -buffer-name=files   file:!<cr>
-nnoremap [unite]m :<C-u>Unite -no-split -buffer-name=mru     file_mru<cr>
-" nnoremap [unite]o :<C-u>Unite -no-split -buffer-name=outline outline<cr>
-nnoremap [unite]y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
-nnoremap [unite]b :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>
-nnoremap [unite]g :<C-u>Unite -no-quit  -keep-focus          grep<cr>
-nnoremap [unite]r :<C-u>UniteResume<CR>
-nnoremap [unite]s :<C-u>Unite file_rec -input=
-
-" Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
-    " Play nice with supertab
-    let b:SuperTabDisabled=1
-    " Enable navigation with control-j and control-k in insert mode
-    imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-    imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-endfunction
+nnoremap , :Ack -w <C-r><C-w>
 
 " Always have a status line
 set laststatus=2
