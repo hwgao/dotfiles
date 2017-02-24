@@ -94,7 +94,7 @@ Plug 'kergoth/vim-bitbake'
 " UltiSnip Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 "Plug 'scrooloose/syntastic'
 Plug 'altercation/vim-colors-solarized'
 " Retro groove color scheme for Vim 
@@ -121,6 +121,7 @@ Plug 'MattesGroeger/vim-bookmarks'
 Plug 'will133/vim-dirdiff'
 Plug 'tmhedberg/matchit'
 Plug 'Chiel92/vim-autoformat'
+Plug 'rust-lang/rust.vim'
 Plug 'junegunn/fzf', { 'dir': '~/src_root/fzf', 'do': './install --all'  }
 
 " All of your Plugins must be added before the following line
