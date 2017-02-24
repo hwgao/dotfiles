@@ -60,19 +60,12 @@ sudo apt-get install -y diffstat texinfo chrpath
 
 mkdir -p ~/.vimbackup
 
-echo -n "Clone Vundle ..."
-git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+echo -n "Install vim-plug ..."
+curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
 echo -n "Install all vim plugins ..."
-vim +PluginInstall +qall
-
-echo -n "Build ycm ..."
-cd ~/.vim/bundle/YouCompleteMe
-./install.py --clang-completer
-
-echo -n "Build vimproc(requested by unite) ..."
-cd ~/.vim/bundle/vimproc.vim
-make
+vim +PlugInstall
 
 echo -n "Clone bin folder ..."
 git clone ssh://pi2:/media/Work/repos/tools ~/bin
