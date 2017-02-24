@@ -67,6 +67,8 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
+set rtp+=~/src_root/fzf
+
 " set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
@@ -106,6 +108,8 @@ Plugin 'Shougo/neomru.vim'
 " Show a diff via Vim sign column
 Plugin 'mhinz/vim-signify'
 Plugin 'vim-scripts/vcscommand.vim'
+" Git wrapper
+Plugin 'tpope/vim-fugitive'
 " Vim script for text filtering and alignment
 Plugin 'godlygeek/tabular'
 Plugin 'dkprice/vim-easygrep'
@@ -114,11 +118,13 @@ Plugin 'klen/python-mode'
 Plugin 'leshill/vim-json'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'kergoth/vim-bitbake'
+" UltiSnip Snippets
 Plugin 'honza/vim-snippets'
 Plugin 'SirVer/ultisnips'
 Plugin 'Valloric/YouCompleteMe'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/syntastic'
 Plugin 'altercation/vim-colors-solarized'
+" Retro groove color scheme for Vim 
 Plugin 'morhetz/gruvbox'
 " Alternate Files quickly (.c --> .h etc)
 Plugin 'vim-scripts/a.vim'
@@ -402,7 +408,7 @@ set diffopt=filler,vertical
 
 " find word under cursor with ag, in current dir (use :pwd to check current
 " dir)
-nnoremap , :Ag <C-r><C-w>
+nnoremap , :Ag -w <C-r><C-w>
 
 " Unite
 nmap <space> [unite]
