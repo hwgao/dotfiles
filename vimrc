@@ -67,90 +67,64 @@
 set nocompatible              " be iMproved, required
 filetype off                  " required
 
-set rtp+=~/src_root/fzf
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
-
-" samples begin
-" The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
-" plugin on GitHub repo
-"Plugin 'tpope/vim-fugitive'
-" plugin from http://vim-scripts.org/vim/scripts.html
-"Plugin 'L9'
-" Git plugin not hosted on GitHub
-"Plugin 'git://git.wincent.com/command-t.git'
-" git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
-" The sparkup vim script is in a subdirectory of this repo called vim.
-" Pass the path to set the runtimepath properly.
-"Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
-" Install L9 and avoid a Naming conflict if you've already installed a
-" different version somewhere else.
-"Plugin 'ascenator/L9', {'name': 'newL9'}
-" samples end
+" Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
+call plug#begin('~/.vim/bundle')
 
 " Vim plugin that displays tags in a window
-Plugin 'majutsushi/tagbar'
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'Shougo/unite.vim'
-Plugin 'Shougo/vimproc.vim'
-Plugin 'Shougo/neomru.vim'
+Plug 'majutsushi/tagbar'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'Shougo/unite.vim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' }
+Plug 'Shougo/neomru.vim'
 " Show a diff via Vim sign column
-Plugin 'mhinz/vim-signify'
-Plugin 'vim-scripts/vcscommand.vim'
+Plug 'mhinz/vim-signify'
+Plug 'vim-scripts/vcscommand.vim'
 " Git wrapper
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " Vim script for text filtering and alignment
-Plugin 'godlygeek/tabular'
-Plugin 'dkprice/vim-easygrep'
-Plugin 'vim-scripts/grep.vim'
-Plugin 'klen/python-mode'
-Plugin 'leshill/vim-json'
-Plugin 'plasticboy/vim-markdown'
-Plugin 'kergoth/vim-bitbake'
+Plug 'godlygeek/tabular'
+Plug 'dkprice/vim-easygrep'
+Plug 'vim-scripts/grep.vim'
+Plug 'klen/python-mode'
+Plug 'leshill/vim-json'
+Plug 'plasticboy/vim-markdown'
+Plug 'kergoth/vim-bitbake'
 " UltiSnip Snippets
-Plugin 'honza/vim-snippets'
-Plugin 'SirVer/ultisnips'
-Plugin 'Valloric/YouCompleteMe'
-"Plugin 'scrooloose/syntastic'
-Plugin 'altercation/vim-colors-solarized'
+Plug 'honza/vim-snippets'
+Plug 'SirVer/ultisnips'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py' }
+"Plug 'scrooloose/syntastic'
+Plug 'altercation/vim-colors-solarized'
 " Retro groove color scheme for Vim 
-Plugin 'morhetz/gruvbox'
+Plug 'morhetz/gruvbox'
 " Alternate Files quickly (.c --> .h etc)
-Plugin 'vim-scripts/a.vim'
+Plug 'vim-scripts/a.vim'
 " Script that will search for and load cscope.out databases automatically
-Plugin 'vim-scripts/autoload_cscope.vim'
+Plug 'vim-scripts/autoload_cscope.vim'
 " Unload/delete/wipe a buffer, keep its window(s), display last accessed buffer(s)
-Plugin 'vim-scripts/bufkill.vim'
+Plug 'vim-scripts/bufkill.vim'
 " Delete all the buffers except the current/named buffer
-Plugin 'vim-scripts/BufOnly.vim'
-Plugin 'vim-scripts/DoxygenToolkit.vim'
+Plug 'vim-scripts/BufOnly.vim'
+Plug 'vim-scripts/DoxygenToolkit.vim'
 " Highlight several words in different colors simultaneously.
-Plugin 'dimasg/vim-mark'
+Plug 'dimasg/vim-mark'
 " provides insert mode auto-completion for quotes, parens, brackets, etc.
-Plugin 'jiangmiao/auto-pairs'
+Plug 'jiangmiao/auto-pairs'
 " Vim plugin for the_silver_searcher, 'ag', a replacement for the Perl module CLI script 'ack'
-Plugin 'rking/ag.vim'
-" Plugin 'Rip-Rip/clang_complete'
-" Plugin 'ervandew/supertab'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'MattesGroeger/vim-bookmarks'
-Plugin 'will133/vim-dirdiff'
-Plugin 'tmhedberg/matchit'
-Plugin 'Chiel92/vim-autoformat'
+Plug 'rking/ag.vim'
+" Plug 'Rip-Rip/clang_complete'
+" Plug 'ervandew/supertab'
+Plug 'scrooloose/nerdcommenter'
+Plug 'MattesGroeger/vim-bookmarks'
+Plug 'will133/vim-dirdiff'
+Plug 'tmhedberg/matchit'
+Plug 'Chiel92/vim-autoformat'
+Plug 'junegunn/fzf', { 'dir': '~/src_root/fzf', 'do': './install --all'  }
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
