@@ -21,7 +21,8 @@ echo "done"
 echo -n "Changing to the $dir directory ..."
 cd $dir
 
-# move any existing dotfiles in homedir to dotfiles_old directory, then create symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
+# move any existing dotfiles in homedir to dotfiles_old directory, then create 
+# symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
 for file in $files; do
     echo "Moving any existing dotfiles from ~ to $olddir"
     mv ~/.$file ~/dotfiles_old/
@@ -38,13 +39,13 @@ sudo apt-get install -y git vim tmux mc silversearcher-ag htop strace
 sudo apt-get install -y curl
 sudo apt-get install -y ctags cscope
 sudo apt-get install -y autotools-dev automake
-sudo apt-get install -y zim python-gtksourceview2 meld vim-gnome
+# sudo apt-get install -y zim python-gtksourceview2 meld vim-gnome
 # need by tmux to copy to clipboard
-sudo apt-get install -y xclip
+#sudo apt-get install -y xclip
 sudo apt-get install -y ranger
 sudo apt-get install -y shellcheck
 # Need to update to latest version to support input stream required by vim 
-sudo apt-get install -y astyle
+#sudo apt-get install -y astyle
 # Terminal music player
 #sudo apt-get install -y cmus
 #sudo apt-get install -y goldendict
@@ -71,23 +72,14 @@ echo -n "Clone bin folder ..."
 git clone ssh://pi2:/media/Work/repos/tools ~/bin
 echo "done"
 
-echo -n "Install sag sack ..." 
-git clone https://github.com/sampson-chen/sack.git && cd sack && chmod +x install_sack.sh && ./install_sack.sh
+#echo -n "Install sag sack ..." 
+#git clone https://github.com/sampson-chen/sack.git && cd sack && chmod +x install_sack.sh && ./install_sack.sh
 
 #To run a 32-bit executable file on a 64-bit multi-architecture Ubuntu
 if [ "x$support_32bit" == "xy" ]; then
     sudo dpkg --add-architecture i386
     sudo apt-get update
     sudo apt-get install -y libc6:i386 libncurses5:i386 libstdc++6:i386
-fi
-
-#Manage node with nvm
-if [ "x$install_node" == "xy" ]; then
-    sudo apt-get install build-essential checkinstall
-    sudo apt-get install libssl-dev
-    curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.32.1/install.sh | bash 
-    . ~/.bashrc
-    nvm install node
 fi
 
 if [ "x$install_samba" == "xy" ]; then
@@ -107,20 +99,3 @@ sudo apt-get clean
 
 # Configure bash as the default shell
 sudo dpkg-reconfigure dash
-
-# cd.bash
-if [ "x$install_cdbash" == "xy" ]; then
-    mkdir -p ~/mywork/cd.bash
-    cd ~/mywork/cd.bash
-    git clone https://gist.github.com/6640533.git
-fi
-
-# install latest tig
-if [ "x$install_tig" == "xy" ]; then
-    cd ~/mywork
-    git clone https://github.com/jonas/tig.git
-    cd tig
-    git checkout $(git describe --tags)
-    make
-    make install
-fi
