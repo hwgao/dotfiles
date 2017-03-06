@@ -64,9 +64,6 @@
 "
 " * :recover -- Try to recover from the swap file
 
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/bundle')
 
@@ -122,18 +119,12 @@ Plug 'junegunn/fzf', { 'dir': '~/src_root/fzf', 'do': './install --all'  }
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+
+if has("autocmd")
+    filetype on
+    filetype indent on
+    filetype plugin on
+endif
 
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
@@ -484,3 +475,9 @@ inoremap <c-;> <c-o>A;
 
 " Max current window
 map <F7> <C-W>_<C-W><Bar>
+
+" copy to buffer
+vmap <C-c> :w! ~/.vimbuffer<CR>
+nmap <C-c> :.w! ~/.vimbuffer<CR>
+" paste from buffer
+map <C-p> :r ~/.vimbuffer<CR>

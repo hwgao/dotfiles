@@ -125,8 +125,7 @@ alias tmux='tmux -2'
 alias ta='tmux -2 attach'
 alias rr=ranger
 alias df='df -h'
-alias wk='cd /data/work'
-alias sk='cd /data2/work'
+alias rg='rg --no-ignore-vcs'
 
 set -o vi 				# enable vi-mode
 bind -m vi-command ".":insert-last-argument
@@ -173,6 +172,6 @@ export NVM_DIR="/home/hongwei/.nvm"
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 
-export FZF_DEFAULT_COMMAND='rg --files --no-ignore --hidden --follow --glob "!.git/*" --glob "!.repo/*"'
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
 
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
