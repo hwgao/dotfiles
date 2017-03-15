@@ -63,6 +63,7 @@
 " * `. -- Jump to the position the last change was made.
 "
 " * :recover -- Try to recover from the swap file
+" * :bro[wse] ol[dfiles] -- list all recent files and prompt to enter a file number
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/bundle')
@@ -480,4 +481,5 @@ map <F7> <C-W>_<C-W><Bar>
 vmap <C-c> :w! ~/.vimbuffer<CR>
 nmap <C-c> :.w! ~/.vimbuffer<CR>
 " paste from buffer
-map <C-p> :r ~/.vimbuffer<CR>
+map <C-y> :r ~/.vimbuffer<CR>
+imap <C-y> <C-o>:r ~/.vimbuffer<CR>
