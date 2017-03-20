@@ -1,7 +1,7 @@
 " Useful commands:
 " * :Tab /{pattern}  -- align selected lines by {pattern} with tabular
 " * :b <tab> -- switch between buffers
-" * :CCD --- change current dir to the current file's dir
+" * <leader>c -- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
 " mark
