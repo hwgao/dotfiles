@@ -1,23 +1,23 @@
 " Useful commands:
 " * :Tab /{pattern}  -- align selected lines by {pattern} with tabular
 " * :b <tab> -- switch between buffers
-" * <leader>c -- change current dir to the current file's dir
+" * <Leader>c -- change current dir to the current file's dir
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
 " mark
-" * <leader>m -- Mark the same words under cursor
-" * <leader>n -- Clean all the marks
+" * <Leader>m -- Mark the same words under cursor
+" * <Leader>n -- Clean all the marks
 " nerdcommenter
-" * <leader>cc -- Comment out the current line or text selected in visual mode
-" * <leader>c<space> -- Toggles the comment state of the selected line(s)
-" * <leader>cs -- Comments out the selected lines with a pretty block formatted layout
+" * <Leader>cc -- Comment out the current line or text selected in visual mode
+" * <Leader>c<space> -- Toggles the comment state of the selected line(s)
+" * <Leader>cs -- Comments out the selected lines with a pretty block formatted layout
 " DoxygenToolkit
 " * :DOX --  Function / class comment: place the cursor on the line of the
 "            function header (or returned value of the function) or the class.
 "            Then execute the command :Dox.  This will generate the skeleton
 "            and leave the cursor after the @brief tag.
 " EasyGrep
-" * <leader>vv -- Search word under cursor in all buffers
+" * <Leader>vv -- Search word under cursor in all buffers
 " * <Leader>vo -- Open an options explorer to select the files to search in
 "            and set grep options
 "
@@ -149,9 +149,6 @@ set incsearch     " do incremental searching
 set autowrite     " autosave befor :make
 set nofoldenable  " turn off folding
 " set number        " show line number
-
-" place yanked text into the global clipboard
-set clipboard=unnamedplus
 
 " Don't use Ex mode, use Q for formatting
 nnoremap Q gq
@@ -477,9 +474,20 @@ inoremap <c-;> <c-o>A;
 " Max current window
 map <F7> <C-W>_<C-W><Bar>
 
+if exists("$SSH_CONNECTION")
 " copy to buffer
-vmap <C-c> :w! ~/.vimbuffer<CR>
-nmap <C-c> :.w! ~/.vimbuffer<CR>
+vmap <Leader>y :w! ~/.vimbuffer<CR>
+nmap <Leader>y :.w! ~/.vimbuffer<CR>
 " paste from buffer
-map <C-y> :r ~/.vimbuffer<CR>
-imap <C-y> <C-o>:r ~/.vimbuffer<CR>
+map <Leader>p :r ~/.vimbuffer<CR>
+imap <Leader>p <C-o>:r ~/.vimbuffer<CR>
+" noremap <Leader>y :!xclip -f -sel clip
+" noremap <Leader>p :!xclip -o -sel clip
+else
+noremap <Leader>y "*y
+noremap <Leader>p "*p
+noremap <Leader>Y "+y
+noremap <Leader>P "+p
+endif
+
+cmap bo browse oldfiles
