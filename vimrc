@@ -475,19 +475,24 @@ inoremap <c-;> <c-o>A;
 map <F7> <C-W>_<C-W><Bar>
 
 if exists("$SSH_CONNECTION")
-" copy to buffer
-vmap <Leader>y :w! ~/.vimbuffer<CR>
-nmap <Leader>y :.w! ~/.vimbuffer<CR>
-" paste from buffer
-map <Leader>p :r ~/.vimbuffer<CR>
-imap <Leader>p <C-o>:r ~/.vimbuffer<CR>
-" noremap <Leader>y :!xclip -f -sel clip
-" noremap <Leader>p :!xclip -o -sel clip
+    " copy to buffer
+    vmap <Leader>y :w! ~/.vimbuffer<CR>
+    nmap <Leader>y :.w! ~/.vimbuffer<CR>
+    " paste from buffer
+    map <Leader>p :r ~/.vimbuffer<CR>
+    imap <Leader>p <C-o>:r ~/.vimbuffer<CR>
+    " noremap <Leader>y :!xclip -f -sel clip
+    " noremap <Leader>p :!xclip -o -sel clip
 else
-noremap <Leader>y "*y
-noremap <Leader>p "*p
-noremap <Leader>Y "+y
-noremap <Leader>P "+p
+    if has("X11")
+        " linux
+        noremap <Leader>y "+y
+        noremap <Leader>p "+p
+    else
+        " macos
+        noremap <Leader>y "*y
+        noremap <Leader>p "*p
+    endif
 endif
 
 cmap bo browse oldfiles
