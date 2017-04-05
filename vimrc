@@ -1,12 +1,9 @@
 " Useful commands:
 " * :Tab /{pattern}  -- align selected lines by {pattern} with tabular
 " * :b <tab> -- switch between buffers
-" * <Leader>c -- change current dir to the current file's dir
+" * :b# or Ctrl+6 or Ctrl+^ -- switch back to previous buffer
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
-" mark
-" * <Leader>m -- Mark the same words under cursor
-" * <Leader>n -- Clean all the marks
 " nerdcommenter
 " * <Leader>cc -- Comment out the current line or text selected in visual mode
 " * <Leader>c<space> -- Toggles the comment state of the selected line(s)
@@ -64,6 +61,24 @@
 "
 " * :recover -- Try to recover from the swap file
 " * :bro[wse] ol[dfiles] -- list all recent files and prompt to enter a file number
+" * :set list -- To show tab with >... whitespace with ␣ eol with ¬
+" * :set nolist -- to clean them
+" * , -- Ack search
+"
+" <Leader>
+" * <Leader>] -- Show the tag in preview window
+" * <Leader>i -- List searching of the current word
+" * <Leader>h -- Clear highlighted searches
+" * <Leader>m -- Mark the same words under cursor
+" * <Leader>n -- Clean all the marks
+" * <Leader>y -- Cross vim copy if no X11 or copy to system clipboard
+" * <Leader>p -- Paste above copied text
+" * <Leader>s -- Save session
+" * <Leader>c -- change current dir to the current file's dir
+" * <Leader>c* -- nerdcommenter
+" * <Leader>f -- fzf Files 
+" * <Leader>b -- fzf Buffers
+" * <Leader>h -- fzf Historys
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/bundle')
@@ -91,9 +106,6 @@ Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 "Plug 'scrooloose/syntastic'
-Plug 'altercation/vim-colors-solarized'
-" Retro groove color scheme for Vim 
-Plug 'morhetz/gruvbox'
 " Alternate Files quickly (.c --> .h etc)
 Plug 'vim-scripts/a.vim'
 " Script that will search for and load cscope.out databases automatically
@@ -117,6 +129,19 @@ Plug 'tmhedberg/matchit'
 Plug 'Chiel92/vim-autoformat'
 Plug 'rust-lang/rust.vim'
 Plug 'junegunn/fzf', { 'dir': '~/src_root/fzf', 'do': './install --all'  }
+Plug 'junegunn/fzf.vim'
+Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+Plug 'nathanaelkane/vim-indent-guides'
+Plug 'airblade/vim-rooter'
+
+"""""""colorscheme""""""""
+Plug 'altercation/vim-colors-solarized'
+" Retro groove color scheme for Vim 
+Plug 'morhetz/gruvbox'
+Plug 'dracula/vim'
+Plug 'tomasr/molokai'
+Plug 'octol/vim-cpp-enhanced-highlight'
+"""""""colorscheme""""""""
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -234,12 +259,8 @@ let g:tagbar_left=1
 map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 " cscope
-set cscopequickfix=s-,c-,d-,i-,t-,e-
-set cst
-" set csto=1
-" set cscopeprg=gtags-cscope
-" cscope find calling
-nnoremap <silent> <F9> :cs find s <C-R>=expand("<cword>")<CR><CR>
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+
 " quickfix
 nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
@@ -303,8 +324,8 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 " ycmcompleter hotkeys
 nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
-nnoremap <Leader>jr :YcmCompleter GoToReferences<CR>
-nnoremap <Leader>jd :YcmCompleter GetDoc<CR>
+nnoremap <Leader>yr :YcmCompleter GoToReferences<CR>
+nnoremap <Leader>yd :YcmCompleter GetDoc<CR>
 
 " UltiSnips Trigger configuration.
 " make compatible with ycm
@@ -361,8 +382,8 @@ let g:EasyGrepCommand=1
 vnoremap < <gv  " better indentation
 vnoremap > >gv  " better indentation
 
-" Rebind <Leader> key
-" let mapleader = ","
+" Rebind <Leader> key to space
+" let mapleader = ' '
 
 " vim-signify
 let g:signify_vcs_list = ['git', 'svn']
@@ -397,7 +418,7 @@ let g:airline#extensions#whitespace#enabled = 1
 set confirm
 
 " Show the tag under cursor in preview window
-nnoremap <C-p> <Esc>:exe "ptjump " . expand("<cword>")<Esc>
+nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
 " List the search of the word under cursor and let user to choose
 map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
@@ -410,6 +431,7 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
 nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
+nnoremap <Leader>s :mksession! ~/.vim/default_session
 
 " set completeopt-=preview "Disable preview document when autocomplete
 set completeopt=longest,menuone
@@ -495,4 +517,20 @@ else
     endif
 endif
 
-cmap bo browse oldfiles
+" Make session 
+" vim -S ~/.vim/default_session to reopen it
+nnoremap <Leader>s :mksession! ~/.vim/default_session
+set ssop-=options    " do not store global and local values in a session
+set ssop-=folds      " do not store folds
+
+" fzf.vim map
+nnoremap <Leader>f :Files
+nnoremap <Leader>b :Buffers<CR>
+nnoremap <Leader>h :History<CR> " Same with :browse oldfiles
+
+" show all tab whitespace with :set list. :set nolist to clear
+" http://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
+set listchars=eol:¬,tab:>.,trail:~,extends:>,precedes:<,space:␣
+
+" vim-rooter
+let g:rooter_manual_only = 1
