@@ -530,7 +530,7 @@ nnoremap <Leader>h :History<CR> " Same with :browse oldfiles
 
 " show all tab whitespace with :set list. :set nolist to clear
 " http://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
-set listchars=eol:¬,tab:>.,trail:~,extends:>,precedes:<,space:␣
+set listchars=eol:¬,tab:>·,trail:~,extends:>,precedes:<,space:␣
 
 " vim-rooter
 let g:rooter_manual_only = 1
