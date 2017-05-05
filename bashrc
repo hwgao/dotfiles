@@ -90,7 +90,7 @@ if [ -x /usr/bin/dircolors ]; then
     #alias dir='dir --color=auto'
     #alias vdir='vdir --color=auto'
 
-    alias grep='grep --color=auto'
+    alias grep='grep --color=auto --exclude-dir=.git --exclude-dir=.svn --exclude-dir=.repo --exclude-dir=objs --exclude-dir=bin'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
 fi
@@ -125,10 +125,14 @@ alias tmux='tmux -2'
 alias ta='tmux -2 attach'
 alias rr=ranger
 alias df='df -h'
-alias rg='rg --no-ignore-vcs'
+# Use rg -u instead
+# alias rg='rg --no-ignore-vcs'
 
 set -o vi 				# enable vi-mode
 bind -m vi-command ".":insert-last-argument
+bind -m vi-insert "\C-a.":beginning-of-line
+bind -m vi-insert "\C-e.":end-of-line
+bind -m vi-insert "\C-w.":backward-kill-word
 export EDITOR=vi
 
 # terminal support 256 color
@@ -171,7 +175,16 @@ export NVM_DIR="/home/hongwei/.nvm"
 # --hidden: Search hidden files and folders
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-
 export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
-
+#export FZF_DEFAULT_OPTS='--exact'
+export FZF_TMUX=1
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
+
+export JAVA_HOME='/opt/jdk1.6.0_45'
+PATH="$PATH:${JAVA_HOME}/bin"
+export GRAILS_HOME='/opt/grails-2.2.1'
+PATH="$PATH:${GRAILS_HOME}/bin"
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/home/hongwei/.sdkman"
+[[ -s "/home/hongwei/.sdkman/bin/sdkman-init.sh" ]] && source "/home/hongwei/.sdkman/bin/sdkman-init.sh"

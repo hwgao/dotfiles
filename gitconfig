@@ -19,8 +19,9 @@
     dc = diff --cached
     lg = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %Cblue<%an>%Creset' --abbrev-commit --date=relative --all
     review = push origin HEAD:refs/for/master
+    vimdiff = difftool -t vimdiff
 
 [push]
 	default = simple
-[init]
-	templatedir = ~/dotfiles/git_template
+#[init]
+#	templatedir = ~/dotfiles/git_template

@@ -38,6 +38,7 @@ sudo apt-get install -y python-dev python3-dev
 sudo apt-get install -y git vim tmux mc silversearcher-ag htop strace
 sudo apt-get install -y curl
 sudo apt-get install -y ctags cscope
+sudo apt-get install -y ccache
 sudo apt-get install -y autotools-dev automake
 # sudo apt-get install -y zim python-gtksourceview2 meld vim-gnome
 # need by tmux to copy to clipboard
@@ -58,6 +59,7 @@ sudo apt-get install -y shellcheck
 sudo apt-get install -y minicom uucp
 # rdk 
 sudo apt-get install -y diffstat texinfo chrpath
+sudo apt-get install -y colordiff
 
 mkdir -p ~/.vimbackup
 

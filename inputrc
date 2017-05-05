@@ -6,5 +6,4 @@ set completion-ignore-case on
 set menu-complete-display-prefix on
 TAB: menu-complete
 "\e[Z": menu-complete-backward
-set -o vi
-
+set editing-mode vi

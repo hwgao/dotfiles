@@ -4,19 +4,11 @@
 " * :b# or Ctrl+6 or Ctrl+^ -- switch back to previous buffer
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
-" nerdcommenter
-" * <Leader>cc -- Comment out the current line or text selected in visual mode
-" * <Leader>c<space> -- Toggles the comment state of the selected line(s)
-" * <Leader>cs -- Comments out the selected lines with a pretty block formatted layout
 " DoxygenToolkit
 " * :DOX --  Function / class comment: place the cursor on the line of the
 "            function header (or returned value of the function) or the class.
 "            Then execute the command :Dox.  This will generate the skeleton
 "            and leave the cursor after the @brief tag.
-" EasyGrep
-" * <Leader>vv -- Search word under cursor in all buffers
-" * <Leader>vo -- Open an options explorer to select the files to search in
-"            and set grep options
 "
 " * Ctrl+r Ctrl+w -- In command line mode, insert the word under the cursor.
 " * w!! -- sudo save the file
@@ -46,7 +38,7 @@
 " * :tabonly -- Close all other tabs
 " * :tabedit filename -- Open the filename in a tab
 "
-" * ]p -- Pasting in the current indent
+" * ]p -- Paste in the current indent
 " * :e! -- Open the same file freshly discarding current changes
 " * gd -- Search for define in same function
 " * gD -- Search for define in same file
@@ -75,10 +67,29 @@
 " * <Leader>p -- Paste above copied text
 " * <Leader>s -- Save session
 " * <Leader>c -- change current dir to the current file's dir
-" * <Leader>c* -- nerdcommenter
-" * <Leader>f -- fzf Files 
-" * <Leader>b -- fzf Buffers
-" * <Leader>h -- fzf Historys
+" * <Leader>cc -- Comment out the current line or text selected in visual mode
+" * <Leader>c<space> -- Toggles the comment state of the selected line(s)
+" * <Leader>cs -- Comments out the selected lines with a pretty block formatted layout
+"
+" * <Space>f -- fzf Files
+" * <Space>b -- fzf Buffers
+" * <Space>h -- fzf Historys
+" * <Space>t -- fzf Tags
+" * <Space>l -- fzf BTags
+" * <Space>c -- fzf CSFiles
+" * <Space>o -- Switch back to previous buffer
+" * <Space>m -- max
+" * <Space>n -- :cn
+" * <Space>p -- :cp
+" * <Space>, -- rg
+"
+"
+" Use cscope.files to manage project
+" The project can include the files spreaded in several directories.
+" Use cscope.files to manage the files in project.
+" All the cscope commands are used in project.
+" <Space>c -- Search a file in project.
+" <Space>s -- Search the text in all files of the project.
 
 " Specify a directory for plugins (for Neovim: ~/.local/share/nvim/plugged)
 call plug#begin('~/.vim/bundle')
@@ -95,7 +106,7 @@ Plug 'vim-scripts/vcscommand.vim'
 Plug 'tpope/vim-fugitive'
 " Vim script for text filtering and alignment
 Plug 'godlygeek/tabular'
-Plug 'dkprice/vim-easygrep'
+" Plug 'dkprice/vim-easygrep'
 Plug 'vim-scripts/grep.vim'
 Plug 'klen/python-mode'
 Plug 'leshill/vim-json'
@@ -109,7 +120,7 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 " Alternate Files quickly (.c --> .h etc)
 Plug 'vim-scripts/a.vim'
 " Script that will search for and load cscope.out databases automatically
-Plug 'vim-scripts/autoload_cscope.vim'
+" Plug 'vim-scripts/autoload_cscope.vim'
 " Unload/delete/wipe a buffer, keep its window(s), display last accessed buffer(s)
 Plug 'vim-scripts/bufkill.vim'
 " Delete all the buffers except the current/named buffer
@@ -133,6 +144,8 @@ Plug 'junegunn/fzf.vim'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-rooter'
+Plug 'scrooloose/nerdtree'
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'  }
 
 """""""colorscheme""""""""
 Plug 'altercation/vim-colors-solarized'
@@ -171,7 +184,7 @@ set history=50    " keep 50 lines of command line history
 set ruler         " show the cursor position all the time
 set showcmd       " display incomplete commands
 set incsearch     " do incremental searching
-set autowrite     " autosave befor :make
+set autowrite     " autosave before :make
 set nofoldenable  " turn off folding
 " set number        " show line number
 
@@ -262,8 +275,12 @@ map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
 " quickfix
+" nnoremap <silent> <F5> :cn<CR>
+" nnoremap <silent> <F6> :cp<CR>
 nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
+map <space>n :cn<CR>
+map <space>p :cp<CR>
 
 " Grep
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git .repo obj build lib'
@@ -303,12 +320,15 @@ if !exists('$TMUX')
     nnoremap <c-l> <c-w>l
 endif
 
+" Disable tmux navigator when zooming the Vim pane
+let g:tmux_navigator_disable_when_zoomed = 1
+
 
 " remove search in included files from the complete list
 set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_confirm_extra_conf = 0
+let g:ycm_confirm_extra_conf = 1
 let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 
 " If use syntastic, disable it. As ycm will disable syntastic by default
@@ -340,8 +360,8 @@ let g:UltiSnipsEditSplit="vertical"
 inoremap <c-x><c-]> <c-]>
 
 " Quickly edit/reload the vimrc file
-nmap <silent> <leader>ev :e $MYVIMRC<CR>
-nmap <silent> <leader>sv :so $MYVIMRC<CR>
+" nmap <silent> <leader>ev :e $MYVIMRC<CR>
+" nmap <silent> <leader>sv :so $MYVIMRC<CR>
 
 " map toggle paste mode
 " Refer to http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
@@ -355,7 +375,7 @@ nnoremap j gj
 nnoremap k gk
 
 " clear highlighted searches
-nnoremap <Leader>h :nohlsearch<CR>
+" nnoremap <Leader>h :nohlsearch<CR>
 
 " Forget to sudo before editing a file that requires root privileges
 " Use w!! to do that after you opened the file already
@@ -364,7 +384,7 @@ cmap w!! w !sudo tee >/dev/null %
 if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-ignore-vcs
     set grepformat=%f:%l:%c:%m,%f:%l:%m
-    let g:ackprg = 'rg --vimgrep --no-ignore-vcs'
+    let g:ackprg = 'rg --vimgrep --no-ignore-vcs -g !tags -g !cscope.*'
 elseif executable("ag")
     set grepprg=ag\ --vimgrep
     set grepformat=%f:%l:%c:%m,%f:%l:%m
@@ -396,7 +416,13 @@ set diffopt=filler,vertical
 
 " find word under cursor with rg, in current dir (use :pwd to check current
 " dir)
-nnoremap , :Ack -w <C-r><C-w>
+if filereadable("cscope.files")
+    nnoremap , :Ack -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
+else
+    nnoremap , :Ack -w <C-r><C-w>
+endif
+
+map <space>, :Ack -w <C-r><C-w>
 
 " Always have a status line
 set laststatus=2
@@ -491,10 +517,10 @@ set cino+=g0
 " let g:airline_theme='solarized'
 
 " Insert semicolon at the end of line in insert mode
-inoremap <c-;> <c-o>A;
+inoremap <C-;> <C-o>A;
 
 " Max current window
-map <F7> <C-W>_<C-W><Bar>
+map <space>m <C-W>_<C-W><Bar>
 
 if exists("$SSH_CONNECTION")
     " copy to buffer
@@ -524,9 +550,15 @@ set ssop-=options    " do not store global and local values in a session
 set ssop-=folds      " do not store folds
 
 " fzf.vim map
-nnoremap <Leader>f :Files
-nnoremap <Leader>b :Buffers<CR>
-nnoremap <Leader>h :History<CR> " Same with :browse oldfiles
+nnoremap <Space>f :Files
+nnoremap <Space>b :Buffers<CR>
+nnoremap <Space>h :History<CR> " Same with :browse oldfiles
+nnoremap <Space>t :Tags<CR>
+nnoremap <Space>l :BTags<CR>
+nnoremap <Space>c :CSFiles<CR>
+" nnoremap <Space>o :b#<CR>
+nnoremap <Space>o :only<CR>
+nnoremap <Space>s :cs find t <C-R>=expand("<cword>")<CR>
 
 " show all tab whitespace with :set list. :set nolist to clear
 " http://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
@@ -534,3 +566,10 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 
 " vim-rooter
 let g:rooter_manual_only = 1
+
+" Treat the words linked with '-' as one word 
+" For example, one-two 
+" Can not enable in c/c++ file, for example if var->name, var- 
+" set isk+=-
+
+map <F7> :NERDTreeToggle<CR>
