@@ -517,7 +517,8 @@ set cino+=g0
 " let g:airline_theme='solarized'
 
 " Insert semicolon at the end of line in insert mode
-inoremap <C-;> <C-o>A;
+inoremap ;<cr> <end>;<cr>
+inoremap ;; <end>;
 
 " Max current window
 map <space>m <C-W>_<C-W><Bar>
