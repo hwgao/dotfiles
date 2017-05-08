@@ -46,16 +46,19 @@
 " * :AutoFormat -- Format the current file, asytyle 2.05.1 is needed, or clang-format.
 " * :%!astyle -- Call astyle formating current file
 " change
-" * :g; -- Jump back to the position of the previous (older) change.
-" * :g, -- Jump to the position of the next (newer) change.
+" * g; -- Jump back to the position of the previous (older) change.
+" * g, -- Jump to the position of the next (newer) change.
 " * :changes -- List the changes
 " * `. -- Jump to the position the last change was made.
+" * `` -- To the position before the latest jump, or where the last "m'" or
+"         "m`" command was given
 "
 " * :recover -- Try to recover from the swap file
 " * :bro[wse] ol[dfiles] -- list all recent files and prompt to enter a file number
 " * :set list -- To show tab with >... whitespace with ␣ eol with ¬
 " * :set nolist -- to clean them
 " * , -- Ack search
+" * :%/\s\+$//e -- Delete any trailing whitespace at the end of each line
 "
 " <Leader>
 " * <Leader>] -- Show the tag in preview window
@@ -149,7 +152,7 @@ Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'  }
 
 """""""colorscheme""""""""
 Plug 'altercation/vim-colors-solarized'
-" Retro groove color scheme for Vim 
+" Retro groove color scheme for Vim
 Plug 'morhetz/gruvbox'
 Plug 'dracula/vim'
 Plug 'tomasr/molokai'
@@ -218,7 +221,7 @@ else
     colorscheme gruvbox
     " when terminal or tmux using 16 colors mode
     " colorscheme desert
-    " hi CursorLine term=bold cterm=bold guibg=Grey40  
+    " hi CursorLine term=bold cterm=bold guibg=Grey40
 endif
 
 " hide currentline backgroud when in insert mode
@@ -544,7 +547,7 @@ else
     endif
 endif
 
-" Make session 
+" Make session
 " vim -S ~/.vim/default_session to reopen it
 nnoremap <Leader>s :mksession! ~/.vim/default_session
 set ssop-=options    " do not store global and local values in a session
@@ -568,9 +571,9 @@ set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
 " vim-rooter
 let g:rooter_manual_only = 1
 
-" Treat the words linked with '-' as one word 
-" For example, one-two 
-" Can not enable in c/c++ file, for example if var->name, var- 
+" Treat the words linked with '-' as one word
+" For example, one-two
+" Can not enable in c/c++ file, for example if var->name, var-
 " set isk+=-
 
 map <F7> :NERDTreeToggle<CR>

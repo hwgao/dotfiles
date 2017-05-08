@@ -17,7 +17,7 @@ fi
 link_dotfiles() {
     dir=$(pwd)                        # dotfiles directory
     olddir=~/dotfiles_old             # old dotfiles backup directory
-    files="bashrc vimrc tmux.conf inputrc vim gitconfig astylerc"    # list of files/folders to symlink in homedir
+    files="bashrc vimrc tmux.conf inputrc vim gitconfig astylerc bash_aliases command"    # list of files/folders to symlink in homedir
 
     ##########
 
@@ -30,7 +30,7 @@ link_dotfiles() {
     echo -n "Changing to the $dir directory ..."
     cd $dir
 
-    # move any existing dotfiles in homedir to dotfiles_old directory, then create 
+    # move any existing dotfiles in homedir to dotfiles_old directory, then create
     # symlinks from the homedir to any files in the ~/dotfiles directory specified in $files
     for file in $files; do
         echo "Moving any existing dotfiles from ~ to $olddir"
@@ -44,7 +44,7 @@ install_terminal_cmds() {
     echo -n "Install useful tools ..."
     sudo apt-get update
     sudo apt-get install -y build-essential cmake
-    # need by ycm 
+    # need by ycm
     sudo apt-get install -y python-dev python3-dev
     sudo apt-get install -y git vim tmux mc silversearcher-ag htop strace
     sudo apt-get install -y curl
@@ -54,7 +54,7 @@ install_terminal_cmds() {
     sudo apt-get install -y ranger
     sudo apt-get install -y shellcheck
     sudo apt-get install -y minicom uucp
-    # rdk 
+    # rdk
     sudo apt-get install -y diffstat texinfo chrpath
     sudo apt-get install -y colordiff
     # Need by OE-core
@@ -64,7 +64,7 @@ install_terminal_cmds() {
     sudo apt-get clean
     # Configure bash as the default shell
     sudo dpkg-reconfigure dash
-    # Need to update to latest version to support input stream required by vim 
+    # Need to update to latest version to support input stream required by vim
     ./install_from_source/astyle.sh
 }
 
@@ -118,13 +118,13 @@ EOF
 for var in "$@"; do
     case $var in
     "dotfile")
-            link_dotfiles 
+            link_dotfiles
             ;;
     "cmds")
-            install_terminal_cmds 
+            install_terminal_cmds
             ;;
     "gui")
-            install_gui_cmds 
+            install_gui_cmds
             ;;
     "vim")
             install_vim
