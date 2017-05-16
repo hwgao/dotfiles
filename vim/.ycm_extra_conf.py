@@ -16,8 +16,6 @@ BASE_FLAGS = [
     '-std=c++11',
     '-xc++',
     '-isystem',
-    '/usr/lib/',
-    '-isystem',
     '/usr/include/'
 ]
 

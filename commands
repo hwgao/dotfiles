@@ -2,11 +2,12 @@ cd ~/work
 cd ~/work/rdk-mstar
 cd ~/work/linaro_3.18_dev/
 cd ~/work/rootfs
+cd ~/work/rdk-mstar/build-mstark6/tmp/work/mstark6-rdk-linux-gnueabi/rdk-generic-hybrid-tdk-image/1.0-r0/rootfs/ # RDK rootfs
 cd ~/dotfiles
-cd /home/hongwei/work/rdk-mstar/build-mstark6/tmp/work/mstark6-rdk-linux-gnueabi/rdk-generic-hybrid-tdk-image/1.0-r0/rootfs/ # RDK rootfs
 vi ~/.commands
 vi ~/.vimrc
 vi ~/.bashrc
+. ~/.bashrc
 vi ~/work/rdk-mstar/meta-cmf/conf/distro/include/rdk-external-src.inc
 i=$(find . | fzf) && [[ -d "${i}" ]] && cd "${i}" || vi "${i}"
 fc -ln -1 | sed '1s/^[[:space:]]*//' >> ~/.commands    # Append last command to this file

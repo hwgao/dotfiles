@@ -173,7 +173,7 @@ if v:progname =~? "evim"
   finish
 endif
 
-" Automatic reloading of .vimrc
+" Automatic reloading of .vimrc after saved .vimrc
 autocmd! bufwritepost .vimrc source %
 
 " allow backspacing over everything in insert mode
@@ -267,8 +267,11 @@ set splitright
 set tags=tags;/
 
 " Tagbar
-nnoremap <silent> <F8> :TagbarToggle<CR>
+nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
+
 let g:tagbar_left=1
+
+map <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
 
 " Display all line that contain the keyward under the cursor
 " :help [I
@@ -331,7 +334,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
-let g:ycm_confirm_extra_conf = 1
+let g:ycm_confirm_extra_conf = 0
 let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 
 " If use syntastic, disable it. As ycm will disable syntastic by default
@@ -352,9 +355,9 @@ nnoremap <Leader>yd :YcmCompleter GetDoc<CR>
 
 " UltiSnips Trigger configuration.
 " make compatible with ycm
-let g:UltiSnipsExpandTrigger="<c-k>"
-let g:UltiSnipsJumpForwardTrigger="<c-k>"
-let g:UltiSnipsJumpBackwardTrigger="<c-s-k>"
+let g:UltiSnipsExpandTrigger="<c-j>"
+let g:UltiSnipsJumpForwardTrigger="<c-j>"
+let g:UltiSnipsJumpBackwardTrigger="<c-k>"
 
 " If you want :UltiSnipsEdit to split your window.
 let g:UltiSnipsEditSplit="vertical"
@@ -522,6 +525,7 @@ set cino+=g0
 " Insert semicolon at the end of line in insert mode
 inoremap ;<cr> <end>;<cr>
 inoremap ;; <end>;
+inoremap ,, <right>,
 
 " Max current window
 map <space>m <C-W>_<C-W><Bar>
@@ -576,4 +580,5 @@ let g:rooter_manual_only = 1
 " Can not enable in c/c++ file, for example if var->name, var-
 " set isk+=-
 
-map <F7> :NERDTreeToggle<CR>
+" type :e %% will expend to the current file's parent folder
+cabbr <expr> %% expand('%:p:h')

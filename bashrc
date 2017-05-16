@@ -128,11 +128,11 @@ alias df='df -h'
 # Use rg -u instead
 # alias rg='rg --no-ignore-vcs'
 
-set -o vi 				# enable vi-mode
-bind -m vi-command ".":insert-last-argument
-bind -m vi-insert "\C-a.":beginning-of-line
-bind -m vi-insert "\C-e.":end-of-line
-bind -m vi-insert "\C-w.":backward-kill-word
+# set -o vi 				# enable vi-mode
+# bind -m vi-command ".":insert-last-argument
+# bind -m vi-insert "\C-a.":beginning-of-line
+# bind -m vi-insert "\C-e.":end-of-line
+# bind -m vi-insert "\C-w.":backward-kill-word
 export EDITOR=vi
 
 # terminal support 256 color
