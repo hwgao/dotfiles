@@ -309,9 +309,9 @@ set backupdir^=~/.vimbackup//
 " so Vim will check that directory first.
 set directory^=~/.vimbackup//
 
-" set guifont=Fixed
-" set guifont=Monaco\ 10
-set guifont=Hack\ 10
+" Note: guifont is used to set GUI version of Vim font.
+" For vim, the font set through terminal or putty is used
+set guifont=Hack\ 12,Monaco\ 10,Fixed
 
 " Saves all open buffers in the background, instead of closing them and re-opening on demand
 set hidden
