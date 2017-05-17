@@ -101,6 +101,8 @@ call plug#begin('~/.vim/bundle')
 Plug 'majutsushi/tagbar'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+Plug 'edkolev/tmuxline.vim'
+Plug 'edkolev/promptline.vim'
 Plug 'christoomey/vim-tmux-navigator'
 " Show a diff via Vim sign column
 Plug 'mhinz/vim-signify'
