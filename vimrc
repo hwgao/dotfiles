@@ -469,6 +469,15 @@ let g:airline#extensions#syntastic#enabled = 1
 " enable/disable detection of whitespace errors.
 let g:airline#extensions#whitespace#enabled = 1
 
+let g:tmuxline_preset = {
+        \ 'a': '[#S]',
+        \ 'win': '#I:#W#F',
+        \ 'cwin': '#I:#W#F',
+        \ 'z': '"#H" %H:%M %d-%b-%y',
+        \ 'options': {
+        \'status-justify': 'left'}
+        \}
+
 " Confirm if 1 more files to edit
 set confirm
 
