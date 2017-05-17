@@ -310,7 +310,8 @@ set backupdir^=~/.vimbackup//
 set directory^=~/.vimbackup//
 
 " set guifont=Fixed
-set guifont=Monaco\ 10
+" set guifont=Monaco\ 10
+set guifont=Hack\ 10
 
 " Saves all open buffers in the background, instead of closing them and re-opening on demand
 set hidden
@@ -434,17 +435,35 @@ map <space>, :Ack -w <C-r><C-w>
 set laststatus=2
 set statusline+=%F
 
-" use vcscommand.vim if available >
-let g:airline#extensions#branch#use_vcscommand = 1
+""""""""""""""""""""""
+" Conf for airline   "
+""""""""""""""""""""""
+let g:airline_powerline_fonts = 1
 
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+
+" powerline symbols
+let g:airline_left_sep = ''
+let g:airline_left_alt_sep = ''
+let g:airline_right_sep = ''
+let g:airline_right_alt_sep = ''
+let g:airline_symbols.branch = ''
+let g:airline_symbols.readonly = ''
+let g:airline_symbols.linenr = ''
+
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ''
+let g:airline#extensions#tabline#left_alt_sep = ''
+let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+
+" use vcscommand.vim if available
+let g:airline#extensions#branch#use_vcscommand = 1
 " enable/disable syntastic integration
 let g:airline#extensions#syntastic#enabled = 1
-
 " enable/disable detection of whitespace errors.
 let g:airline#extensions#whitespace#enabled = 1
-
-" Automatically displays all buffer when there's only one tab open
-" let g:airline#extensions#tabline#enabled = 1
 
 " Confirm if 1 more files to edit
 set confirm
