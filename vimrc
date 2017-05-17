@@ -59,6 +59,7 @@
 " * :set nolist -- to clean them
 " * , -- Ack search
 " * :%/\s\+$//e -- Delete any trailing whitespace at the end of each line
+" * :runtime syntax/colortest.vim -- test color setup
 "
 " <Leader>
 " * <Leader>] -- Show the tag in preview window
@@ -85,7 +86,6 @@
 " * <Space>n -- :cn
 " * <Space>p -- :cp
 " * <Space>, -- rg
-"
 "
 " Use cscope.files to manage project
 " The project can include the files spreaded in several directories.
@@ -438,6 +438,8 @@ set statusline+=%F
 """"""""""""""""""""""
 " Conf for airline   "
 """"""""""""""""""""""
+let g:airline_theme='molokai'
+
 let g:airline_powerline_fonts = 1
 
 if !exists('g:airline_symbols')
@@ -538,8 +540,6 @@ let g:NERDDefaultAlign = 'left'
 " refer to indent.txt
 " g0 -- don't indent c++ scope declarations -- public, protect, private
 set cino+=g0
-
-" let g:airline_theme='solarized'
 
 " Insert semicolon at the end of line in insert mode
 inoremap ;<cr> <end>;<cr>
