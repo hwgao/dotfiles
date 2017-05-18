@@ -469,6 +469,7 @@ let g:airline#extensions#syntastic#enabled = 1
 " enable/disable detection of whitespace errors.
 let g:airline#extensions#whitespace#enabled = 1
 
+let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_preset = {
         \ 'a': '[#S]',
         \ 'win': '#I:#W#F',
