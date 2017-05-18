@@ -17,7 +17,7 @@ fi
 link_dotfiles() {
     dir=$(pwd)                        # dotfiles directory
     olddir=~/dotfiles_old             # old dotfiles backup directory
-    files="bashrc vimrc tmux.conf inputrc vim gitconfig astylerc bash_aliases command"    # list of files/folders to symlink in homedir
+    files="bashrc shell_prompt.sh vimrc tmux.conf tmux_theme.conf inputrc vim gitconfig astylerc bash_aliases command"    # list of files/folders to symlink in homedir
 
     ##########
 
