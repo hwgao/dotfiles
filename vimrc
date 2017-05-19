@@ -60,6 +60,9 @@
 " * , -- Ack search
 " * :%/\s\+$//e -- Delete any trailing whitespace at the end of each line
 " * :runtime syntax/colortest.vim -- test color setup
+" * If you launch vim with -q errors.txt, after putting compile errors in
+" errors.txt (i.e. gcc -Wall *.c >errors.txt 2>&1), vim will populate the
+" quickfix list from the list of compile errors
 "
 " <Leader>
 " * <Leader>] -- Show the tag in preview window
@@ -121,9 +124,10 @@ Plug 'kergoth/vim-bitbake'
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
 Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
-"Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 " Alternate Files quickly (.c --> .h etc)
 Plug 'vim-scripts/a.vim'
+" If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
 " Script that will search for and load cscope.out databases automatically
 " Plug 'vim-scripts/autoload_cscope.vim'
 " Unload/delete/wipe a buffer, keep its window(s), display last accessed buffer(s)
@@ -340,8 +344,10 @@ let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 
-" If use syntastic, disable it. As ycm will disable syntastic by default
-" let g:ycm_show_diagnostics_ui = 0
+" Setting it makes YCM remove all Syntastic checkers set for the c, cpp,
+" objc and objcpp filetypes
+" YCM's diagnostics UI is only supported for C-family languages
+let g:ycm_show_diagnostics_ui = 1
 " or
 " sysntastic setting for c++11
 let g:syntastic_cpp_compiler = 'clang++'
@@ -350,6 +356,10 @@ let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
 " JavaScript lint -- eslint
 " Install: # npm install -g eslint
 let g:syntastic_javascript_checkers = ['eslint']
+
+" Show lotcation-list with error and jump to the first error
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_auto_jump = 1
 
 " ycmcompleter hotkeys
 nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
