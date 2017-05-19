@@ -14,11 +14,12 @@ ff() {
     echo F="\"$F\""
 }
 
-of() {
+vf() {
    F=$(fzf)
-   if [ -d "$F"  ]; then
-       cd "$F"
-   elif [ -f "$F"  ]; then
-       vi "$F"
-   fi
+   vi "$F"
+}
+
+cf() {
+   F=$(fzf)
+   cd $(dirname "$F")
 }
