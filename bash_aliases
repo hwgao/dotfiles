@@ -8,11 +8,11 @@ url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
 }
 
-F() {
+ff() {
     F=$(fzf)
 }
 
-OF() {
+of() {
    F=$(fzf)
    if [ -d "$F"  ]; then
        cd "$F"
