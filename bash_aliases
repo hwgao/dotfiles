@@ -11,6 +11,7 @@ url2epub() {
 
 ff() {
     F=$(fzf)
+    echo F="\"$F\""
 }
 
 of() {
