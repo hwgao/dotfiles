@@ -5,7 +5,7 @@
 " * :DiffOrig -- diff current buffer with saved file
 " * :BufOnly -- Delete all the buffers except the current/named buffer
 " DoxygenToolkit
-" * :DOX --  Function / class comment: place the cursor on the line of the
+" * :Dox --  Function / class comment: place the cursor on the line of the
 "            function header (or returned value of the function) or the class.
 "            Then execute the command :Dox.  This will generate the skeleton
 "            and leave the cursor after the @brief tag.
@@ -82,7 +82,7 @@
 " * <Space>b -- fzf Buffers
 " * <Space>h -- fzf Historys
 " * <Space>t -- fzf Tags
-" * <Space>l -- fzf BTags
+" * <Space>l -- fzf BTags -- map to <F8> too
 " * <Space>c -- fzf CSFiles
 " * <Space>o -- Switch back to previous buffer
 " * <Space>m -- max
@@ -101,7 +101,7 @@
 call plug#begin('~/.vim/bundle')
 
 " Vim plugin that displays tags in a window
-Plug 'majutsushi/tagbar'
+" Plug 'majutsushi/tagbar' -- replace by :BTags
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -114,7 +114,6 @@ Plug 'vim-scripts/vcscommand.vim'
 Plug 'tpope/vim-fugitive'
 " Vim script for text filtering and alignment
 Plug 'godlygeek/tabular'
-" Plug 'dkprice/vim-easygrep'
 Plug 'vim-scripts/grep.vim'
 Plug 'klen/python-mode'
 Plug 'leshill/vim-json'
@@ -153,7 +152,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-rooter'
-Plug 'scrooloose/nerdtree'
+" Plug 'scrooloose/nerdtree' -- replace by :Files
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'  }
 
 """""""colorscheme""""""""
@@ -169,9 +168,7 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 call plug#end()            " required
 
 if has("autocmd")
-    filetype on
-    filetype indent on
-    filetype plugin on
+    filetype plugin indent on
 endif
 
 " When started as "evim", evim.vim will already have done these settings.
@@ -272,12 +269,12 @@ set splitright
 " ctags
 set tags=tags;/
 
-" Tagbar
-nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
-
-let g:tagbar_left=1
-
-map <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
+" let g:tagbar_left=1
+" nnoremap <silent> <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
+" nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
+" nnoremap <Leader>f :NERDTreeFind<CR>
+map <F7> :Files<CR>
+map <F8> :BTags<CR>
 
 " Display all line that contain the keyward under the cursor
 " :help [I
@@ -287,12 +284,8 @@ map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
 
 " quickfix
-" nnoremap <silent> <F5> :cn<CR>
-" nnoremap <silent> <F6> :cp<CR>
 nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
-map <space>n :cn<CR>
-map <space>p :cp<CR>
 
 " Grep
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git .repo obj build lib'
@@ -347,19 +340,21 @@ let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
 " Setting it makes YCM remove all Syntastic checkers set for the c, cpp,
 " objc and objcpp filetypes
 " YCM's diagnostics UI is only supported for C-family languages
-let g:ycm_show_diagnostics_ui = 1
+let g:ycm_show_diagnostics_ui = 0 "default 1
+let g:ycm_always_populate_location_list = 1 "default 0
 " or
 " sysntastic setting for c++11
 let g:syntastic_cpp_compiler = 'clang++'
 let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
+"let g:syntastic_always_populate_loc_list=1
+"let g:syntastic_auto_loc_list=1
+let g:syntastic_check_on_open=1
+let g:syntastic_check_on_wq=1
+let g:syntastic_aggregate_errors=1
 
 " JavaScript lint -- eslint
 " Install: # npm install -g eslint
 let g:syntastic_javascript_checkers = ['eslint']
-
-" Show lotcation-list with error and jump to the first error
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_auto_jump = 1
 
 " ycmcompleter hotkeys
 nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
@@ -410,19 +405,11 @@ elseif executable("ag")
     let g:ackprg = 'ag --vimgrep'
 endif
 
-" Set easygrep mode to Open Buffers
-let g:EasyGrepMode=1
-" 1 - grepprg is used
-let g:EasyGrepCommand=1
-
 " easier moving of code blocks
 " Try to go into visual mode (v), thenselect several lines of code here and
 " then press ``>`` several times.
 vnoremap < <gv  " better indentation
 vnoremap > >gv  " better indentation
-
-" Rebind <Leader> key to space
-" let mapleader = ' '
 
 " vim-signify
 let g:signify_vcs_list = ['git', 'svn']
@@ -436,24 +423,21 @@ set diffopt=filler,vertical
 " find word under cursor with rg, in current dir (use :pwd to check current
 " dir)
 if filereadable("cscope.files")
-    nnoremap , :Ack -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
+    nnoremap , :Ack! -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
 else
-    nnoremap , :Ack -w <C-r><C-w>
+    nnoremap , :Ack! -w <C-r><C-w> -t c -t cpp
 endif
 
-map <space>, :Ack -w <C-r><C-w>
+map <space>, :Ack! -w <C-r><C-w>
 
 " Always have a status line
 set laststatus=2
-set statusline+=%F
 
 """"""""""""""""""""""
 " Conf for airline   "
 """"""""""""""""""""""
 let g:airline_theme='molokai'
-
 let g:airline_powerline_fonts = 1
-
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -474,9 +458,7 @@ let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 
 " use vcscommand.vim if available
 let g:airline#extensions#branch#use_vcscommand = 1
-" enable/disable syntastic integration
 let g:airline#extensions#syntastic#enabled = 1
-" enable/disable detection of whitespace errors.
 let g:airline#extensions#whitespace#enabled = 1
 
 let g:airline#extensions#tmuxline#enabled = 0
@@ -517,6 +499,12 @@ let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
 " If use syntastic, disable it
 " let g:pymode_lint_on_write = 0
 
+" Disable syntastic for golang
+let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
+" or
+" let g:go_fmt_fail_silently = 1
+
+
 " Disable python-mode autocomplete, it conflicts with ycm
 let g:pymode_rope_complete_on_dot = 0
 
@@ -555,8 +543,7 @@ let g:NERDSpaceDelims = 1
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
 
-" DoxygenToolkit
-" let g:load_doxygen_syntax=1
+let g:load_doxygen_syntax=1
 
 " cindent option
 " refer to indent.txt
@@ -609,9 +596,14 @@ nnoremap <Space>c :CSFiles<CR>
 nnoremap <Space>o :only<CR>
 nnoremap <Space>s :cs find t <C-R>=expand("<cword>")<CR>
 
+" Insert a character in normal mode
+noremap <silent> <space>i :exe "normal i".nr2char(getchar())<CR>
+
 " show all tab whitespace with :set list. :set nolist to clear
 " http://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
-set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+"set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
+set lcs=trail:·,tab:»·
+set list
 
 " vim-rooter
 let g:rooter_manual_only = 1
