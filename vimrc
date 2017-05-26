@@ -141,16 +141,16 @@ Plug 'junegunn/fzf.vim'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-rooter'
+Plug 'embear/vim-localvimrc'
 " File type based plugins
 Plug 'leshill/vim-json'
 Plug 'plasticboy/vim-markdown'
 Plug 'kergoth/vim-bitbake'
-Plug 'klen/python-mode', { 'for': 'python' }
+"Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
 
-Plug 'embear/vim-localvimrc'
 " If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
 " Script that will search for and load cscope.out databases automatically
 " Plug 'vim-scripts/autoload_cscope.vim'
@@ -497,26 +497,10 @@ nnoremap <Leader>s :mksession! ~/.vim/default_session
 " set completeopt-=preview "Disable preview document when autocomplete
 set completeopt=longest,menuone
 
-" Disable syntastic for python
-let g:syntastic_mode_map = { 'passive_filetypes': ['python'] }
-" or
-" If use syntastic, disable it
-" let g:pymode_lint_on_write = 0
-
 " Disable syntastic for golang
 let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
 " or
 " let g:go_fmt_fail_silently = 1
-
-
-" Disable python-mode autocomplete, it conflicts with ycm
-let g:pymode_rope_complete_on_dot = 0
-
-" Override go-to.definition key shortcut
-let g:pymode_rope_goto_definition_bind = "<C-]>"
-
-" Override view python doc key shortcut
-let g:pymode_doc_bind = "<Leader>d"
 
 " python PEP8 indentation
 au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
