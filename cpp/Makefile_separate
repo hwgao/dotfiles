@@ -1,0 +1,21 @@
+# source files in src folder
+# object files in obj folder (it must exist)
+CC=g++
+CFLAGS=-std=c++11 -Wall
+LDFLAGS=
+SOURCES := $(wildcard src/*.cpp)
+OBJECTS := $(addprefix obj/,$(notdir $(SOURCES:.cpp=.o)))
+EXECUTABLE=exec
+
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) -o $@ $^
+
+obj/%.o: src/%.cpp
+	$(CC) $(CFLAGS) -c -o $@ $<
+
+clean:
+	rm -f obj/*
+
+run:
+	./$(EXECUTABLE)
+

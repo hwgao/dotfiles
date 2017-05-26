@@ -1,0 +1,21 @@
+CC=g++
+CFLAGS=-std=c++11 -Wall -c
+LDFLAGS=
+SOURCES := $(wildcard *.cpp)
+OBJECTS=$(SOURCES:.cpp=.o)
+EXECUTABLE=output
+
+all: $(SOURCES) $(EXECUTABLE)
+
+$(EXECUTABLE): $(OBJECTS) 
+	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
+
+.cpp.o: 
+	$(CC) $(CFLAGS) $< -o $@
+
+clean:
+	rm -f *.o *.out $(EXECUTABLE)
+
+run:
+	./$(EXECUTABLE)
+
