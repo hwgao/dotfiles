@@ -101,7 +101,6 @@
 call plug#begin('~/.vim/bundle')
 
 " Vim plugin that displays tags in a window
-" Plug 'majutsushi/tagbar' -- replace by :BTags
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'edkolev/tmuxline.vim'
@@ -115,10 +114,6 @@ Plug 'tpope/vim-fugitive'
 " Vim script for text filtering and alignment
 Plug 'godlygeek/tabular'
 Plug 'vim-scripts/grep.vim'
-Plug 'klen/python-mode'
-Plug 'leshill/vim-json'
-Plug 'plasticboy/vim-markdown'
-Plug 'kergoth/vim-bitbake'
 " UltiSnip Snippets
 Plug 'honza/vim-snippets'
 Plug 'SirVer/ultisnips'
@@ -126,9 +121,6 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer' }
 Plug 'scrooloose/syntastic'
 " Alternate Files quickly (.c --> .h etc)
 Plug 'vim-scripts/a.vim'
-" If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
-" Script that will search for and load cscope.out databases automatically
-" Plug 'vim-scripts/autoload_cscope.vim'
 " Unload/delete/wipe a buffer, keep its window(s), display last accessed buffer(s)
 Plug 'vim-scripts/bufkill.vim'
 " Delete all the buffers except the current/named buffer
@@ -139,21 +131,33 @@ Plug 'dimasg/vim-mark'
 " provides insert mode auto-completion for quotes, parens, brackets, etc.
 Plug 'jiangmiao/auto-pairs'
 Plug 'mileszs/ack.vim'
-" Plug 'Rip-Rip/clang_complete'
-" Plug 'ervandew/supertab'
 Plug 'scrooloose/nerdcommenter'
 Plug 'MattesGroeger/vim-bookmarks'
 Plug 'will133/vim-dirdiff'
 Plug 'tmhedberg/matchit'
 Plug 'Chiel92/vim-autoformat'
-Plug 'rust-lang/rust.vim'
 Plug 'junegunn/fzf', { 'dir': '~/src_root/fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
 Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-rooter'
+" File type based plugins
+Plug 'leshill/vim-json'
+Plug 'plasticboy/vim-markdown'
+Plug 'kergoth/vim-bitbake'
+Plug 'klen/python-mode', { 'for': 'python' }
+Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
+Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
+
+Plug 'embear/vim-localvimrc'
+" If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
+" Script that will search for and load cscope.out databases automatically
+" Plug 'vim-scripts/autoload_cscope.vim'
+" Plug 'majutsushi/tagbar' -- replace by :BTags
 " Plug 'scrooloose/nerdtree' -- replace by :Files
-Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries'  }
+" Plug 'Rip-Rip/clang_complete'
+" Plug 'ervandew/supertab'
 
 """""""colorscheme""""""""
 Plug 'altercation/vim-colors-solarized'
@@ -592,7 +596,8 @@ nnoremap <Space>h :History<CR> " Same with :browse oldfiles
 nnoremap <Space>t :Tags<CR>
 nnoremap <Space>l :BTags<CR>
 nnoremap <Space>c :CSFiles<CR>
-" nnoremap <Space>o :b#<CR>
+
+nnoremap <Space>p :b#<CR>
 nnoremap <Space>o :only<CR>
 nnoremap <Space>s :cs find t <C-R>=expand("<cword>")<CR>
 
@@ -615,3 +620,9 @@ let g:rooter_manual_only = 1
 
 " type :e %% will expend to the current file's parent folder
 cabbr <expr> %% expand('%:p:h')
+
+" P to paste yanked text from register 0
+" yank will save text to registers 0 and " by default.
+" text deleted using d/D/x/X/c/C/s/S commands will be save to " register
+" " register is default register
+nnoremap P "0p
