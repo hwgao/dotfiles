@@ -378,8 +378,8 @@ let g:UltiSnipsEditSplit="vertical"
 inoremap <c-x><c-]> <c-]>
 
 " Quickly edit/reload the vimrc file
-" nmap <silent> <leader>ev :e $MYVIMRC<CR>
-" nmap <silent> <leader>sv :so $MYVIMRC<CR>
+" nmap <silent> <Leader>ev :e $MYVIMRC<CR>
+" nmap <silent> <Leader>sv :so $MYVIMRC<CR>
 
 " map toggle paste mode
 " Refer to http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
@@ -607,5 +607,10 @@ cabbr <expr> %% expand('%:p:h')
 " " register is default register
 nnoremap P "0p
 
- " whitelist all local vimrc
+" whitelist all local vimrc
 let g:localvimrc_whitelist=['/home/hongwei/mywork/', '/home/hongwei/work/']
+
+" Press jk to exist insert mode
+inoremap jk <ESC>
+" Map unused key to no operation
+" inoremap <ESC> <nop>
