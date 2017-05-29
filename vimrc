@@ -225,7 +225,7 @@ if has('gui_running')
     set showmatch       " show the matching part of the pair for [] {} and ()
 else
     set background=dark
-    colorscheme gruvbox
+    colorscheme molokai
     " when terminal or tmux using 16 colors mode
     " colorscheme desert
     " hi CursorLine term=bold cterm=bold guibg=Grey40
@@ -277,12 +277,12 @@ set tags=tags;/
 " nnoremap <silent> <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
 " nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
 " nnoremap <Leader>f :NERDTreeFind<CR>
-map <F7> :Files<CR>
-map <F8> :BTags<CR>
+nnoremap <silent> <F7> :Files<CR>
+nnoremap <silent> <F8> :BTags<CR>
 
 " Display all line that contain the keyward under the cursor
 " :help [I
-map <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
+nnoremap <silent> <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 
 " cscope
 set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
@@ -481,9 +481,6 @@ set confirm
 " Show the tag under cursor in preview window
 nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
-" List the search of the word under cursor and let user to choose
-map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
 " as much as possible of the last line in a window will be displayed.
 " When not set, a last line that doesn't fit is replaced with "@" lines.
 " set display+=lastline
@@ -492,7 +489,6 @@ map <Leader>i [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
 nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
-nnoremap <Leader>s :mksession! ~/.vim/default_session
 
 " set completeopt-=preview "Disable preview document when autocomplete
 set completeopt=longest,menuone
@@ -610,3 +606,6 @@ cabbr <expr> %% expand('%:p:h')
 " text deleted using d/D/x/X/c/C/s/S commands will be save to " register
 " " register is default register
 nnoremap P "0p
+
+ " whitelist all local vimrc
+let g:localvimrc_whitelist=['/home/hongwei/mywork/', '/home/hongwei/work/']
