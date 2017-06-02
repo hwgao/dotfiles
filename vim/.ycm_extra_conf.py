@@ -60,7 +60,8 @@ def GetCompilationInfoForFile(database, filename):
         for extension in SOURCE_EXTENSIONS:
             replacement_file = basename + extension
             if os.path.exists(replacement_file):
-                compilation_info = database.GetCompilationInfoForFile(replacement_file)
+                compilation_info = database.GetCompilationInfoForFile(
+                    replacement_file)
                 if compilation_info.compiler_flags_:
                     return compilation_info
         return None
@@ -111,7 +112,8 @@ def MakeRelativePathsInFlagsAbsolute(flags, working_directory):
 def FlagsForClangComplete(root):
     try:
         clang_complete_path = FindNearest(root, '.clang_complete')
-        clang_complete_flags = open(clang_complete_path, 'r').read().splitlines()
+        clang_complete_flags = open(
+            clang_complete_path, 'r').read().splitlines()
         return clang_complete_flags
     except:
         return None
@@ -147,14 +149,16 @@ def FlagsForCompilationDatabase(root, filename):
     try:
         compilation_db_path = FindNearest(root, 'compile_commands.json')
         compilation_db_dir = os.path.dirname(compilation_db_path)
-        logging.info("Set compilation database directory to " + compilation_db_dir)
+        logging.info("Set compilation database directory to " +
+                     compilation_db_dir)
         compilation_db = ycm_core.CompilationDatabase(compilation_db_dir)
         if not compilation_db:
             logging.info("Compilation database file found but unable to load")
             return None
         compilation_info = GetCompilationInfoForFile(compilation_db, filename)
         if not compilation_info:
-            logging.info("No compilation info for " + filename + " in compilation database")
+            logging.info("No compilation info for " +
+                         filename + " in compilation database")
             return None
         return MakeRelativePathsInFlagsAbsolute(
             compilation_info.compiler_flags_,
