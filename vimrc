@@ -44,6 +44,7 @@
 " * gD -- Search for define in same file
 " format
 " * :AutoFormat -- Format the current file, asytyle 2.05.1 is needed, or clang-format.
+"                  autopep8 is used for python. To install: pip install --user autopep8
 " * :%!astyle -- Call astyle formating current file
 " change
 " * g; -- Jump back to the position of the previous (older) change.
@@ -82,7 +83,7 @@
 " * <Space>b -- fzf Buffers
 " * <Space>h -- fzf Historys
 " * <Space>t -- fzf Tags
-" * <Space>l -- fzf BTags -- map to <F8> too
+" * <Space>l -- fzf BTags
 " * <Space>c -- fzf CSFiles
 " * <Space>o -- Switch back to previous buffer
 " * <Space>m -- max
@@ -142,6 +143,11 @@ Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-rooter'
 Plug 'embear/vim-localvimrc'
+Plug 'majutsushi/tagbar'
+Plug 'scrooloose/nerdtree'
+Plug 'rupa/z'
+Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
+
 " File type based plugins
 Plug 'leshill/vim-json'
 Plug 'plasticboy/vim-markdown'
@@ -154,8 +160,6 @@ Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
 " If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
 " Script that will search for and load cscope.out databases automatically
 " Plug 'vim-scripts/autoload_cscope.vim'
-" Plug 'majutsushi/tagbar' -- replace by :BTags
-" Plug 'scrooloose/nerdtree' -- replace by :Files
 " Plug 'Rip-Rip/clang_complete'
 " Plug 'ervandew/supertab'
 
@@ -171,65 +175,103 @@ Plug 'octol/vim-cpp-enhanced-highlight'
 " All of your Plugins must be added before the following line
 call plug#end()            " required
 
-if has("autocmd")
-    filetype plugin indent on
-endif
-
 " When started as "evim", evim.vim will already have done these settings.
 if v:progname =~? "evim"
   finish
 endif
 
-" Automatic reloading of .vimrc after saved .vimrc
-autocmd! bufwritepost .vimrc source %
+set nocompatible                           " Enables us Vim specific features
+filetype off                               " Reset filetype detection first ...
+filetype plugin indent on                  " ... and enable filetype detection
+set ttyfast                                " Indicate fast terminal conn for faster redraw
+set ttymouse=xterm2                        " Indicate terminal type for mouse codes
+set ttyscroll=3                            " Speedup scrolling
+set laststatus=2                           " Always have a status line
+set autoread                               " Automatically read changed files
+set autoindent                             " Enabile Autoindent
+set hlsearch
+set cursorline
+set fo-=t                                  " Don't automatically wrap text when typing
+set expandtab                              " Use spaces, not tabs in insert mode. Use :retab to change all the
+                                           " Existing tab characters to match the current tab setting
+set tabstop=4                              " Number of spaces that a <Tab> in the file counts for
+set shiftwidth=4                           " Number of spaces to use for each step of (auto)indent
+set smarttab                               " Insert tabs on the start of a line according to shifwidth, not tabstop
+set autoindent
+set smartindent
+set splitright                             " Vertical windows should be split to right
+set splitbelow                             " Horizontal windows should split to bottom
+set backspace=indent,eol,start             " Allow backspacing over everything in insert mode
+set history=50                             " Keep 50 lines of command line history
+set ruler                                  " Show the cursor position all the time
+set showcmd                                " Display incomplete commands
+set incsearch                              " Do incremental searching
+set autowrite                              " Autosave before :make
+set hidden                                 " Buffer should still exist if window is closed
+set fileformats=unix,dos,mac               " Prefer Unix over Windows over OS 9 formats
+set noshowmatch                            " Do not show matching brackets by flickering
+set noshowmode                             " We show the mode with airline or lightline
+set ignorecase                             " Search case insensitive...
+set smartcase                              " ... but not it begins with upper case
+set completeopt=longest,menuone            " set completeopt-=preview Disable preview document when autocomplete
+set confirm                                " Demands confirmation before closing unsaved buffers
+set nofoldenable                           " Turn off folding
+set noerrorbells                           " No beeps
+set tags=tags;/                            " ctags
+set cscopequickfix=s-,c-,d-,i-,t-,e-,a-    " cscope
+set diffopt=filler,vertical                " diff option
+set cino+=g0                               " Rrefer to indent.txt. Not indent c++ scope declarations
+set guioptions-=T                          " hide tool bar
+set wildmenu                               " enhance mode of the command complete
+set backupdir^=~/.vimbackup//              " Where backup file is stored
+set directory^=~/.vimbackup//              " The // at the end of the directory name tells Vim to use the absolute path
+                                           " to the file to create the swap file so there aren't collisions between files
+                                           " of the same name from different directories.
+                                           " The ^= syntax for :set prepends the directory name to the head of the list,
+                                           " so Vim will check that directory first.
+set guifont=Hack\ 12,Monaco\ 10,Fixed      " Note: guifont is used to set GUI version of Vim font.
+                                           " For vim, the font set through terminal or putty is used
+set complete-=i                            " remove search in included files from the complete list
 
-" allow backspacing over everything in insert mode
-set backspace=indent,eol,start
-" bydefault backup off, writebackup on
+" by default backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
 " set nowritebackup
-" set noswapfile  " Swap files store changes you've made to the buffer. If Vim
-                  " or your computer crashes, they allow you to recover those changes
-set history=50    " keep 50 lines of command line history
-set ruler         " show the cursor position all the time
-set showcmd       " display incomplete commands
-set incsearch     " do incremental searching
-set autowrite     " autosave before :make
-set nofoldenable  " turn off folding
+" set noswapfile    " Swap files store changes you've made to the buffer. If Vim
+                    " or your computer crashes, they allow you to recover those changes
 " set number        " show line number
+" set showbreak=↪   " Better line wraps
+" set display+=lastline " As much as possible of the last line in a window will be displayed.
+                        " When not set, a last line that doesn't fit is replaced with "@" lines.
+
 
 " Don't use Ex mode, use Q for formatting
 nnoremap Q gq
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Act like D and C
+nnoremap Y y$
+
 
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
 
-" http://superuser.com/questions/436890/cant-copy-to-clipboard-from-vim
-if has('mouse')
-  set mouse=a
-endif
-
-let python_highlight_all=1
+" Colorscheme
 syntax enable
-set hlsearch
-set cursorline
+set t_Co=256
+let g:rehash256 = 1
+let g:molokai_original = 1
+colorscheme molokai
+" when terminal or tmux using 16 colors mode
+" colorscheme desert
+" hi CursorLine term=bold cterm=bold guibg=Grey40
 
-let g:solarized_termcolors=256
-set t_Co=256           " Terminal support 256 color
-if has('gui_running')
-    source $VIMRUNTIME/mswin.vim
-    behave mswin
-    set background=light
-    colorscheme solarized
-    set showmatch       " show the matching part of the pair for [] {} and ()
-else
-    set background=dark
-    colorscheme molokai
-    " when terminal or tmux using 16 colors mode
-    " colorscheme desert
-    " hi CursorLine term=bold cterm=bold guibg=Grey40
-endif
+" Automatic reloading of .vimrc after saved .vimrc
+autocmd! bufwritepost .vimrc source %
 
 " hide currentline backgroud when in insert mode
 autocmd InsertEnter,InsertLeave * set cul!
@@ -242,50 +284,9 @@ if !exists(":DiffOrig")
         \ | wincmd p | diffthis
 endif
 
-" Ignore case when searching
-set ignorecase
-
-" If no uppercase char -- insensitive search
-" If any uppercase char -- sensitive search
-" Only used when ignorecase is on
-set smartcase
-
-" don't automatically wrap text when typing
-set fo-=t
-
-" Use spaces, not tabs in insert mode
-" Use :retab to change all the existing tab characters to
-" match the current tab setting
-set expandtab
-" Number of spaces that a <Tab> in the file counts for
-set tabstop=4
-" Number of spaces to use for each step of (auto)indent
-set shiftwidth=4
-" insert tabs on the start of a line according to
-" shifwidth, not tabstop
-set smarttab
-set autoindent
-set smartindent
-" show preview window below the current one
-set splitbelow
-set splitright
-
-" ctags
-set tags=tags;/
-
-" let g:tagbar_left=1
-" nnoremap <silent> <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
-" nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
-" nnoremap <Leader>f :NERDTreeFind<CR>
-nnoremap <silent> <F7> :Files<CR>
-nnoremap <silent> <F8> :BTags<CR>
-
-" Display all line that contain the keyward under the cursor
-" :help [I
-nnoremap <silent> <F10> [I:let nr = input("Which one: ")<Bar>exe "normal " . nr ."[\t"<CR>
-
-" cscope
-set cscopequickfix=s-,c-,d-,i-,t-,e-,a-
+let g:tagbar_left=1
+nnoremap <silent> <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
+nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
 
 " quickfix
 nnoremap <silent> <F5> :cn<CR>
@@ -297,31 +298,6 @@ let Grep_Skip_Files = '*.bak *~ *.so *.a *.o *.log *.fw'
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
 
-" hide tool bar
-set guioptions-=T
-
-" enhance mode of the command complete
-set wildmenu
-
-" Where backup file is stored
-set backupdir^=~/.vimbackup//
-" The // at the end of the directory name tells Vim to use the absolute path
-" to the file to create the swap file so there aren't collisions between files
-" of the same name from different directories.
-" The ^= syntax for :set prepends the directory name to the head of the list,
-" so Vim will check that directory first.
-set directory^=~/.vimbackup//
-
-" Note: guifont is used to set GUI version of Vim font.
-" For vim, the font set through terminal or putty is used
-set guifont=Hack\ 12,Monaco\ 10,Fixed
-
-" Saves all open buffers in the background, instead of closing them and re-opening on demand
-set hidden
-
-" Demands confirmation before closing unsaved buffers
-set confirm
-
 " If not use tmux navigator plugin
 if !exists('$TMUX')
     nnoremap <c-j> <c-w>j
@@ -332,10 +308,6 @@ endif
 
 " Disable tmux navigator when zooming the Vim pane
 let g:tmux_navigator_disable_when_zoomed = 1
-
-
-" remove search in included files from the complete list
-set complete-=i
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf = 0
@@ -362,11 +334,10 @@ let g:syntastic_javascript_checkers = ['eslint']
 
 " ycmcompleter hotkeys
 nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
-nnoremap <Leader>yr :YcmCompleter GoToReferences<CR>
-nnoremap <Leader>yd :YcmCompleter GetDoc<CR>
+autocmd FileType python nnoremap <Leader>yr :YcmCompleter GoToReferences<CR>
+autocmd FileType python nnoremap <Leader>yd :YcmCompleter GetDoc<CR>
 
-" UltiSnips Trigger configuration.
-" make compatible with ycm
+" UltiSnips Trigger configuration. Compatible with ycm
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
 let g:UltiSnipsJumpBackwardTrigger="<c-k>"
@@ -377,20 +348,25 @@ let g:UltiSnipsEditSplit="vertical"
 " Not need any plugin to complete a tag
 inoremap <c-x><c-]> <c-]>
 
-" Quickly edit/reload the vimrc file
-" nmap <silent> <Leader>ev :e $MYVIMRC<CR>
-" nmap <silent> <Leader>sv :so $MYVIMRC<CR>
-
 " map toggle paste mode
 " Refer to http://vim.wikia.com/wiki/Toggle_auto-indenting_for_code_paste
 nnoremap <F11> :set invpaste paste?<CR>
 set pastetoggle=<F11>
 set showmode
 
-
 " if line wrapped, jump to the new row, not the next line
+nnoremap <Up> gj
+nnoremap <Down> gk
 nnoremap j gj
 nnoremap k gk
+
+" Show the tag under cursor in preview window
+nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
+
+" change the working directory to the dir for the current editing file
+" :p Make file name a full path.
+" :h Head of the file name(the last component and any separators removed)
+nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
 
 " clear highlighted searches
 " nnoremap <Leader>h :nohlsearch<CR>
@@ -398,6 +374,18 @@ nnoremap k gk
 " Forget to sudo before editing a file that requires root privileges
 " Use w!! to do that after you opened the file already
 cmap w!! w !sudo tee >/dev/null %
+" Show the tag under cursor in preview window
+nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
+
+" as much as possible of the last line in a window will be displayed.
+" When not set, a last line that doesn't fit is replaced with "@" lines.
+" set display+=lastline
+
+" change the working directory to the dir for the current editing file
+" :p Make file name a full path.
+" :h Head of the file name(the last component and any separators removed)
+nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
+
 
 if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-ignore-vcs
@@ -418,12 +406,6 @@ vnoremap > >gv  " better indentation
 " vim-signify
 let g:signify_vcs_list = ['git', 'svn']
 
-" Better line wraps
-" set showbreak=↪
-
-" diff option
-set diffopt=filler,vertical
-
 " find word under cursor with rg, in current dir (use :pwd to check current
 " dir)
 if filereadable("cscope.files")
@@ -432,10 +414,7 @@ else
     nnoremap , :Ack! -w <C-r><C-w> -t c -t cpp
 endif
 
-map <space>, :Ack! -w <C-r><C-w>
-
-" Always have a status line
-set laststatus=2
+nnoremap <space>, :Ack! -w <C-r><C-w>
 
 """"""""""""""""""""""
 " Conf for airline   "
@@ -464,6 +443,7 @@ let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 let g:airline#extensions#branch#use_vcscommand = 1
 let g:airline#extensions#syntastic#enabled = 1
 let g:airline#extensions#whitespace#enabled = 1
+let g:airline#extensions#tagbar#enabled = 1
 
 let g:airline#extensions#tmuxline#enabled = 0
 let g:tmuxline_preset = {
@@ -475,31 +455,16 @@ let g:tmuxline_preset = {
         \'status-justify': 'left'}
         \}
 
-" Confirm if 1 more files to edit
-set confirm
-
-" Show the tag under cursor in preview window
-nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
-
-" as much as possible of the last line in a window will be displayed.
-" When not set, a last line that doesn't fit is replaced with "@" lines.
-" set display+=lastline
-
-" change the working directory to the dir for the current editing file
-" :p Make file name a full path.
-" :h Head of the file name(the last component and any separators removed)
-nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
-
-" set completeopt-=preview "Disable preview document when autocomplete
-set completeopt=longest,menuone
-
 " Disable syntastic for golang
 let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
 " or
 " let g:go_fmt_fail_silently = 1
 
 " python PEP8 indentation
-au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
+au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix lcs=trail:·,tab:»· list
+
+" c/c++
+au BufNewFile,BufRead *.c,*.cpp,*cc,*.h set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix lcs=trail:·,tab:»· list
 
 " web files indentation
 " Note: no space between file types
@@ -514,25 +479,14 @@ au BufNewFile,BufRead *.kv set filetype=kv
 " log
 au BufNewFile,BufRead *.log set filetype=log
 
-" Arduino hardy
-" let g:hardy_arduino_options = "--board arduino:avr:mega"
-
 " NERD Commenter
 " Add spaces after comment delimiters by default
 let g:NERDSpaceDelims = 1
-
-" Use compact syntax for prettified multi-line comments
-" let g:NERDCompactSexyComs = 1
-
 " Align line-wise comment delimiters flush left instead of following code indentation
 let g:NERDDefaultAlign = 'left'
 
-let g:load_doxygen_syntax=1
-
-" cindent option
-" refer to indent.txt
-" g0 -- don't indent c++ scope declarations -- public, protect, private
-set cino+=g0
+" Enable Doxygen highlighting
+" let g:load_doxygen_syntax=1 
 
 " Insert semicolon at the end of line in insert mode
 inoremap ;<cr> <end>;<cr>
@@ -563,6 +517,21 @@ else
     endif
 endif
 
+" Enable to copy to clipboard for operations like yank, delete, change and put
+" http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
+if has('unnamedplus')
+  set clipboard^=unnamed
+  set clipboard^=unnamedplus
+endif
+
+" Search mappings: These will make it so that going to the next one in a
+" search will center on the line it's found in.
+nnoremap n nzzzv
+nnoremap N Nzzzv
+
+" Act like D and C
+nnoremap Y y$
+
 " Make session
 " vim -S ~/.vim/default_session to reopen it
 nnoremap <Leader>s :mksession! ~/.vim/default_session
@@ -584,12 +553,6 @@ nnoremap <Space>s :cs find t <C-R>=expand("<cword>")<CR>
 " Insert a character in normal mode
 noremap <silent> <space>i :exe "normal i".nr2char(getchar())<CR>
 
-" show all tab whitespace with :set list. :set nolist to clear
-" http://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
-"set listchars=eol:$,tab:>-,trail:~,extends:>,precedes:<
-set lcs=trail:·,tab:»·
-set list
-
 " vim-rooter
 let g:rooter_manual_only = 1
 
@@ -610,7 +573,15 @@ nnoremap P "0p
 " whitelist all local vimrc
 let g:localvimrc_whitelist=['/home/hongwei/mywork/', '/home/hongwei/work/']
 
-" Press jk to exist insert mode
-inoremap jk <ESC>
-" Map unused key to no operation
-" inoremap <ESC> <nop>
+" go
+" run :GoBuild or :GoTestCompile based on the go file
+function! s:build_go_files()
+  let l:file = expand('%')
+  if l:file =~# '^\f\+_test\.go$'
+    call go#cmd#Test(0, 1)
+  elseif l:file =~# '^\f\+\.go$'
+    call go#cmd#Build(0)
+  endif
+endfunction
+
+autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
