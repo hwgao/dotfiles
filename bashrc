@@ -160,11 +160,11 @@ if ! shopt -oq posix; then
     . /etc/bash_completion
   fi
 fi
+# stop complete hidden files
+bind 'set match-hidden-files off'
 
 # bash 'cd' replacement function capable keeping up to 10 visited directories
-if [ -f ~/dotfiles/cd2.bash ]; then
-    . ~/dotfiles/cd2.bash
-fi
+[ -f ~/dotfiles/cd2.bash ] && source ~/dotfiles/cd2.bash
 
 export NVM_DIR="/home/hongwei/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
@@ -174,8 +174,8 @@ export NVM_DIR="/home/hongwei/.nvm"
 # --hidden: Search hidden files and folders
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-#export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
-export FZF_DEFAULT_COMMAND="find * ! -path '*/\.*' -type f"
+export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
+#export FZF_DEFAULT_COMMAND="find * ! -path '*/\.*' -type f"
 #export FZF_DEFAULT_OPTS='--exact'
 export FZF_TMUX=1
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash

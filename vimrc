@@ -147,6 +147,8 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'rupa/z'
 Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
+" Plug 'facebook/PathPicker', {'dir': '~/src_root/PathPicker', 'do': 'ln -s $(pwd)/fpp ~/bin/fpp'}
+Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
 
 " File type based plugins
 Plug 'leshill/vim-json'
@@ -232,6 +234,7 @@ set directory^=~/.vimbackup//              " The // at the end of the directory 
 set guifont=Hack\ 12,Monaco\ 10,Fixed      " Note: guifont is used to set GUI version of Vim font.
                                            " For vim, the font set through terminal or putty is used
 set complete-=i                            " remove search in included files from the complete list
+set mouse=a                                " Enable the use of mouse
 
 " by default backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
@@ -409,12 +412,14 @@ let g:signify_vcs_list = ['git', 'svn']
 " find word under cursor with rg, in current dir (use :pwd to check current
 " dir)
 if filereadable("cscope.files")
-    nnoremap , :Ack! -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
+    nnoremap <space>, :Ack! -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
 else
-    nnoremap , :Ack! -w <C-r><C-w> -t c -t cpp
+    nnoremap <space>, :Ack! -w <C-r><C-w> -tc -tcpp
 endif
 
-nnoremap <space>, :Ack! -w <C-r><C-w>
+nnoremap , :Ack! -w <C-r><C-w>
+nnoremap <space>y :Ack! -w <C-r><C-w> -g *.conf -g *.inc -g *.bb -g *.bbappend -g *.bbclass -t py
+
 
 """"""""""""""""""""""
 " Conf for airline   "
@@ -434,10 +439,10 @@ let g:airline_symbols.branch = ''
 let g:airline_symbols.readonly = ''
 let g:airline_symbols.linenr = ''
 
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#left_sep = ''
-let g:airline#extensions#tabline#left_alt_sep = ''
-let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
+"let g:airline#extensions#tabline#enabled = 1
+"let g:airline#extensions#tabline#left_sep = ''
+"let g:airline#extensions#tabline#left_alt_sep = ''
+"let g:airline#extensions#tabline#tab_nr_type = 1 " tab number
 
 " use vcscommand.vim if available
 let g:airline#extensions#branch#use_vcscommand = 1
