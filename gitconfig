@@ -21,8 +21,9 @@
     rw = push origin HEAD:refs/for/master
     vimdiff = difftool -t vimdiff
 	root = !pwd
-
 [push]
 	default = simple
 [init]
 	templatedir = ~/dotfiles/git_template
+[pull]
+	rebase = true

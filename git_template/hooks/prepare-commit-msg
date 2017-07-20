@@ -8,9 +8,44 @@ case "$2,$3" in
 #        if /^#/ && $first++ == 0' "$1" ;;
   *)
       GIT_PROJECT_NAME=$(git config -l | grep -oP url="(.*)" | sed -e 's/^url\=[a-z]*\:\/\/hcgit03\:[0-9]*\///' | sed 's/[ \t]*$//')
-      TEMPLATE_COMMON="short title description on first line within 65 char\n\nmore detailed description of your patch,\nwhich is likely to take up multiple lines. maxlength within 70 char\nif possible, please describe the root cause and solution here\n#please remove this line\n#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na\n[ticket] = na\n[red flag] = y/n\n";
-      TEMPLATE_MMSDK="short title description on first line within 65 char\n\nmore detailed description of your patch,\nwhich is likely to take up multiple lines. maxlength within 70 char\nif possible, please describe the root cause and solution here\n#please remove this line\n#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na\n[ticket] = na\n[DS/Non-DS Test] = Pass/Fail\n[MVC Test] = Pass/Fail\n[red flag] = y/n\n";
-      TEMPLATE_NON_REDFLAG="short title description on first line within 65 char\n\nmore detailed description of your patch,\nwhich is likely to take up multiple lines. maxlength within 70 char\nif possible, please describe the root cause and solution here\n#please remove this line\n#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na\n[ticket] = na\n[red flag] = n\n";
+      TEMPLATE_COMMON="\
+#short title description on first line within 65 char###########
+      
+
+#more detailed description of your patch,
+#which is likely to take up multiple lines. maxlength within 70 char#
+#if possible, please describe the root cause and solution here
+
+#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na
+[ticket] = na
+[red flag] = n
+";
+      TEMPLATE_MMSDK="\
+#short title description on first line within 65 char
+
+      
+#more detailed description of your patch,
+#which is likely to take up multiple lines. maxlength within 70 char#
+#if possible, please describe the root cause and solution here
+
+#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na
+[ticket] = na
+[DS/Non-DS Test] = Pass/Fail
+[MVC Test] = Pass/Fail
+[red flag] = y
+";
+      TEMPLATE_NON_REDFLAG="\
+#short title description on first line within 65 char
+
+      
+#more detailed description of your patch,
+#which is likely to take up multiple lines. maxlength within 70 char#
+#if possible, please describe the root cause and solution here
+
+#[ticket] = mantis_xxx,rr_xxx,hld_xxx,srs_xxx,fcr_xxx,cid_xxx,na
+[ticket] = na
+[red flag] = n
+";
 
       if [[ "$2" == "commit" && "$3" = "HEAD" ]]; then
         echo "";# do nothing for "--amend" option

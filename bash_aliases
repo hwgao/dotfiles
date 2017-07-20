@@ -13,12 +13,11 @@ url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
 }
 
-j() {
+c() {
     [ $# -gt 0  ] && [ -d "$1"  ] && cd "$1" && return
     [ $# -gt 0  ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | fzf --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+    cd "$(_z -l 2>&1 | fzf -e --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
-alias c=j
 
 # Example:
 # s -w word_to search -t c
@@ -106,3 +105,5 @@ rooter() {
         cd $directory
     fi
 }
+
+alias cr=rooter
