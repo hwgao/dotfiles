@@ -6,8 +6,10 @@ alias less='less -i'
 # Must use single quotes, as it doesn't allow expansion of variable
 alias C='c=$(cat ~/.commands | fzf) && echo $c && eval $c'
 alias git-root='cd $(git rev-parse --show-toplevel > /dev/null 2>&1)'
+alias git-fresh='git clean -df; git reset --hard'
 alias rs=rmate
 alias ctags='ctags --exclude=.git --exclude=.repo --exclude=.svn'
+alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 
 url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
@@ -89,13 +91,13 @@ upsearch () {
 # Go back to root folder of git or repo
 rooter() {
     if [ -d .git ]; then
-	# If there is .git in current folder, then search up for .repo first
+    # If there is .git in current folder, then search up for .repo first
         if ! upsearch .repo; then
-			# If can't find .repo, then search up for .git
+            # If can't find .repo, then search up for .git
             upsearch .git
         fi
     else
-		# Or search up for .git
+        # Or search up for .git
         upsearch .git
     fi
 
