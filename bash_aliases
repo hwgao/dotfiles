@@ -109,3 +109,11 @@ rooter() {
 }
 
 alias cr=rooter
+
+repo-git() {
+    if [ -d .repo/manifests/.git ]; then
+        git --git-dir=.repo/manifests/.git/ $@
+    else
+        echo "Don't find repo info"
+    fi
+}
