@@ -192,12 +192,15 @@ bindsym $mod+F5 workspace 5;exec /opt/jd2/JDownloader2
 
 # rofi bindings
 # Can't use quote in command, can quote whole command
-bindsym $mod+F9 exec "rofi -show combi -switchers combi -combi-modi window,run"
+bindsym $mod+F9 exec rofi -show window
 bindsym $mod+F10 exec rofi -show run
 bindsym $mod+F11 exec rofi -show ssh
-bindsym $alt+Tab exec rofi -show window
+bindsym $mod+F12 exec "rofi -show combi -switchers combi -combi-modi window,drun"
+bindsym $alt+Tab exec "rofi -show combi -switchers combi -combi-modi window,drun"
+#bindsym $mod+F9 exec "rofi -show combi -switchers combi -combi-modi window,run"
+#bindsym $mod+F9 exec "rofi -show drun -modi drun"
 # -i -- case insensitive
-bindsym $mod+F12 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
+#bindsym $mod+F12 exec --no-startup-id i3-dmenu-desktop --dmenu='rofi -dmenu -i'
 # Take snapshot and show in eog
 bindsym --release Print exec "import /var/tmp/snapshot.jpg;eog /var/tmp/snapshot.jpg"
 
