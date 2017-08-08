@@ -35,7 +35,7 @@ bindsym $mod+Return exec i3-sensible-terminal
 
 # kill focused window
 bindsym $mod+Shift+q kill
-bindsym $alt+q kill
+bindsym $alt+F4 kill
 
 # start dmenu (a program launcher)
 #bindsym $mod+d exec dmenu_run
@@ -169,7 +169,7 @@ mode "$mode_system" {
 bindsym $mod+Pause mode "$mode_system"
 
 # Auto lock screen if no action for a period of time
-exec xautolock -time 15 -locker i3lock -c 000066 &
+exec xautolock -time 5 -locker i3lock -c 000066 &
 
 #Open Application in specified workspace
 # terminal
@@ -207,8 +207,14 @@ bindsym $alt+Tab exec "rofi -show combi -switchers combi -combi-modi window,drun
 # Take snapshot and show in eog
 bindsym --release Print exec "scrot -z /var/tmp/snapshot.jpg;eog /var/tmp/snapshot.jpg"
 bindsym --release Shift+Print exec "scrot -zs /var/tmp/snapshot.jpg;eog /var/tmp/snapshot.jpg"
+bindsym --release $mod+Print exec "scrot -zu /var/tmp/snapshot.jpg;eog /var/tmp/snapshot.jpg"
 
-#Auto starting applications on startup
+# Pulse Audio controls
+#bindsym XF86AudioRaiseVolume exec --no-startup-id pactl -- set-sink-volume 0 +5%
+#bindsym XF86AudioLowerVolume exec --no-startup-id pactl -- set-sink-volume 0 -5%
+#bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+
+#Auto starting goldendict on startup
 exec goldendict
 
 
