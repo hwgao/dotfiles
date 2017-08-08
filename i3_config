@@ -187,7 +187,7 @@ assign [class="JDownloader"] 5
 bindsym $mod+Tab workspace back_and_forth
 bindsym $alt+l workspace back_and_forth
 
-bindsym $mod+F1 workspace 1;exec gnome-terminal -e tmux attach
+bindsym $mod+F1 workspace 1;exec gnome-terminal -x tmux attach
 bindsym $mod+F2 workspace 2;exec nautilus --no-desktop
 bindsym $mod+F3 workspace 3;exec firefox
 bindsym $mod+F4 workspace 4;exec qtcreator
