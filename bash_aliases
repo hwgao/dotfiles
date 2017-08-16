@@ -4,12 +4,17 @@ alias vs="vim -S ~/.vim/default_session"
 alias diff=colordiff
 alias less='less -i'
 # Must use single quotes, as it doesn't allow expansion of variable
-alias C='c=$(cat ~/.commands | fzf) && echo $c && eval $c'
+alias C='c=$(cat ~/.commands | fzf-tmux) && echo $c && eval $c'
 alias git-root='cd $(git rev-parse --show-toplevel > /dev/null 2>&1)'
 alias git-fresh='git clean -df; git reset --hard'
 alias rs=rmate
 alias ctags='ctags --exclude=.git --exclude=.repo --exclude=.svn'
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
+alias ag='ag -U --path-to-agignore ~/dotfiles/agignore'
+alias rg='rg -u --ignore-file ~/dotfiles/agignore'
+alias qtcreator='~/opt/qtcreator-4.3.1/bin/qtcreator &> /dev/null &'
+alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
+alias clion='/home/hongwei/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.3544.40/bin/clion.sh &'
 
 url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
@@ -18,37 +23,51 @@ url2epub() {
 c() {
     [ $# -gt 0  ] && [ -d "$1"  ] && cd "$1" && return
     [ $# -gt 0  ] && _z "$*" && return
-    cd "$(_z -l 2>&1 | fzf -e --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
+    cd "$(_z -l 2>&1 | fzf-tmux -e --height 40% --reverse --inline-info +s --tac --query "$*" | sed 's/^[0-9,.]* *//')"
 }
 
 # Example:
 # s -w word_to search -t c
 # s -w word_to_search -g *.c
+# s() {
+#     vim +"Ack $*"
+# }
 s() {
-    vim +"Ack $*"
+    #rg -u --vimgrep --ignore-file ~/dotfiles/agignore "$@" | vim -
+    local TEMPFILE=$(mktemp)
+    rg -u --vimgrep --ignore-file ~/dotfiles/agignore "$@" | tee "$TEMPFILE"
+    if [ -s "$TEMPFILE" ]; then
+       vim -c :copen -q "$TEMPFILE"
+    fi
+    rm -f "$TEMPFILE"
 }
 
 ff() {
-    F=$(fzf -m)
+    # -m -- enable multi-select mode, TAB and shift-TAB to mark multiple items
+    F=$(fzf-tmux -m "$@")
     echo F=\"$F\"
 }
 
 vv() {
-   vi ${F}
+   if [ ! -z "${F}" ]; then
+       vi ${F}
+   fi
 }
 
 cc() {
-    cd "$(dirname $(echo $F | awk '{print $1}'))"
+   if [ ! -z "${F}" ]; then
+       cd "$(dirname $(echo $F | awk '{print $1}'))"
+   fi
 }
 
 ffv() {
-   F=$(fzf -m)
-   vi $F
+    ff "$@"
+    vv
 }
 
 ffc() {
-   F=$(fzf)
-   cd "$(dirname "$F")"
+    ff "$@"
+    cc
 }
 
 vb() {
@@ -119,3 +138,32 @@ repo-git() {
         echo "Don't find repo info"
     fi
 }
+
+git-commit() {
+    git diff --cached --check --no-ext-diff && git commit
+}
+
+o() {
+    filename=$(basename "$1")
+    ## Substring Removal
+    # "#"  -- delete shortest match from front
+    # "##" -- delete longest match from front
+    # "%"  -- delete shortest match from back
+    # "%%" -- delete longest match from back
+    extension="${filename##*.}"
+    #filename="${filename%.*}"
+    case "$extension" in
+        pdf)
+            exe=mupdf
+            ;;
+        com|org)
+            exe="uzbl -u"
+            ;;
+        *)
+            exe=gvim
+            ;;
+    esac
+
+    eval "$exe $1 2> /dev/null &"
+}
+

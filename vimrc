@@ -231,7 +231,7 @@ set directory^=~/.vimbackup//              " The // at the end of the directory 
                                            " of the same name from different directories.
                                            " The ^= syntax for :set prepends the directory name to the head of the list,
                                            " so Vim will check that directory first.
-set guifont=Hack\ 12,Monaco\ 10,Fixed      " Note: guifont is used to set GUI version of Vim font.
+set guifont=Hack\ 10,Monaco\ 10,Fixed      " Note: guifont is used to set GUI version of Vim font.
                                            " For vim, the font set through terminal or putty is used
 set complete-=i                            " remove search in included files from the complete list
 set mouse=a                                " Enable the use of mouse

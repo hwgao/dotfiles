@@ -72,6 +72,7 @@ install_gui_cmds() {
     sudo apt-get install -y zim python-gtksourceview2 meld vim-gnome
     # need by tmux to copy to clipboard
     sudo apt-get install -y xclip
+    sudo apt-get install -y uzbl
     # Terminal music player
     sudo apt-get install -y cmus
     sudo apt-get install -y goldendict
