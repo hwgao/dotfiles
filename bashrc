@@ -175,7 +175,7 @@ export NVM_DIR="/home/hongwei/.nvm"
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
 #export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
 #export FZF_DEFAULT_COMMAND="find * ! -path '*/\.*' -type f"
-export FZF_DEFAULT_COMMAND='ag -U --path-to-agignore ~/dotfiles/agignore -g ""'
+export FZF_DEFAULT_COMMAND='ag -U --path-to-ignore ~/dotfiles/agignore -g ""'
 #export FZF_DEFAULT_COMMAND="find * -type f ! -path '*/\.*' ! -path 'build*' ! -path '*downloads*'"
 #export FZF_DEFAULT_OPTS='--exact'
 export FZF_TMUX=1

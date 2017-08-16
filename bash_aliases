@@ -10,7 +10,7 @@ alias git-fresh='git clean -df; git reset --hard'
 alias rs=rmate
 alias ctags='ctags --exclude=.git --exclude=.repo --exclude=.svn'
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
-alias ag='ag -U --path-to-agignore ~/dotfiles/agignore'
+alias ag='ag -U --path-to-ignore ~/dotfiles/agignore'
 alias rg='rg -u --ignore-file ~/dotfiles/agignore'
 alias qtcreator='~/opt/qtcreator-4.3.1/bin/qtcreator &> /dev/null &'
 alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
