@@ -173,8 +173,7 @@ export NVM_DIR="/home/hongwei/.nvm"
 # --hidden: Search hidden files and folders
 # --follow: Follow symlinks
 # --glob: Additional conditions for search (in this case ignore everything in the .git/ folder)
-#export FZF_DEFAULT_COMMAND='rg --files --no-ignore-vcs'
-#export FZF_DEFAULT_COMMAND="find * ! -path '*/\.*' -type f"
+#export FZF_DEFAULT_COMMAND='rg -u --files --ignore-file ~/dotfiles/agignore'
 export FZF_DEFAULT_COMMAND='ag -U --path-to-ignore ~/dotfiles/agignore -g ""'
 #export FZF_DEFAULT_COMMAND="find * -type f ! -path '*/\.*' ! -path 'build*' ! -path '*downloads*'"
 #export FZF_DEFAULT_OPTS='--exact'

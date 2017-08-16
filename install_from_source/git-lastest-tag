@@ -1,0 +1,26 @@
+#!/bin/bash
+set -x
+
+NAME=${1##*/}
+NAME=${NAME%%.*}
+NAME="${2}/${NAME}"
+
+if [ ! -d "${NAME}" ]; then
+    git clone "${1}"
+    cd "${NAME}"
+else
+    cd "${NAME}"
+    # Get new tags from remote
+    git fetch --tags
+fi
+
+# Get latest tag name
+
+if [ "${3}" = "-i" ]; then
+    latestTag=$(git tag | fzf)
+else
+    latestTag="$(git describe --tags `git rev-list --tags --max-count=1`)"
+fi
+
+# Checkout latest tag
+git checkout "${latestTag}"

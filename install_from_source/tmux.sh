@@ -2,13 +2,10 @@
 
 ###tmux
 sudo apt-get install -y build-essential libevent-dev libncurses-dev
-cd ~/src_root
-git clone https://github.com/tmux/tmux.git
-cd tmux
-git checkout tags/2.3 -b 2.3
+. ./git-lastest-tag https://github.com/tmux/tmux.git ~/src_root
 sh autogen.sh
 ./configure && make
 
-sudo apt-get remove tmux
+sudo apt-get remove -y tmux
 sudo make install
 

@@ -1,0 +1,6 @@
+build/
+build-*/
+downloads/
+documentation/
+sstate-cache/
+.sstate-cache/

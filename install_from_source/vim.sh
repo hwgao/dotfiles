@@ -1,7 +1,5 @@
 #!/bin/bash
 
-SRC_ROOT=~/src_root
-
 #Install checkinstall to easily uninstall
 sudo apt-get install -y checkinstall
 #Go to source code directory, then run "sudo checkinstall"
@@ -12,9 +10,7 @@ sudo apt-get install -y libncurses5-dev libgnome2-dev libgnomeui-dev \
     libcairo2-dev libx11-dev libxpm-dev libxt-dev python-dev \
     python3-dev ruby-dev lua5.1 lua5.1-dev libperl-dev git
 
-cd ${SRC_ROOT}
-git clone https://github.com/vim/vim.git
-cd vim
+. ./git-lastest-tag https://github.com/vim/vim.git ~/src_root
 ./configure \
     --with-features=huge \
     --enable-multibyte \

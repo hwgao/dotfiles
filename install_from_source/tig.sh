@@ -1,8 +1,6 @@
 #!/bin/sh
+set -x
 
-cd ~/src_root
-git clone https://github.com/jonas/tig.git
-cd tig
-git checkout $(git describe --tags)
-make prefix=/usr/local
-sudo checkinstall prefix=/usr/local
+. ./git-lastest-tag https://github.com/jonas/tig.git ~/src_root
+make
+sudo make install prefix=/usr/local
