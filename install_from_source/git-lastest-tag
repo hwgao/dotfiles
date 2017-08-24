@@ -6,6 +6,7 @@ NAME=${NAME%%.*}
 NAME="${2}/${NAME}"
 
 if [ ! -d "${NAME}" ]; then
+    cd "${2}"
     git clone "${1}"
     cd "${NAME}"
 else
@@ -16,10 +17,10 @@ fi
 
 # Get latest tag name
 
-if [ "${3}" = "-i" ]; then
-    latestTag=$(git tag | fzf)
-else
+if [ "${3}" = "-q" ]; then
     latestTag="$(git describe --tags `git rev-list --tags --max-count=1`)"
+else
+    latestTag=$(git tag | fzf)
 fi
 
 # Checkout latest tag
