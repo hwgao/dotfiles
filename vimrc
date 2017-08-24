@@ -158,6 +158,8 @@ Plug 'kergoth/vim-bitbake'
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
+Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+"Plug 'WolfgangMehner/bash-support'
 
 " If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
 " Script that will search for and load cscope.out databases automatically
@@ -235,6 +237,8 @@ set guifont=Hack\ 10,Monaco\ 10,Fixed      " Note: guifont is used to set GUI ve
                                            " For vim, the font set through terminal or putty is used
 set complete-=i                            " remove search in included files from the complete list
 set mouse=a                                " Enable the use of mouse
+set lcs=trail:·,tab:»·                     " https://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
+
 
 " by default backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
@@ -315,6 +319,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf = 0
 let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
+let g:ycm_collect_identifiers_from_tags_files = 1
 
 " Setting it makes YCM remove all Syntastic checkers set for the c, cpp,
 " objc and objcpp filetypes
@@ -491,7 +496,7 @@ let g:NERDSpaceDelims = 1
 let g:NERDDefaultAlign = 'left'
 
 " Enable Doxygen highlighting
-" let g:load_doxygen_syntax=1 
+" let g:load_doxygen_syntax=1
 
 " Insert semicolon at the end of line in insert mode
 inoremap ;<cr> <end>;<cr>
@@ -590,3 +595,6 @@ function! s:build_go_files()
 endfunction
 
 autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
+
+" Auto strip trailing spaces on save
+autocmd BufWritePre * :%s/\s\+$//e

@@ -48,6 +48,15 @@ ff() {
     echo F=\"$F\"
 }
 
+fc() {
+    if [ -f cscope.files ]; then
+        F=$(cat cscope.files | fzf-tmux -m "$@")
+        echo F=\"$F\"
+    else
+        ff
+    fi
+}
+
 vv() {
    if [ ! -z "${F}" ]; then
        vi ${F}
@@ -167,3 +176,38 @@ o() {
     eval "$exe $1 2> /dev/null &"
 }
 
+swap() {
+    local SRC
+    local DEST
+    local TMP
+    if [ $# -eq 1 ]; then
+        SRC="${1%.hiden}"
+        DEST="${SRC}.hiden"
+    elif [ $# -ge 2 ]; then
+        SRC="$1"
+        DEST="$2"
+    fi
+
+    if [ -e "${SRC}" ]; then
+        if [ -e "${DEST}" ]; then
+            TMP=".${SRC}.tmp"
+            mv "${SRC}" "${TMP}"
+            mv "${DEST}" "${SRC}"
+            mv "${TMP}" "${DEST}"
+        else
+            mv "${SRC}" "${DEST}"
+        fi
+    else
+        if [ -e "${DEST}" ]; then
+            mv "${DEST}" "${SRC}"
+        fi
+    fi
+}
+
+comp() {
+    vi -c ":DirDiff ${1} ${2}"
+}
+
+mru() {
+    vi -c ":History<CR>"
+}
