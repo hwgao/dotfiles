@@ -1,3 +1,4 @@
+# ex: ts=4
 import os
 import os.path
 import logging
@@ -14,21 +15,17 @@ BASE_FLAGS = [
     '-ferror-limit=10000',
     '-DNDEBUG',
     '-std=c++11',
-    '-xc++',
-    '-isystem',
-    '/usr/include/'
+    '-xc++'
 ]
 
-# Add relative and absolute include paths
-# the relative path is the parent paths of the current edited file
-INC_FLAGS = [
-]
-
-# Recursively add relative and absolute include paths
-# the relative path is the parent paths of the current edited file
-R_INC_FLAGS = [
+DEFAULT_INC_FLAGS = [
     'include',
-    'inc',
+    'inc'
+]
+
+# Must be absolute paths
+SYS_INC_FLAGS = [
+    '/usr/include/',
     '/usr/local/include'
 ]
 
@@ -129,22 +126,6 @@ def FlagsForR(root):
     return flags
 
 
-def FlagsForInclude(root):
-    try:
-        include_path = FindNearest(root, 'include')
-        return FlagsForR(include_path)
-    except:
-        return None
-
-
-def FlagsForInc(root):
-    try:
-        inc_path = FindNearest(root, 'inc')
-        return FlagsForR(inc_path)
-    except:
-        return None
-
-
 def FlagsForCompilationDatabase(root, filename):
     try:
         compilation_db_path = FindNearest(root, 'compile_commands.json')
@@ -167,23 +148,39 @@ def FlagsForCompilationDatabase(root, filename):
         return None
 
 
+def IncludeFile(root, filename):
+    try:
+        fpath = FindNearest(root, filename)
+        if (not os.path.isfile(fpath)):
+            return None
+        lines = [os.path.join(os.path.dirname(fpath), line.rstrip('\n')) for line in open(fpath)]
+        return lines
+    except:
+        return None
+
+
 def IncludePaths(root):
     flags = []
-    for d in INC_FLAGS:
-        if not d.startswith('/'):
-            try:
-                d = FindNearest(root, d)
-            except:
-                continue
-        flags += ["-I" + d]
 
-    for d in R_INC_FLAGS:
-        if not d.startswith('/'):
-            try:
-                d = FindNearest(root, d)
-            except:
-                continue
-        flags += FlagsForR(d)
+    paths = IncludeFile(root, '.ycm_include_cross')
+    if paths:
+        for d in paths:
+            flags += ["-I" + d]
+    else:
+        paths = IncludeFile(root, '.ycm_include_native')
+        if paths:
+            for d in paths:
+                flags += ["-I" + d]
+        else:
+            for d in DEFAULT_INC_FLAGS:
+                try:
+                    d = FindNearest(root, d)
+                except:
+                    continue
+                flags += ["-I" + d]
+
+        for d in SYS_INC_FLAGS:
+            flags += ["-I" + d]
 
     return flags
 
