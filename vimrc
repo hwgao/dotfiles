@@ -147,8 +147,8 @@ Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'rupa/z'
 Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
-" Plug 'facebook/PathPicker', {'dir': '~/src_root/PathPicker', 'do': 'ln -s $(pwd)/fpp ~/bin/fpp'}
 Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
+Plug 'tpope/vim-sleuth'
 
 " File type based plugins
 Plug 'leshill/vim-json'
@@ -156,6 +156,7 @@ Plug 'plasticboy/vim-markdown'
 Plug 'kergoth/vim-bitbake'
 "Plug 'klen/python-mode', { 'for': 'python' }
 Plug 'rust-lang/rust.vim', { 'for': 'rust' }
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
@@ -167,14 +168,7 @@ Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
 " Plug 'Rip-Rip/clang_complete'
 " Plug 'ervandew/supertab'
 
-"""""""colorscheme""""""""
-Plug 'altercation/vim-colors-solarized'
-" Retro groove color scheme for Vim
-Plug 'morhetz/gruvbox'
-Plug 'dracula/vim'
-Plug 'tomasr/molokai'
-Plug 'octol/vim-cpp-enhanced-highlight'
-"""""""colorscheme""""""""
+Plug 'flazz/vim-colorschemes'
 
 " All of your Plugins must be added before the following line
 call plug#end()            " required
@@ -237,7 +231,9 @@ set guifont=Hack\ 10,Monaco\ 10,Fixed      " Note: guifont is used to set GUI ve
                                            " For vim, the font set through terminal or putty is used
 set complete-=i                            " remove search in included files from the complete list
 set mouse=a                                " Enable the use of mouse
-set lcs=trail:·,tab:»·                     " https://stackoverflow.com/questions/1675688/make-vim-show-all-white-spaces-as-a-character
+set list
+set listchars=""                           " reset
+set listchars=tab:→\ ,trail:·              " To keep the trailing space and avoid being auto removed add extra "
 
 
 " by default backup off, writebackup on
@@ -269,13 +265,15 @@ inoremap <C-U> <C-G>u<C-U>
 
 " Colorscheme
 syntax enable
-set t_Co=256
 let g:rehash256 = 1
 let g:molokai_original = 1
 colorscheme molokai
+set background=dark
+" hi Normal ctermbg=NONE
 " when terminal or tmux using 16 colors mode
 " colorscheme desert
 " hi CursorLine term=bold cterm=bold guibg=Grey40
+
 
 " Automatic reloading of .vimrc after saved .vimrc
 autocmd! bufwritepost .vimrc source %
@@ -324,17 +322,17 @@ let g:ycm_collect_identifiers_from_tags_files = 1
 " Setting it makes YCM remove all Syntastic checkers set for the c, cpp,
 " objc and objcpp filetypes
 " YCM's diagnostics UI is only supported for C-family languages
-let g:ycm_show_diagnostics_ui = 0 "default 1
 let g:ycm_always_populate_location_list = 1 "default 0
 " or
 " sysntastic setting for c++11
-let g:syntastic_cpp_compiler = 'clang++'
-let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
+"let g:ycm_show_diagnostics_ui = 0 "default 1
+"let g:syntastic_cpp_compiler = 'clang++'
+"let g:syntastic_cpp_compiler_options = '-std=c++11 -Wall -Wextra -Wpedantic'
 "let g:syntastic_always_populate_loc_list=1
 "let g:syntastic_auto_loc_list=1
-let g:syntastic_check_on_open=1
-let g:syntastic_check_on_wq=1
-let g:syntastic_aggregate_errors=1
+"let g:syntastic_check_on_open=1
+"let g:syntastic_check_on_wq=1
+"let g:syntastic_aggregate_errors=1
 
 " JavaScript lint -- eslint
 " Install: # npm install -g eslint
@@ -382,18 +380,10 @@ nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
 " Forget to sudo before editing a file that requires root privileges
 " Use w!! to do that after you opened the file already
 cmap w!! w !sudo tee >/dev/null %
-" Show the tag under cursor in preview window
-nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
 " as much as possible of the last line in a window will be displayed.
 " When not set, a last line that doesn't fit is replaced with "@" lines.
 " set display+=lastline
-
-" change the working directory to the dir for the current editing file
-" :p Make file name a full path.
-" :h Head of the file name(the last component and any separators removed)
-nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
-
 
 if executable("rg")
     set grepprg=rg\ --vimgrep\ --no-ignore-vcs
@@ -524,6 +514,7 @@ else
         " macos
         noremap <Leader>y "*y
         noremap <Leader>p "*p
+        " for macvim, directly use cmd+c and cmd+v
     endif
 endif
 
@@ -557,7 +548,7 @@ nnoremap <Space>l :BTags<CR>
 nnoremap <Space>c :CSFiles<CR>
 
 nnoremap <Space>p :b#<CR>
-nnoremap <Space>o :only<CR>
+nnoremap <Space>o :only<CR>:diffoff<CR>
 nnoremap <Space>s :cs find t <C-R>=expand("<cword>")<CR>
 
 " Insert a character in normal mode
@@ -598,3 +589,6 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 
 " Auto strip trailing spaces on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+" Make `jj` and `jk` throw you into normal mode
+inoremap jk <esc>
