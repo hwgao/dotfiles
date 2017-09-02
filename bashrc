@@ -165,8 +165,9 @@ bind 'set match-hidden-files off'
 # bash 'cd' replacement function capable keeping up to 10 visited directories
 [ -f ~/dotfiles/cd2.bash ] && source ~/dotfiles/cd2.bash
 
-export NVM_DIR="/home/hongwei/.nvm"
+export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # --files: List files that would be searched but do not search
 # --no-ignore: Do not respect .gitignore, etc...
@@ -186,5 +187,5 @@ export GRAILS_HOME='/opt/grails-2.2.1'
 PATH="$PATH:${GRAILS_HOME}/bin"
 
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="/home/hongwei/.sdkman"
-[[ -s "/home/hongwei/.sdkman/bin/sdkman-init.sh" ]] && source "/home/hongwei/.sdkman/bin/sdkman-init.sh"
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

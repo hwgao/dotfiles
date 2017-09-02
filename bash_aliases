@@ -15,6 +15,7 @@ alias rg='rg -u --ignore-file ~/dotfiles/agignore'
 alias qtcreator='~/opt/qtcreator-4.3.1/bin/qtcreator &> /dev/null &'
 alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
 alias clion='/home/hongwei/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.3544.40/bin/clion.sh &'
+alias bmake='bear make'
 
 url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
@@ -149,7 +150,7 @@ repo-git() {
 }
 
 git-commit() {
-    git diff --cached --check --no-ext-diff && git commit
+    git diff --cached --check --no-ext-diff && git commit $@
 }
 
 o() {
