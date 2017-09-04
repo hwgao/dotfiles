@@ -5,7 +5,19 @@ import logging
 import ycm_core
 
 # Can add absolute include path here
-BASE_FLAGS = [
+BASE_C_FLAGS = [
+    '-Wall',
+    '-Wextra',
+    '-Werror',
+    '-Wno-long-long',
+    '-Wno-variadic-macros',
+    '-fexceptions',
+    '-ferror-limit=10000',
+    '-DNDEBUG',
+    '-xc'
+]
+
+BASE_CPP_FLAGS = [
     '-Wall',
     '-Wextra',
     '-Werror',
@@ -38,6 +50,10 @@ SOURCE_EXTENSIONS = [
     '.mm'
 ]
 
+SOURCE_C_EXTENSIONS = [
+    '.c'
+]
+
 HEADER_EXTENSIONS = [
     '.h',
     '.hxx',
@@ -49,6 +65,10 @@ HEADER_EXTENSIONS = [
 def IsHeaderFile(filename):
     extension = os.path.splitext(filename)[1]
     return extension in HEADER_EXTENSIONS
+
+def IsCFile(filename):
+    extension = os.path.splitext(filename)[1]
+    return extension in SOURCE_C_EXTENSIONS
 
 
 def GetCompilationInfoForFile(database, filename):
@@ -191,7 +211,10 @@ def FlagsForFile(filename):
     if compilation_db_flags:
         final_flags = compilation_db_flags
     else:
-        final_flags = BASE_FLAGS
+        if IsCFile(filename):
+            final_flags = BASE_C_FLAGS
+        else:
+            final_flags = BASE_CPP_FLAGS
         clang_flags = FlagsForClangComplete(root)
         if clang_flags:
             final_flags += clang_flags
