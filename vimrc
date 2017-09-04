@@ -74,7 +74,8 @@
 " * <Leader>y -- Cross vim copy if no X11 or copy to system clipboard
 " * <Leader>p -- Paste above copied text
 " * <Leader>s -- Save session
-" * <Leader>c -- change current dir to the current file's dir
+" * <Leader>. -- Set the current directory to the path of the current file
+" * <Leader>c -- Close buffer
 " * <Leader>cc -- Comment out the current line or text selected in visual mode
 " * <Leader>c<space> -- Toggles the comment state of the selected line(s)
 " * <Leader>cs -- Comments out the selected lines with a pretty block formatted layout
@@ -149,6 +150,7 @@ Plug 'rupa/z'
 Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
 Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
 Plug 'tpope/vim-sleuth'
+Plug 'sheerun/vim-polyglot'
 
 " File type based plugins
 Plug 'leshill/vim-json'
@@ -221,6 +223,9 @@ set diffopt=filler,vertical                " diff option
 set cino+=g0                               " Rrefer to indent.txt. Not indent c++ scope declarations
 set guioptions-=T                          " hide tool bar
 set wildmenu                               " enhance mode of the command complete
+set wildignore+=.git
+set wildignore+=*.o,*.obj,*.a,*.so
+set wildignore+=*.pyc,__pycache
 set backupdir^=~/.vimbackup//              " Where backup file is stored
 set directory^=~/.vimbackup//              " The // at the end of the directory name tells Vim to use the absolute path
                                            " to the file to create the swap file so there aren't collisions between files
@@ -298,8 +303,8 @@ nnoremap <silent> <F5> :cn<CR>
 nnoremap <silent> <F6> :cp<CR>
 
 " Grep
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git .repo obj build lib'
-let Grep_Skip_Files = '*.bak *~ *.so *.a *.o *.log *.fw'
+let Grep_Skip_Dirs = 'RCS CVS SCCS .svn .git .repo obj build lib node_modules'
+let Grep_Skip_Files = '*.bak *~ *.so *.a *.o *.log *.fw *.db'
 nnoremap <silent> <F3> :Bgrep<CR>
 nnoremap <silent> <F4> :Rgrep<CR>
 
@@ -369,10 +374,16 @@ nnoremap k gk
 " Show the tag under cursor in preview window
 nnoremap <Leader>] <Esc>:exe "ptjump " . expand("<cword>")<Esc>
 
-" change the working directory to the dir for the current editing file
+" Only set the current directory for the current window with :lcd
 " :p Make file name a full path.
 " :h Head of the file name(the last component and any separators removed)
-nnoremap <Leader>c :cd %:p:h<CR>:pwd<CR>
+nnoremap <Leader>. :lcd %:p:h<CR>:pwd<CR>
+
+" Edit file in the same directory
+nnoremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>")"
+
+" Close buffer
+nnoremap <leader>c :bd<CR>"
 
 " clear highlighted searches
 " nnoremap <Leader>h :nohlsearch<CR>
