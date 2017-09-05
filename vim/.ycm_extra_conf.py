@@ -46,8 +46,7 @@ SOURCE_EXTENSIONS = [
     '.cxx',
     '.cc',
     '.c',
-    '.m',
-    '.mm'
+    '.C'
 ]
 
 SOURCE_C_EXTENSIONS = [
@@ -56,6 +55,7 @@ SOURCE_C_EXTENSIONS = [
 
 HEADER_EXTENSIONS = [
     '.h',
+    '.H',
     '.hxx',
     '.hpp',
     '.hh'

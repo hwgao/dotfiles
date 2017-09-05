@@ -294,8 +294,16 @@ if !exists(":DiffOrig")
         \ | wincmd p | diffthis
 endif
 
+function! ToggleNERDTreeFind()
+    if g:NERDTree.IsOpen()
+        execute ':NERDTreeClose'
+    else
+        execute ':NERDTreeFind'
+    endif
+endfunction
+
 let g:tagbar_left=1
-nnoremap <silent> <F7> :TagbarClose<CR>:NERDTreeToggle<CR>
+nnoremap <silent> <F7> :TagbarClose<CR>:call ToggleNERDTreeFind()<CR>
 nnoremap <silent> <F8> :NERDTreeClose<CR>:TagbarToggle<CR>
 
 " quickfix
@@ -418,12 +426,12 @@ let g:signify_vcs_list = ['git', 'svn']
 " find word under cursor with rg, in current dir (use :pwd to check current
 " dir)
 if filereadable("cscope.files")
-    nnoremap <space>, :Ack! -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
+    nnoremap , :Ack! -w <C-r><C-w> `grep -v -e "^-.*" cscope.files`
 else
-    nnoremap <space>, :Ack! -w <C-r><C-w> -tc -tcpp
+    nnoremap , :Ack! -w <C-r><C-w> -tc -tcpp
 endif
 
-nnoremap , :Ack! -w <C-r><C-w>
+nnoremap <space>, :Ack! -w <C-r><C-w>
 nnoremap <space>y :Ack! -w <C-r><C-w> -g *.conf -g *.inc -g *.bb -g *.bbappend -g *.bbclass -t py
 
 
