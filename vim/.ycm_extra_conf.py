@@ -30,7 +30,7 @@ BASE_CPP_FLAGS = [
     '-xc++'
 ]
 
-DEFAULT_INC_FLAGS = [
+NEAREST_INC_FLAGS = [
     'include',
     'inc'
 ]
@@ -181,6 +181,12 @@ def IncludeFile(root, filename):
 
 def IncludePaths(root):
     flags = []
+    for d in NEAREST_INC_FLAGS:
+        try:
+            d = FindNearest(root, d)
+        except:
+            continue
+        flags += ["-I" + d]
 
     paths = IncludeFile(root, '.ycm_include_cross')
     if paths:
@@ -190,13 +196,6 @@ def IncludePaths(root):
         paths = IncludeFile(root, '.ycm_include_native')
         if paths:
             for d in paths:
-                flags += ["-I" + d]
-        else:
-            for d in DEFAULT_INC_FLAGS:
-                try:
-                    d = FindNearest(root, d)
-                except:
-                    continue
                 flags += ["-I" + d]
 
         for d in SYS_INC_FLAGS:

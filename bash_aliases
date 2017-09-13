@@ -16,6 +16,7 @@ alias qtcreator='~/opt/qtcreator-4.3.1/bin/qtcreator &> /dev/null &'
 alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
 alias clion='/home/hongwei/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.3544.40/bin/clion.sh &'
 alias bmake='bear make'
+alias gen-ycm-include-cross='find -type d -iname include > .ycm_include_cross'
 
 url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
@@ -174,7 +175,7 @@ o() {
             ;;
     esac
 
-    eval "$exe $1 2> /dev/null &"
+    eval "$exe \"$1\" 2> /dev/null &"
 }
 
 swap() {

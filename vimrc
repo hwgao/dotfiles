@@ -149,7 +149,6 @@ Plug 'scrooloose/nerdtree'
 Plug 'rupa/z'
 Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
 Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
-Plug 'tpope/vim-sleuth'
 Plug 'sheerun/vim-polyglot'
 
 " File type based plugins
@@ -162,6 +161,7 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
+Plug 'tpope/vim-sleuth', { 'for': 'python' }
 "Plug 'WolfgangMehner/bash-support'
 
 " If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
@@ -239,7 +239,7 @@ set mouse=a                                " Enable the use of mouse
 set list
 set listchars=""                           " reset
 set listchars=tab:→\ ,trail:·              " To keep the trailing space and avoid being auto removed add extra "
-
+set shortmess=a                            " Make messages shorter
 
 " by default backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
@@ -480,10 +480,10 @@ let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
 " let g:go_fmt_fail_silently = 1
 
 " python PEP8 indentation
-au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix lcs=trail:·,tab:»· list
+au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 " c/c++
-au BufNewFile,BufRead *.c,*.cpp,*cc,*.h set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix lcs=trail:·,tab:»· list
+au BufNewFile,BufRead *.c,*.cpp,*cc,*.h set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 " web files indentation
 " Note: no space between file types
@@ -497,6 +497,9 @@ au BufNewFile,BufRead *.kv set filetype=kv
 
 " log
 au BufNewFile,BufRead *.log set filetype=log
+
+" go
+au BufNewFile,BufRead *.go set nolist
 
 " NERD Commenter
 " Add spaces after comment delimiters by default

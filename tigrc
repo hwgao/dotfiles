@@ -1,0 +1,15 @@
+#push local changes to origin
+bind status P !git push origin
+bind main P !git push origin
+
+#push local changed to review
+bind status R !git push origin HEAD:refs/for/master
+
+#Compare changed file in status view
+bind status <F4> !sh -c "git difftool -y \"$(git rev-parse --show-toplevel)/%(file)\""
+
+#Compare selected commit in log view (main view) with its parent
+bind main <F4> !git difftool %(commit)^!
+
+#Compare two selected commits, press F5 to select the first commit. Then move to the other commit and press F5 again to compare
+bind main <F5> !sh -c "if [[ $(git branch --list temp-compare-base) != \"\"  ]]; then git difftool temp-compare-base..%(commit); git branch --delete temp-compare-base; else git branch temp-compare-base %(commit); fi"
