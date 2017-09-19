@@ -150,6 +150,8 @@ Plug 'rupa/z'
 Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
 Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
 Plug 'sheerun/vim-polyglot'
+Plug 'hwgao/detectindent'
+
 
 " File type based plugins
 Plug 'leshill/vim-json'
@@ -161,7 +163,6 @@ Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries', 'for': 'go' }
 Plug 'rhysd/wandbox-vim', { 'for': 'cpp,c' }
 Plug 'google/yapf', { 'rtp': 'plugins/vim', 'for': 'python' }
-Plug 'tpope/vim-sleuth', { 'for': 'python' }
 "Plug 'WolfgangMehner/bash-support'
 
 " If managed it here, 'vim -t tag' can't work. Move it to global plugin folder
@@ -192,10 +193,10 @@ set autoindent                             " Enabile Autoindent
 set hlsearch
 set cursorline
 set fo-=t                                  " Don't automatically wrap text when typing
-set expandtab                              " Use spaces, not tabs in insert mode. Use :retab to change all the
-                                           " Existing tab characters to match the current tab setting
 set tabstop=4                              " Number of spaces that a <Tab> in the file counts for
 set shiftwidth=4                           " Number of spaces to use for each step of (auto)indent
+set expandtab                              " Use spaces, not tabs in insert mode. Use :retab to change all the
+                                           " Existing tab characters to match the current tab setting
 set smarttab                               " Insert tabs on the start of a line according to shifwidth, not tabstop
 set autoindent
 set smartindent
@@ -465,6 +466,7 @@ let g:airline#extensions#whitespace#enabled = 1
 let g:airline#extensions#tagbar#enabled = 1
 
 let g:airline#extensions#tmuxline#enabled = 0
+let g:airline_section_y=airline#section#create_right(['ffenc', '%{&expandtab?"Space":"Tab"}:%{&tabstop}:%{&shiftwidth}'])
 let g:tmuxline_preset = {
         \ 'a': '[#S]',
         \ 'win': '#I:#W#F',
@@ -480,14 +482,14 @@ let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
 " let g:go_fmt_fail_silently = 1
 
 " python PEP8 indentation
-au BufNewFile,BufRead *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
+au BufNewFile *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 " c/c++
-au BufNewFile,BufRead *.c,*.cpp,*cc,*.h set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
+au BufNewFile *.c,*.cpp,*cc,*.h set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
 " web files indentation
 " Note: no space between file types
-au BufNewFile,BufRead *.js,*.html,*.css set tabstop=2 softtabstop=2 shiftwidth=2
+au BufNewFile *.js,*.html,*.css set tabstop=2 softtabstop=2 shiftwidth=2
 
 " OpenSCAD
 au! BufRead,BufNewFile *.scad set filetype=openscad
@@ -500,6 +502,12 @@ au BufNewFile,BufRead *.log set filetype=log
 
 " go
 au BufNewFile,BufRead *.go set nolist
+
+" Detectindent
+au BufReadPost * :DetectIndent
+let g:detectindent_preferred_expandtab = 1
+let g:detectindent_preferred_indent = 4
+"let g:detectindent_preferred_when_mixed = 1
 
 " NERD Commenter
 " Add spaces after comment delimiters by default
