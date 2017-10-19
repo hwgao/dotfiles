@@ -6,6 +6,9 @@ NAME=${NAME%%.*}
 NAME="${2}/${NAME}"
 
 if [ ! -d "${NAME}" ]; then
+    if [ ! -d "${2}" ]; then
+        mkdir "${2}"
+    fi	
     cd "${2}"
     git clone "${1}"
     cd "${NAME}"

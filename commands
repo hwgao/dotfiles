@@ -10,13 +10,13 @@ vi /home/hongwei/.vimbuffer
 vi ~/.commands
 cat ~/.vimbuffer
 i=$(find . | fzf) && [[ -d "${i}" ]] && cd "${i}" || vi "${i}"
-git --git-dir=.repo/manifests/.git/ branch -a # List repo branches
-git --git-dir=.repo/manifests/.git branch -v;ll .repo/manifest.xml # Repo current branch
+git --git-dir=.repo/manifests/.git/ branch -a                           # List repo branches
+git --git-dir=.repo/manifests/.git branch -v;ll .repo/manifest.xml      # Repo current branch
 git archive --format=tar.gz -o onebsp-$(date -I).tar.gz HEAD
 git fetch && git reset --hard origin/master
-git reset --hard HEAD~1 # Delete last commit, the change in last commit will be deleted
+git reset --hard HEAD~1                 # Delete last commit, the change in last commit will be deleted
 git log --tags --simplify-by-decoration --pretty="format:%ci %d"
-git commit --no-verify . # Not run pre-commit hook
+git commit --no-verify .                # Not run pre-commit hook
 repo forall -c "git reset --hard && git clean -dfx"
 GOOS=linux GOARCH=arm GOARM=7 go build
 python -c 'print u"\u22c5 \u22c5\u22c5 \u201d \u2019 \u266f \u2622 \u260d \u2318 \u2730 \u28ff \u26a1 \u262f \u2691 \u21ba \u2934 \u2935 \u2206 \u231a \u2240\u2207 \u2707 \u26a0\xa0\u25d4 \u26a1\xa0\u21af \xbf \u2a02 \u2716 \u21e3 \u21e1  \u2801 \u2809 \u280b \u281b \u281f \u283f \u287f \u28ff \u2639 \u2780 \u2781 \u2782 \u2783 \u2784 \u2785 \u2786 \u2787 \u2788 \u2789 \u25b9\xa0\u254d \u25aa \u26af \u2692 \u25cc \u21c5 \u21a1 \u219f \u229b \u267a ".encode("utf8")' # Check if can show glyphs properly
@@ -24,9 +24,32 @@ uzbl -u 0daydown.com &
 uzbl -u my.jdownloader.org &
 python -c "import sys, random; stdout = sys.stdout; sys.stdout = type('BlackHole', (), {'write': (lambda self, string: '')})(); import this; sys.stdout = stdout; print random.choice(''.join([this.d.get(i, i) for i in this.s]).splitlines()[2:]);" | cowsay | lolcat
 fortune | cowsay | lolcat
-compgen -c # will list all the binaries you could run.
-compgen -a # will list all the aliases you could run.
-compgen -b # will list all the built-ins you could run.
-compgen -k # will list all the keywords you could run.
-compgen -A function # will list all the functions you could run.
-compgen -A function -abck # will list all the above in one go.
+compgen -c                                  # List all the binaries you could run.
+compgen -a                                  # List all the aliases you could run.
+compgen -b                                  # List all the built-ins you could run.
+compgen -k                                  # List all the keywords you could run.
+compgen -A function                         # List all the functions you could run.
+compgen -A function -abck                   # List all the above in one go.
+sudo pdbedit -L -v                          # List Samba Users -L to list all users, -v to be verbose
+docker rm $(docker ps -a -q)                # Docker: delete all the containers
+docker rmi $(docker images -q)              # Docker: delete all the images
+docker volume rm $(docker volume list -q)   # Docker: delete all the volumes
+docker images                               # Docker: list images
+docker ps                                   # Docker: list running containers
+docker ps -a                                # Docker: list all containers
+docker top ${_P_}                           # Docker: See the top processes within a container
+docker stats ${_P_}                         # Docker: Provide the statistics of a running container
+docker stop ${_P_}                          # Docker: Stop a running container
+docker rm ${_P_}                            # Docker: Delete a container
+docker rmi ${_P_}                           # Docker: Delete a image
+docker attach ${_P_}                        # Docker: Attach to a container
+docker pause ${_P_}                         # Docker: Pause the processes in a running container
+docker unpause ${_P_}                       # Docker: Unpause the processes in a running container
+docker kill ${_P_}                          # Docker: Kill the processes in a running container
+make -pn | less                             # Make: detail information
+make -p -f /dev/null                        # Make: Print make data base
+make -qp | awk -F':' '/^[a-zA-Z0-9][^$#\/\t=]*:([^=]|$)/ {split($1,A,/ /);for(i in A)print A[i]}' # Make: list all targets
+pkg-config --variable=pc_path pkg-config    # pkg-config: list directories where to search *.pc files
+pkg-config --libs --cflags ${_P_}           # pkg-config: Show link path and c flags
+for user in $(cut -f1 -d: /etc/passwd); do echo $user; sudo crontab -u $user -l; done # List all cron jobs for allusers
+ps aux | grep ${_P_} | grep -v grep         # Grep an app

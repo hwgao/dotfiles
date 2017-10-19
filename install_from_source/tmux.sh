@@ -7,5 +7,5 @@ sh autogen.sh
 ./configure && make
 
 sudo apt-get remove -y tmux
-sudo make install
+sudo checkinstall
 

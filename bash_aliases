@@ -3,8 +3,6 @@
 alias vs="vim -S ~/.vim/default_session"
 alias diff=colordiff
 alias less='less -i'
-# Must use single quotes, as it doesn't allow expansion of variable
-alias C='c=$(cat ~/.commands | fzf-tmux) && echo $c && eval $c'
 alias git-root='cd $(git rev-parse --show-toplevel > /dev/null 2>&1)'
 alias git-fresh='git clean -df; git reset --hard'
 alias rs=rmate
@@ -17,6 +15,22 @@ alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
 alias clion='/home/hongwei/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.3544.40/bin/clion.sh &'
 alias bmake='bear make'
 alias gen-ycm-include-cross='find -type d -iname include > .ycm_include_cross'
+
+# If a command needs parameters, it can refer the parameters through the array variable _REPLACE_ME_
+# The formats:
+# ${_P_[*]} -- all parameters
+# ${_P_[index]} -- the paramete at the specified index
+# ${_P_} is same with ${_REPLACE_ME_[0]}
+C() {
+   F=$(cat ~/.commands|fzf-tmux)
+   echo $F
+   if [[ $F == *" \${_P_"* ]]; then
+      echo Please input parameters:
+      # Read into array
+      read -a _P_
+   fi
+   eval $F
+}
 
 url2epub() {
     pandoc -f html -t epub3 -o "$2".epub "$1"
@@ -66,7 +80,13 @@ vv() {
 }
 
 cc() {
-   if [ ! -z "${F}" ]; then
+   if [ -z "${F}" ]; then
+      return
+   fi
+
+   if [ -d "${F}" ]; then
+      cd "${F}"
+   else
        cd "$(dirname $(echo $F | awk '{print $1}'))"
    fi
 }
@@ -105,7 +125,7 @@ R() {
 }
 
 # https://unix.stackexchange.com/questions/13464/is-there-a-way-to-find-a-file-in-an-inverse-recursive-search/13474
-upsearch () {
+upsearch() {
     slashes=${PWD//[^\/]/}
     directory="$PWD"
     for (( n=${#slashes}; n>0; --n ))
@@ -212,4 +232,18 @@ comp() {
 
 mru() {
     vi -c ":History<CR>"
+}
+
+ldir() {
+    F=$(find -maxdepth $1 -type d | fzf-tmux -m)
+    echo F=\"$F\"
+}
+
+tftproot() {
+   rm ~/tftp_root
+   if [ $# -eq 1 ]; then
+      ln -s $(realpath $1) ~/tftp_root
+   else
+      ln -s "$(pwd)" ~/tftp_root
+   fi
 }

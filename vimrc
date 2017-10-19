@@ -147,7 +147,6 @@ Plug 'embear/vim-localvimrc'
 Plug 'majutsushi/tagbar'
 Plug 'scrooloose/nerdtree'
 Plug 'rupa/z'
-Plug 'BurntSushi/ripgrep', {'dir': '~/src_root/ripgrep', 'do': 'cargo build --release \| cp target/release/rg ~/bin/'}
 Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
 Plug 'sheerun/vim-polyglot'
 Plug 'hwgao/detectindent'

@@ -17,7 +17,7 @@ fi
 link_dotfiles() {
     dir=$(pwd)                        # dotfiles directory
     olddir=~/dotfiles_old             # old dotfiles backup directory
-    files="bashrc shell_prompt.sh vimrc tmux.conf tmux_theme.conf inputrc vim gitconfig astylerc bash_aliases command"    # list of files/folders to symlink in homedir
+    files="bashrc shell_prompt.sh vimrc tmux.conf tmux_theme.conf inputrc vim gitconfig astylerc bash_aliases command tigrc"    # list of files/folders to symlink in homedir
 
     ##########
 
@@ -46,9 +46,9 @@ install_terminal_cmds() {
     sudo apt-get install -y build-essential cmake
     # need by ycm
     sudo apt-get install -y python-dev python3-dev
-    sudo apt-get install -y git vim tmux mc silversearcher-ag htop strace
+    sudo apt-get install -y git mc htop strace
     sudo apt-get install -y curl
-    sudo apt-get install -y ctags cscope
+    sudo apt-get install -y exuberant-ctags cscope
     sudo apt-get install -y ccache
     sudo apt-get install -y autotools-dev automake
     sudo apt-get install -y ranger
@@ -65,7 +65,14 @@ install_terminal_cmds() {
     # Configure bash as the default shell
     sudo dpkg-reconfigure dash
     # Need to update to latest version to support input stream required by vim
+    ./install_from_source/git.sh
     ./install_from_source/astyle.sh
+    ./install_from_source/ag.sh
+    ./install_from_source/ripgrep.sh
+    ./install_from_source/tig.sh
+    ./install_from_source/tmux.sh
+    ./install_from_source/vim.sh
+
 }
 
 install_gui_cmds() {
