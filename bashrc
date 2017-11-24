@@ -180,12 +180,3 @@ export FZF_DEFAULT_COMMAND='ag -U --path-to-ignore ~/dotfiles/agignore -g ""'
 #export FZF_DEFAULT_OPTS='--exact'
 export FZF_TMUX=1
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
-
-export JAVA_HOME='/opt/jdk1.6.0_45'
-PATH="$PATH:${JAVA_HOME}/bin"
-export GRAILS_HOME='/opt/grails-2.2.1'
-PATH="$PATH:${GRAILS_HOME}/bin"
-
-#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
-export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

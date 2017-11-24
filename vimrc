@@ -188,7 +188,6 @@ set ttymouse=xterm2                        " Indicate terminal type for mouse co
 set ttyscroll=3                            " Speedup scrolling
 set laststatus=2                           " Always have a status line
 set autoread                               " Automatically read changed files
-set autoindent                             " Enabile Autoindent
 set hlsearch
 set cursorline
 set fo-=t                                  " Don't automatically wrap text when typing
@@ -197,7 +196,7 @@ set shiftwidth=4                           " Number of spaces to use for each st
 set expandtab                              " Use spaces, not tabs in insert mode. Use :retab to change all the
                                            " Existing tab characters to match the current tab setting
 set smarttab                               " Insert tabs on the start of a line according to shifwidth, not tabstop
-set autoindent
+set autoindent                             " Enabile Autoindent
 set smartindent
 set splitright                             " Vertical windows should be split to right
 set splitbelow                             " Horizontal windows should split to bottom
@@ -238,8 +237,10 @@ set complete-=i                            " remove search in included files fro
 set mouse=a                                " Enable the use of mouse
 set list
 set listchars=""                           " reset
-set listchars=tab:→\ ,trail:·              " To keep the trailing space and avoid being auto removed add extra "
+"set listchars=tab:→\ ,trail:·              " To keep the trailing space and avoid being auto removed add extra "
+set listchars=tab:>-,trail:-
 set shortmess=a                            " Make messages shorter
+set encoding=utf-8
 
 " by default backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
@@ -548,9 +549,8 @@ else
 endif
 
 " Enable to copy to clipboard for operations like yank, delete, change and put
-" http://stackoverflow.com/questions/20186975/vim-mac-how-to-copy-to-clipboard-without-pbcopy
+set clipboard^=unnamed
 if has('unnamedplus')
-  set clipboard^=unnamed
   set clipboard^=unnamedplus
 endif
 
