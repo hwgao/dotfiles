@@ -1,0 +1,61 @@
+" highlight matched
+set hlsearch
+" case insensitive search
+set ignorecase
+set smartcase
+" search while typing
+set incsearch
+" wrap-around when searching
+set wrapscan
+" show pressed keys in lower right corner
+set showcmd
+" tab -> spaces
+set expandtab
+set smarttab
+set tabstop=4
+set shiftwidth=4
+set autoindent
+set smartindent
+" Allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+" keep a 5 line buffer for the cursor from top/bottom of window
+set scrolloff=5
+" X11 clipboard
+set clipboard=unnamed
+set notildeop
+
+" mappings
+nnoremap ; :
+inoremap jj <Esc>
+
+" clear highlighted search term on space
+noremap <silent> <Space> :nohls<CR>
+
+" reselect visual block after indent
+vnoremap < <gv
+vnoremap > >gv
+
+" MOVE LINE/BLOCK
+nnoremap <C-S-J> :m+<CR>==
+nnoremap <C-S-K> :m-2<CR>==
+inoremap <C-S-J> <Esc>:m+<CR>==gi
+inoremap <C-S-K> <Esc>:m-2<CR>==gi
+vnoremap <C-S-J> :m'>+<CR>gv=gv
+vnoremap <C-S-K> :m-2<CR>gv=gv
+
+nnoremap <C-M> :bm<CR> " Toggle bookmark
+nnoremap <C-S> :save<CR>
+nnoremap <C-Z> :undo<CR>
+nnoremap <C-C> y
+vnoremap <C-C> y
+
+inoremap <C-;> <C-O>A;<CR>
+inoremap <C-A> <C-O>:selectall<CR>
+inoremap <C-B> <C-O>:build<CR>
+inoremap <C-C> <C-O>:copyline<CR>
+inoremap <C-F> <C-O>:find<CR>
+inoremap <C-M> <C-O>:bm<CR>
+inoremap <C-R> <C-O>:run<CR>
+inoremap <C-S> <C-O>:save<CR>
+inoremap <C-V> <C-O>p
+inoremap <C-Z> <C-O>:undo<CR>
