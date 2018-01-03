@@ -26,7 +26,11 @@ set notildeop
 
 " mappings
 nnoremap ; :
-inoremap jj <Esc>
+" inoremap jj <Esc>
+" Copy to the end of line, like D and C
+nnoremap Y y$
+" Insert ; at the end of line
+"inoremap ;; <end>;
 
 " clear highlighted search term on space
 noremap <silent> <Space> :nohls<CR>
@@ -49,7 +53,7 @@ nnoremap <C-Z> :undo<CR>
 nnoremap <C-C> y
 vnoremap <C-C> y
 
-inoremap <C-;> <C-O>A;<CR>
+inoremap <C-;> <C-O>A;
 inoremap <C-A> <C-O>:selectall<CR>
 inoremap <C-B> <C-O>:build<CR>
 inoremap <C-C> <C-O>:copyline<CR>

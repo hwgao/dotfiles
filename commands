@@ -57,3 +57,11 @@ for user in $(cut -f1 -d: /etc/passwd); do echo $user; sudo crontab -u $user -l;
 ps aux | grep ${_P_} | grep -v grep                                                               # Grep an app
 find . -type d -empty -delete                                                                     # Delete all empty subfolders
 find -name "*.m4a" -exec mv -t ~/Music {} +                                                       # Move all m4a files to Music folder
+bitbake -g ${_P_} && cat pn-depends.dot | grep -v -e '-native' | grep -v digraph | grep -v -e '-image' | awk '{print $1}' | sort | uniq | less  # Show image's packages, or package's dependencies
+bitbake -s | grep ${_P_}                    # Check if certain package is present on current Yocto Setup
+bitbake -v ${_P_} 2>&1 | tee ${_P_}.log     # Print (on console) and store verbose baking
+bitbake ${_P_} -c fetchall                  # Fetch sources for a particular image
+bitbake ${_P_} -c listtasks                 # List all tasks for package
+bitbake ${_P_} -g -u depexp                 # Show the package dependency for image (Will open a UI window)
+bitbake-layers show-layers                  # Show layers
+bitbake-layers show-recipes "*-image-*"     # Show possiable images to bake. Without "*-image-*", it shows ALL recipes

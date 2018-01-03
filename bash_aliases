@@ -10,17 +10,16 @@ alias ctags='ctags --exclude=.git --exclude=.repo --exclude=.svn'
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
 alias ag='ag -U --path-to-ignore ~/dotfiles/agignore'
 alias rg='rg -u --ignore-file ~/dotfiles/agignore'
-alias qtcreator='~/opt/qtcreator-4.3.1/bin/qtcreator &> /dev/null &'
 alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
 alias clion='/home/hongwei/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.3544.40/bin/clion.sh &'
 alias bmake='bear make'
 alias gen-ycm-include-cross='find -type d -iname include > .ycm_include_cross'
 
-# If a command needs parameters, it can refer the parameters through the array variable _REPLACE_ME_
+# If a command needs parameters, it can refer the parameters through the array variable _P_
 # The formats:
 # ${_P_[*]} -- all parameters
 # ${_P_[index]} -- the paramete at the specified index
-# ${_P_} is same with ${_REPLACE_ME_[0]}
+# ${_P_} is same with ${_P_[0]}
 C() {
    F=$(cat ~/.commands|fzf-tmux)
    echo $F
@@ -30,6 +29,10 @@ C() {
       read -a _P_
    fi
    eval $F
+}
+
+CR() {
+   eval "$F"
 }
 
 url2epub() {
@@ -174,7 +177,7 @@ git-commit() {
     git diff --cached --check --no-ext-diff && git commit $@
 }
 
-o() {
+oo() {
     filename=$(basename "$1")
     ## Substring Removal
     # "#"  -- delete shortest match from front

@@ -9,7 +9,7 @@ else
     rustup update
 fi
 
-cargo install ripgrep
+cargo install --force ripgrep
 # . ./git-lastest-tag https://github.com/BurntSushi/ripgrep ~/src_root -i
 # cargo build --release
 # cp target/release/rg ~/bin/
