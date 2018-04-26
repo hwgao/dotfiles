@@ -38,6 +38,7 @@ NEAREST_INC_FLAGS = [
 # Must be absolute paths
 SYS_INC_FLAGS = [
     '/usr/include/',
+    '/usr/include/glib-2.0',
     '/usr/local/include'
 ]
 
@@ -137,8 +138,15 @@ def FlagsForClangComplete(root):
 
 
 def FlagsForR(root):
+    suffix = "**"
     flags = []
-    flags += ["-I" + root]
+    if root.endswith(suffix):
+        root = root.rstrip(suffix)
+        flags += ["-I" + root]
+    else:
+        flags += ["-I" + root]
+        return flags
+
     for dirroot, dirnames, filenames in os.walk(root):
         for dir_path in dirnames:
             real_path = os.path.join(dirroot, dir_path)
@@ -172,11 +180,12 @@ def IncludeFile(root, filename):
     try:
         fpath = FindNearest(root, filename)
         if (not os.path.isfile(fpath)):
-            return None
+            return None, None
+
         lines = [os.path.join(os.path.dirname(fpath), line.rstrip('\n')) for line in open(fpath)]
-        return lines
+        return lines, os.path.relpath(filename)
     except:
-        return None
+        return None, None
 
 
 def IncludePaths(root):
@@ -188,18 +197,25 @@ def IncludePaths(root):
             continue
         flags += ["-I" + d]
 
-    paths = IncludeFile(root, '.ycm_include_cross')
+    paths, r = IncludeFile(root, '.ycml')
     if paths:
         for d in paths:
-            flags += ["-I" + d]
+            flags += FlagsForR(d)
+    if r:
+        root = r
+
+    paths, r = IncludeFile(root, '.ycmk')
+    if paths:
+        for d in paths:
+            flags += FlagsForR(d)
     else:
-        paths = IncludeFile(root, '.ycm_include_native')
+        paths, r = IncludeFile(root, '.ycm')
         if paths:
             for d in paths:
-                flags += ["-I" + d]
+                flags += FlagsForR(d)
 
         for d in SYS_INC_FLAGS:
-            flags += ["-I" + d]
+            flags += FlagsForR(d)
 
     return flags
 

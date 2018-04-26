@@ -1,6 +1,6 @@
 [ -f ~/.vim/bundle/z/z.sh ] && source ~/.vim/bundle/z/z.sh
 
-alias vs="vim -S ~/.vim/default_session"
+alias vis="vim -S ~/.vim/default_session"
 alias diff=colordiff
 alias less='less -i'
 alias git-root='cd $(git rev-parse --show-toplevel > /dev/null 2>&1)'
@@ -8,12 +8,23 @@ alias git-fresh='git clean -df; git reset --hard'
 alias rs=rmate
 alias ctags='ctags --exclude=.git --exclude=.repo --exclude=.svn'
 alias mc='. /usr/share/mc/bin/mc-wrapper.sh'
+alias gvim='gvim --remote-silent'
+alias mc='EDITOR=gvim mc'
 alias ag='ag -U --path-to-ignore ~/dotfiles/agignore'
 alias rg='rg -u --ignore-file ~/dotfiles/agignore'
 alias cdt='~/opt/eclipse/cpp-oxygen/eclipse/eclipse &> /dev/null &'
 alias clion='/home/hongwei/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/172.3544.40/bin/clion.sh &'
 alias bmake='bear make'
 alias gen-ycm-include-cross='find -type d -iname include > .ycm_include_cross'
+alias cdw='cd ~/work'
+alias o=xdg-open
+# Coverity
+alias cov-build='~/bin/coverity.sh --build'
+alias cov-p4='~/bin/coverity.sh --p4'
+alias cov-git='~/bin/coverity.sh --git'
+alias cov-clean='~/bin/coverity.sh --clean'
+alias cov-analyze='~/bin/coverity.sh'
+
 
 # If a command needs parameters, it can refer the parameters through the array variable _P_
 # The formats:
@@ -54,7 +65,7 @@ c() {
 s() {
     #rg -u --vimgrep --ignore-file ~/dotfiles/agignore "$@" | vim -
     local TEMPFILE=$(mktemp)
-    rg -u --vimgrep --ignore-file ~/dotfiles/agignore "$@" | tee "$TEMPFILE"
+    ag -U --path-to-ignore ~/dotfiles/agignore "$@" | tee "$TEMPFILE"
     if [ -s "$TEMPFILE" ]; then
        vim -c :copen -q "$TEMPFILE"
     fi
@@ -104,7 +115,7 @@ ffc() {
     cc
 }
 
-vb() {
+vib() {
     vi ~/.vimbuffer
     V=$(cat ~/.vimbuffer)
 }
@@ -229,12 +240,12 @@ swap() {
     fi
 }
 
-comp() {
-    vi -c ":DirDiff ${1} ${2}"
+vid() {
+    vim -c ":DirDiff ${1} ${2}"
 }
 
-mru() {
-    vi -c ":History<CR>"
+vih() {
+    vim -c ":History<CR>"
 }
 
 ldir() {

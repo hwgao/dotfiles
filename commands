@@ -14,10 +14,15 @@ git --git-dir=.repo/manifests/.git/ branch -a                           # List r
 git --git-dir=.repo/manifests/.git branch -v;ll .repo/manifest.xml      # Repo current branch
 git archive --format=tar.gz -o onebsp-$(date -I).tar.gz HEAD
 git fetch && git reset --hard origin/master
+git fetch && git reset --hard origin/yocto-2.2-morty-dev
 git reset --hard HEAD~1                 # Delete last commit, the change in last commit will be deleted
+git reset HEAD~                         # Undo last commit, keep the change
 git log --tags --simplify-by-decoration --pretty="format:%ci %d"
 git commit --no-verify .                # Not run pre-commit hook
 git diff --cached --check --no-ext-diff
+git rev-parse --abbrev-ref HEAD         # Get current branch name
+git diff --cached --check --no-ext-diff && git commit # Check before commit
+git clone ssh://hongwei.gao@hcgit03:29418/vendor/rdk rdk-mstar-morty -b yocto-2.2-morty-dev && cd rdk-mstar-morty && cp ~/rdk-local/* .
 repo forall -c "echo "===================================" && pwd && git reset --hard && git clean -dfx && git status"
 GOOS=linux GOARCH=arm GOARM=7 go build
 python -c 'print u"\u22c5 \u22c5\u22c5 \u201d \u2019 \u266f \u2622 \u260d \u2318 \u2730 \u28ff \u26a1 \u262f \u2691 \u21ba \u2934 \u2935 \u2206 \u231a \u2240\u2207 \u2707 \u26a0\xa0\u25d4 \u26a1\xa0\u21af \xbf \u2a02 \u2716 \u21e3 \u21e1  \u2801 \u2809 \u280b \u281b \u281f \u283f \u287f \u28ff \u2639 \u2780 \u2781 \u2782 \u2783 \u2784 \u2785 \u2786 \u2787 \u2788 \u2789 \u25b9\xa0\u254d \u25aa \u26af \u2692 \u25cc \u21c5 \u21a1 \u219f \u229b \u267a ".encode("utf8")' # Check if can show glyphs properly
@@ -57,6 +62,7 @@ for user in $(cut -f1 -d: /etc/passwd); do echo $user; sudo crontab -u $user -l;
 ps aux | grep ${_P_} | grep -v grep                                                               # Grep an app
 find . -type d -empty -delete                                                                     # Delete all empty subfolders
 find -name "*.m4a" -exec mv -t ~/Music {} +                                                       # Move all m4a files to Music folder
+ps -ef | grep ${_P_} | grep -v grep | awk '{print $2}' | xargs kill -9                            # Kill all processes with a given partial name
 bitbake -g ${_P_} && cat pn-depends.dot | grep -v -e '-native' | grep -v digraph | grep -v -e '-image' | awk '{print $1}' | sort | uniq | less  # Show image's packages, or package's dependencies
 bitbake -s | grep ${_P_}                    # Check if certain package is present on current Yocto Setup
 bitbake -v ${_P_} 2>&1 | tee ${_P_}.log     # Print (on console) and store verbose baking
@@ -65,3 +71,4 @@ bitbake ${_P_} -c listtasks                 # List all tasks for package
 bitbake ${_P_} -g -u depexp                 # Show the package dependency for image (Will open a UI window)
 bitbake-layers show-layers                  # Show layers
 bitbake-layers show-recipes "*-image-*"     # Show possiable images to bake. Without "*-image-*", it shows ALL recipes
+bitbake -k rdk-generic-mediaclient-wpe-tdk-image

@@ -140,7 +140,7 @@ Plug 'tmhedberg/matchit'
 Plug 'Chiel92/vim-autoformat'
 Plug 'junegunn/fzf', { 'dir': '~/src_root/fzf', 'do': './install --all'  }
 Plug 'junegunn/fzf.vim'
-Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
+" Plug 'rdnetto/YCM-Generator', { 'branch': 'stable' }
 Plug 'nathanaelkane/vim-indent-guides'
 Plug 'airblade/vim-rooter'
 Plug 'embear/vim-localvimrc'
@@ -150,7 +150,7 @@ Plug 'rupa/z'
 Plug 'tmux-plugins/tpm', {'dir': '~/.tmux/plugins/tpm'}
 Plug 'sheerun/vim-polyglot'
 Plug 'hwgao/detectindent'
-
+Plug 'mkitt/tabline.vim'
 
 " File type based plugins
 Plug 'leshill/vim-json'
@@ -237,10 +237,12 @@ set complete-=i                            " remove search in included files fro
 set mouse=a                                " Enable the use of mouse
 set list
 set listchars=""                           " reset
-"set listchars=tab:→\ ,trail:·              " To keep the trailing space and avoid being auto removed add extra "
-set listchars=tab:>-,trail:-
+set listchars=tab:→\ ,trail:·              " To keep the trailing space and avoid being auto removed add extra "
+"set listchars=tab:>-,trail:-
 set shortmess=a                            " Make messages shorter
+" set cmdheight=2
 set encoding=utf-8
+set nofixendofline
 
 " by default backup off, writebackup on
 " set nobackup      " do not keep a backup file, use versions instead
@@ -258,8 +260,8 @@ nnoremap Q gq
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
+" nnoremap n nzzzv
+" nnoremap N Nzzzv
 
 " Act like D and C
 nnoremap Y y$
@@ -330,7 +332,7 @@ let g:tmux_navigator_disable_when_zoomed = 1
 
 let g:ycm_global_ycm_extra_conf = "~/.vim/.ycm_extra_conf.py"
 let g:ycm_confirm_extra_conf = 0
-let g:ycm_extra_conf_globlist = ['~/mywork/*','!~/*']
+let g:ycm_extra_conf_globlist = ['~/mywork/*','~/work/*','!~/*']
 let g:ycm_collect_identifiers_from_tags_files = 1
 
 " Setting it makes YCM remove all Syntastic checkers set for the c, cpp,
@@ -391,8 +393,9 @@ nnoremap <Leader>. :lcd %:p:h<CR>:pwd<CR>
 " Edit file in the same directory
 nnoremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>")"
 
-" Close buffer
-nnoremap <leader>c :bd<CR>"
+" Close buffer without losing the split window
+nnoremap <leader>c :bp\|bd #<CR>
+command D bp|bd #
 
 " clear highlighted searches
 " nnoremap <Leader>h :nohlsearch<CR>
@@ -434,7 +437,6 @@ endif
 
 nnoremap <space>, :Ack! -w <C-r><C-w>
 nnoremap <space>y :Ack! -w <C-r><C-w> -g *.conf -g *.inc -g *.bb -g *.bbappend -g *.bbclass -t py
-
 
 """"""""""""""""""""""
 " Conf for airline   "
@@ -481,6 +483,9 @@ let g:syntastic_mode_map = { 'passive_filetypes': ['go'] }
 " or
 " let g:go_fmt_fail_silently = 1
 
+" Auto show information of function under cursor
+let g:go_auto_type_info = 1
+
 " python PEP8 indentation
 au BufNewFile *.py set tabstop=4 softtabstop=4 shiftwidth=4 textwidth=79 expandtab autoindent fileformat=unix
 
@@ -504,7 +509,7 @@ au BufNewFile,BufRead *.log set filetype=log
 au BufNewFile,BufRead *.go set nolist
 
 " Detectindent
-au BufReadPost * :DetectIndent
+" au BufReadPost * :DetectIndent
 let g:detectindent_preferred_expandtab = 1
 let g:detectindent_preferred_indent = 4
 "let g:detectindent_preferred_when_mixed = 1
@@ -520,11 +525,27 @@ let g:NERDDefaultAlign = 'left'
 
 " Insert semicolon at the end of line in insert mode
 inoremap ;<cr> <end>;<cr>
-inoremap ;; <end>;
+inoremap ;; <end>;<esc>
 inoremap ,, <right>,
 
 " Max current window
 map <space>m <C-W>_<C-W><Bar>
+
+" Switch to specified tab
+map <space>1 1gt
+map <space>2 2gt
+map <space>3 3gt
+map <space>4 4gt
+map <space>5 5gt
+map <space>6 6gt
+map <space>7 7gt
+map <space>8 8gt
+map <space>9 9gt
+map <space>0 10gt
+map <space><Left> gT
+map <space><Right> gt
+nnoremap <Space><Up> :tab ball<CR>
+nnoremap <Space><Down> :tabonly<CR>
 
 if exists("$SSH_CONNECTION")
     " copy to buffer
@@ -571,12 +592,12 @@ set ssop-=folds      " do not store folds
 " fzf.vim map
 nnoremap <Space>f :Files
 nnoremap <Space>b :Buffers<CR>
-nnoremap <Space>h :History<CR> " Same with :browse oldfiles
+nnoremap <Space>h :History<CR>            " Same with :browse oldfiles
 nnoremap <Space>t :Tags<CR>
 nnoremap <Space>l :BTags<CR>
 nnoremap <Space>c :CSFiles<CR>
 
-nnoremap <Space>p :b#<CR>
+nnoremap <Space>p :b#<CR>                 " switch to previous buffer
 nnoremap <Space>o :only<CR>:diffoff<CR>
 nnoremap <Space>s :cs find t <C-R>=expand("<cword>")<CR>
 
@@ -619,5 +640,11 @@ autocmd FileType go nmap <leader>b :<C-u>call <SID>build_go_files()<CR>
 " Auto strip trailing spaces on save
 autocmd BufWritePre * :%s/\s\+$//e
 
+" Set it in Detectindent now
+" autocmd Filetype make setlocal noexpandtab
+
 " Make `jj` and `jk` throw you into normal mode
 inoremap jk <esc>
+
+" Paste and indent
+nnoremap p ]p
