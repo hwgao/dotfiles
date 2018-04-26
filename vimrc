@@ -616,9 +616,9 @@ let g:rooter_manual_only = 1
 cabbr <expr> %% expand('%:p:h')
 
 " P to paste yanked text from register 0
-" yank will save text to registers 0 and " by default.
-" text deleted using d/D/x/X/c/C/s/S commands will be save to " register
-" " register is default register
+" yank will save text to registers 0 and ".
+" text deleted using d/D/x/X/c/C/s/S commands will be save to register "
+" register " is used to paste by default
 nnoremap P "0p
 
 " whitelist all local vimrc
@@ -647,4 +647,4 @@ autocmd BufWritePre * :%s/\s\+$//e
 inoremap jk <esc>
 
 " Paste and indent
-nnoremap p ]p
+nnoremap p p=']
