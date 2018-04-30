@@ -359,6 +359,10 @@ nnoremap <silent> <F2> :YcmCompleter GoTo<CR>
 autocmd FileType python nnoremap <Leader>yr :YcmCompleter GoToReferences<CR>
 autocmd FileType python nnoremap <Leader>yd :YcmCompleter GetDoc<CR>
 
+" Python 3 settings
+let g:ycm_python_binary_path = '/usr/bin/python3'
+let g:syntastic_python_python_exec = '/usr/bin/python3'
+
 " UltiSnips Trigger configuration. Compatible with ycm
 let g:UltiSnipsExpandTrigger="<c-j>"
 let g:UltiSnipsJumpForwardTrigger="<c-j>"
