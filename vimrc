@@ -575,14 +575,6 @@ if has('unnamedplus')
   set clipboard^=unnamedplus
 endif
 
-" Search mappings: These will make it so that going to the next one in a
-" search will center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
-" Act like D and C
-nnoremap Y y$
-
 " Make session
 " vim -S ~/.vim/default_session to reopen it
 nnoremap <Leader>s :mksession! ~/.vim/default_session
